@@ -13,7 +13,7 @@ public class Main {
         System.out.println("Enter password");
         String password = scanner.next();
         new Login().login(userName, password);
-
+/*
         User user = new User("123", "456");
         HashMap<String, User> userHashMap = new HashMap<String, User>();
         userHashMap.put("123", user);
@@ -42,7 +42,7 @@ public class Main {
             e.printStackTrace();
         }
 
-
+*/
 
     }
 
