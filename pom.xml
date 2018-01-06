@@ -7,6 +7,13 @@
     <groupId>lt.vcs</groupId>
     <artifactId>MIVS</artifactId>
     <version>1.0-SNAPSHOT</version>
+    <dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>RELEASE</version>
+        </dependency>
+    </dependencies>
 
     <properties>
         <maven.compiler.source>1.9</maven.compiler.source>
