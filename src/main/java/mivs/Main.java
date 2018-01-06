@@ -11,13 +11,8 @@ public class Main {
 
 
         while (true){
-        System.out.println("MIVS");
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter UserName:");
-        String userName = scanner.next();
-        System.out.println("Enter password");
-        String password = scanner.next();
-        System.out.println( new Login().login(userName, password));
+
+         new Login().login();
         }
 
 

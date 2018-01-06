@@ -7,12 +7,15 @@ import java.util.Scanner;
 public class AddUser {
     public void add() {
         Role roles = null;
-
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter UserName:");
         String userName = scanner.next();
         System.out.println("Enter password");
         String password = scanner.next();
+        System.out.println("Enter First Name:");
+        String firstName = scanner.next();
+        System.out.println("Enter SecondName");
+        String secondName = scanner.next();
         System.out.println("Choose role");
         for (Role role : Role.values()) {
             System.out.println(role.get() + ". " + role);
@@ -47,12 +50,10 @@ public class AddUser {
             e.printStackTrace();
         }
 
-        User user = new User(userName, password,  roles);
-       // HashMap<String, User> userHashMap = new HashMap<String, User>();
+        User user = new User(userName, password,  roles,firstName,secondName);
         readUser.put(userName, user);
 
         // irasymas i failaadmin
-
         ObjectOutputStream outputStream = null;
         try {
             outputStream = new ObjectOutputStream(new FileOutputStream("users"));
@@ -60,10 +61,17 @@ public class AddUser {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
     }
 
+
     public void addAdmin(){
-        User user = new User("admin", "admin",  Role.ADMIN);
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter First Name:");
+        String firstName = scanner.next();
+        System.out.println("Enter SecondName");
+        String secondName = scanner.next();
+        User user = new User("admin", "admin",  Role.ADMIN, firstName, secondName);
         HashMap<String, User> userHashMap = new HashMap<String, User>();
         userHashMap.put("admin", user);
 
@@ -76,6 +84,11 @@ public class AddUser {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+
+    }
+
+    private void checkUnique(String userName){
 
     }
 

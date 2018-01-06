@@ -57,13 +57,13 @@ public class Admin {
 
         int nr = 0;
 
-        System.out.printf("%-3s %-10s %-10s\n", "Nr.","Username","Role" );
+        System.out.printf("%-3s %-10s %-10s %-10s %-10s\n", "Nr.","Username","Role","First name","Second Name" );
         for(Map.Entry<String, User> entry : readUser.entrySet()) {
             //String key = entry.getKey();
             User value = entry.getValue();
             nr +=1;
 
-            System.out.printf("%-3s %-10s %-10s\n", nr,value.getUsername(),value.getRole() );
+            System.out.printf("%-3s %-10s %-10s %-10s %-10s\n", nr,value.getUsername(),value.getRole(), value.getFirstName(), value.getSecondName() );
 
 
 
