@@ -1,8 +1,6 @@
 package mivs;
 
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectOutputStream;
+import java.io.*;
 import java.util.HashMap;
 import java.util.Scanner;
 
@@ -35,16 +33,30 @@ public class AddUser {
 
                 break;
         }
-        User user = new User(userName, password,  roles);
-        HashMap<String, User> userHashMap = new HashMap<String, User>();
-        userHashMap.put(userName, user);
 
-        // irasymas i faila
+        ObjectInputStream inputStream = null;
+        HashMap<String, User> readUser = new HashMap<String, User>();
+        try {
+            inputStream = new ObjectInputStream(new FileInputStream("users"));
+            readUser = (HashMap<String, User>) inputStream.readObject();
+
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        User user = new User(userName, password,  roles);
+       // HashMap<String, User> userHashMap = new HashMap<String, User>();
+        readUser.put(userName, user);
+
+        // irasymas i failaadmin
 
         ObjectOutputStream outputStream = null;
         try {
             outputStream = new ObjectOutputStream(new FileOutputStream("users"));
-            outputStream.writeObject(userHashMap);
+            outputStream.writeObject(readUser);
         } catch (IOException e) {
             e.printStackTrace();
         }

@@ -31,6 +31,8 @@ public class Login {
 
         if (readUser.get(userName).getPassword().equals(password)) {
             System.out.println("OK");
+            new Admin().adminMeniu();
+
             return true;
 
         }else {
@@ -48,12 +50,12 @@ public class Login {
         System.out.println("__First Login__");
         if (userName.equalsIgnoreCase(myUserName)&& password.equals(myPassword)){
             new AddUser().addAdmin();
+            new Admin().adminMeniu();
             return true;
         }
         System.out.println("Wrong User Name or Password!!");
         return false;
     }
-
 
     public boolean login (String userName, String password){
         File f = new File("users");

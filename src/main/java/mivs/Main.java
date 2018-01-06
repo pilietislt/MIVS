@@ -10,6 +10,7 @@ public class Main {
 
 
 
+        while (true){
         System.out.println("MIVS");
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter UserName:");
@@ -17,6 +18,7 @@ public class Main {
         System.out.println("Enter password");
         String password = scanner.next();
         System.out.println( new Login().login(userName, password));
+        }
 
 
 
