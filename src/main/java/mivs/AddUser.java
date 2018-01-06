@@ -2,6 +2,7 @@ package mivs;
 
 import java.io.*;
 import java.util.HashMap;
+import java.util.Random;
 import java.util.Scanner;
 
 public class AddUser {
@@ -10,6 +11,7 @@ public class AddUser {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter UserName:");
         String userName = scanner.next();
+        userName = checkUnique(userName);
         System.out.println("Enter password");
         String password = scanner.next();
         System.out.println("Enter First Name:");
@@ -27,6 +29,8 @@ public class AddUser {
                 break;
             case 2:
                 roles = Role.LECTURER;
+                genereteCode(firstName,secondName,roles);
+
                 break;
             case 3:
                 roles = Role.STUDENT;
@@ -36,6 +40,7 @@ public class AddUser {
 
                 break;
         }
+        //System.out.println(genereteCode(firstName,secondName,roles));
 
         ObjectInputStream inputStream = null;
         HashMap<String, User> readUser = new HashMap<String, User>();
@@ -50,7 +55,8 @@ public class AddUser {
             e.printStackTrace();
         }
 
-        User user = new User(userName, password,  roles,firstName,secondName);
+
+        User user = new User(userName, password, roles, firstName, secondName,genereteCode(firstName,secondName,roles));
         readUser.put(userName, user);
 
         // irasymas i failaadmin
@@ -65,13 +71,13 @@ public class AddUser {
     }
 
 
-    public void addAdmin(){
+    public void addAdmin() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter First Name:");
         String firstName = scanner.next();
         System.out.println("Enter SecondName");
         String secondName = scanner.next();
-        User user = new User("admin", "admin",  Role.ADMIN, firstName, secondName);
+        User user = new User("admin", "admin", Role.ADMIN, firstName, secondName,genereteCode(firstName,secondName,Role.ADMIN));
         HashMap<String, User> userHashMap = new HashMap<String, User>();
         userHashMap.put("admin", user);
 
@@ -88,8 +94,51 @@ public class AddUser {
 
     }
 
-    private void checkUnique(String userName){
+    private String checkUnique(String userName) {
+        try {
+            readFile().get(userName).getUsername();
+        } catch (NullPointerException e) {
+            return userName;
+        }
+
+        System.out.println("User alredy exist");
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter UserName:");
+        userName = scanner.next();
+        checkUnique(userName);
+        return userName;
+    }
+
+    private String genereteCode(String firstName, String secondName, Role role){
+        Random generator = new Random();
+        Integer rand = generator.nextInt(999);
+        Integer i =role.get();
+        Character a = firstName.toUpperCase().charAt(0);
+        Character b = secondName.toUpperCase().charAt(0);
+        String code =  i.toString()+ a.toString()+b.toString()+rand.toString();
+        return code;
+    }
+
+
+
+    private HashMap<String, User> readFile() {
+        ObjectInputStream inputStream = null;
+        HashMap<String, User> readUser = new HashMap<String, User>();
+        try {
+            inputStream = new ObjectInputStream(new FileInputStream("users"));
+            readUser = (HashMap<String, User>) inputStream.readObject();
+
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+
+        } catch (EOFException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return readUser;
 
     }
+
 
 }

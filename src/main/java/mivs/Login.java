@@ -32,7 +32,24 @@ public class Login {
 
         if (readUser.get(userName).getPassword().equals(password)) {
             System.out.println("OK");
-            new Admin().adminMeniu();
+            if (readUser.get(userName).getRole().equals(Role.STUDENT)) {
+                new Student(readUser.get(userName).getUsername(),
+                        readUser.get(userName).getPassword(),
+                        readUser.get(userName).getRole(),
+                        readUser.get(userName).getFirstName(),
+                        readUser.get(userName).getSecondName(),
+                        readUser.get(userName).getCode()).studentMeniu();
+            }else if (readUser.get(userName).getRole().equals(Role.LECTURER)) {
+                new Lecturer(readUser.get(userName).getUsername(),
+                        readUser.get(userName).getPassword(),
+                        readUser.get(userName).getRole(),
+                        readUser.get(userName).getFirstName(),
+                        readUser.get(userName).getSecondName(),
+                        readUser.get(userName).getCode()).lecturerMeniu();
+            }else {
+                new Admin().adminMeniu();
+            }
+
 
             return true;
 
