@@ -6,14 +6,18 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
+
         System.out.println("MIVS");
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter UserName:");
         String userName = scanner.next();
         System.out.println("Enter password");
         String password = scanner.next();
-        new Login().login(userName, password);
-/*
+        System.out.println( new Login().login(userName, password));
+
+
+
+        /*
         User user = new User("123", "456");
         HashMap<String, User> userHashMap = new HashMap<String, User>();
         userHashMap.put("123", user);
