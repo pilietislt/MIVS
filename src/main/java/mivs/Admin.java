@@ -12,8 +12,9 @@ public class Admin {
     public void adminMeniu() {
         System.out.println("1. Add User");
         System.out.println("2. User List");
-        System.out.println("3.");
-        System.out.println("4.exit");
+        System.out.println("3. Add Course");
+        System.out.println("4. Course List");
+        System.out.println("5. Exit");
         Scanner scanner = new Scanner(System.in);
         int chooice = scanner.nextInt();
 
@@ -26,6 +27,14 @@ public class Admin {
 
             case 2:
                 printUserList();
+                adminMeniu();
+                break;
+            case 3:
+               new Course().addCourse();
+                adminMeniu();
+                break;
+            case 4:
+                new Course().courseList();
                 adminMeniu();
                 break;
             default:

@@ -79,7 +79,7 @@ public class Login {
 
     public String loginPassword() {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter UserName:");
+        System.out.println("Enter Password:");
         String password = scanner.next();
         return password;
     }
