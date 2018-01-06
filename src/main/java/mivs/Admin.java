@@ -1,9 +1,7 @@
 package mivs;
 
-public class Admin extends User {
+public class Admin  {
 
 
-    public Admin(String username, String password) {
-        super(username, password);
-    }
+
 }

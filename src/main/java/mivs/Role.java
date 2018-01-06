@@ -2,16 +2,16 @@ package mivs;
 
 public enum Role {
 
-    admin ("Admin"),
-    lecturer ("Lecturer"),
-    student ("Student");
+    ADMIN (1),
+    LECTURER (2),
+    STUDENT  (3);
 
-    private final String role;
+    private final int role;
 
-    Role(String s) {
+    Role(int s) {
         this.role = s;
     }
-    public String get(){
+    public int get(){
         return role;
     }
 

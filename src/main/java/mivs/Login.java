@@ -45,7 +45,9 @@ public class Login {
     public boolean firsLogin(String userName, String password){
         final String myUserName = "admin";
         final String myPassword = "admin";
+        System.out.println("__First Login__");
         if (userName.equalsIgnoreCase(myUserName)&& password.equals(myPassword)){
+            new AddUser().addAdmin();
             return true;
         }
         System.out.println("Wrong User Name or Password!!");
