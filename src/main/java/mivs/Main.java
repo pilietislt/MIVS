@@ -4,8 +4,8 @@ import java.io.*;
 import java.util.HashMap;
 import java.util.Scanner;
 
-public class Main {
-    public static void main(String[] args) {
+public class Main implements Serializable{
+    public static void main(String[] args)  {
 
 
 
@@ -14,6 +14,21 @@ public class Main {
 
          new Login().login();
         }
+//
+//        ObjectInputStream inputStream = null;
+//        try {
+//            inputStream = new ObjectInputStream(new FileInputStream("users"));
+//            HashMap<String, User> readUser = (HashMap<String, User>) inputStream.readObject();
+//            System.out.println( readUser.get("admin").getPassword());
+//
+//        } catch (ClassNotFoundException e) {
+//            e.printStackTrace();
+//
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+
+
 
 
 

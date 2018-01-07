@@ -1,13 +1,10 @@
 package mivs;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
+import java.io.*;
 import java.util.HashMap;
 import java.util.Scanner;
 
-public class Login {
+public class Login  {
 
     public boolean secondLogin(String userName, String password) {
 
@@ -15,13 +12,16 @@ public class Login {
         ObjectInputStream inputStream = null;
         HashMap<String, User> readUser = new HashMap<String, User>();
         try {
-            inputStream = new ObjectInputStream(new FileInputStream("users"));
+            inputStream = new ObjectInputStream(new FileInputStream("files/users"));
             readUser = (HashMap<String, User>) inputStream.readObject();
             readUser.get(userName).getPassword();
 
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
 
+        } catch (InvalidClassException e) {
+            System.out.println("error");
+            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         } catch (NullPointerException e) {
@@ -78,7 +78,7 @@ public class Login {
         System.out.println("MIVS");
 
 
-        File f = new File("users");
+        File f = new File("files/users");
         if (f.exists() && !f.isDirectory()) {
             secondLogin(loginUser(), loginPassword());
         } else {
