@@ -45,7 +45,7 @@ public class AddUser {
         ObjectInputStream inputStream = null;
         HashMap<String, User> readUser = new HashMap<String, User>();
         try {
-            inputStream = new ObjectInputStream(new FileInputStream("users"));
+            inputStream = new ObjectInputStream(new FileInputStream("files/users"));
             readUser = (HashMap<String, User>) inputStream.readObject();
 
         } catch (ClassNotFoundException e) {
@@ -62,7 +62,7 @@ public class AddUser {
         // irasymas i failaadmin
         ObjectOutputStream outputStream = null;
         try {
-            outputStream = new ObjectOutputStream(new FileOutputStream("users"));
+            outputStream = new ObjectOutputStream(new FileOutputStream("files/users"));
             outputStream.writeObject(readUser);
         } catch (IOException e) {
             e.printStackTrace();
@@ -85,7 +85,7 @@ public class AddUser {
 
         ObjectOutputStream outputStream = null;
         try {
-            outputStream = new ObjectOutputStream(new FileOutputStream("users"));
+            outputStream = new ObjectOutputStream(new FileOutputStream("files/users"));
             outputStream.writeObject(userHashMap);
         } catch (IOException e) {
             e.printStackTrace();

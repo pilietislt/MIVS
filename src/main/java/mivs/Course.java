@@ -82,7 +82,7 @@ public class Course implements Serializable {
         // irasymas i faila
         ObjectOutputStream outputStream = null;
         try {
-            outputStream = new ObjectOutputStream(new FileOutputStream("courses"));
+            outputStream = new ObjectOutputStream(new FileOutputStream("files/courses"));
             outputStream.writeObject(courses);
         } catch (IOException e) {
             e.printStackTrace();
@@ -96,7 +96,7 @@ public class Course implements Serializable {
         ObjectInputStream inputStream = null;
         HashMap<String, Course> readCourse = new HashMap<String, Course>();
         try {
-            inputStream = new ObjectInputStream(new FileInputStream("courses"));
+            inputStream = new ObjectInputStream(new FileInputStream("files/courses"));
             readCourse = (HashMap<String, Course>) inputStream.readObject();
         } catch (ClassNotFoundException e) {
             e.printStackTrace();

@@ -50,7 +50,7 @@ public class Admin {
         ObjectInputStream inputStream = null;
         HashMap<String, User> readUser = new HashMap<String, User>();
         try {
-            inputStream = new ObjectInputStream(new FileInputStream("users"));
+            inputStream = new ObjectInputStream(new FileInputStream("files/users"));
             readUser = (HashMap<String, User>) inputStream.readObject();
 
 
