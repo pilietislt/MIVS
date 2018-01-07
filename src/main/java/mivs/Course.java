@@ -1,15 +1,15 @@
 package mivs;
 
 import java.io.*;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import mivs.services.*;
 
 public class Course implements Serializable {
 
     private String code;
     private String tittle;
-    private String desciption;
+    private String description;
     private String startDate;
     private int credit;
     private String lecturerCode;
@@ -17,10 +17,10 @@ public class Course implements Serializable {
     public Course() {
     }
 
-    public Course(String code, String tittle, String desciption, String startDate, int credit, String lecturerCode) {
+    public Course(String code, String tittle, String description, String startDate, int credit, String lecturerCode) {
         this.code = code;
         this.tittle = tittle;
-        this.desciption = desciption;
+        this.description = description;
         this.startDate = startDate;
         this.credit = credit;
         this.lecturerCode = lecturerCode;
@@ -42,12 +42,12 @@ public class Course implements Serializable {
         this.tittle = tittle;
     }
 
-    public String getDesciption() {
-        return desciption;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDesciption(String desciption) {
-        this.desciption = desciption;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String getStartDate() {
@@ -79,38 +79,24 @@ public class Course implements Serializable {
         HashMap<String, Course> courses = new HashMap<String, Course>();
         courses.put("1", curs);
 
-        // irasymas i faila
-        ObjectOutputStream outputStream = null;
-        try {
-            outputStream = new ObjectOutputStream(new FileOutputStream("files/courses"));
-            outputStream.writeObject(courses);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-
+        IOService.writeObjectToFile(courses,"files/courses");
     }
 
     public void courseList() {
-        //nuskaitymas is failo
-        ObjectInputStream inputStream = null;
-        HashMap<String, Course> readCourse = new HashMap<String, Course>();
+
         try {
-            inputStream = new ObjectInputStream(new FileInputStream("files/courses"));
-            readCourse = (HashMap<String, Course>) inputStream.readObject();
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+            HashMap<String, Course> readCourse = (HashMap<String, Course>) IOService.readObjectFromFile("files/courses");
 
-        } catch (IOException e) {
+            System.out.printf("%-5s %-10s %-13s %-10s %-10s\n", "Code.", "Title", "StartDate", "Credit", "LecturerCode");
+            for (Map.Entry<String, Course> entry : readCourse.entrySet()) {
+                Course value = entry.getValue();
+                System.out.printf("%-5s %-10s %-13s %-10s %-10s\n", value.getCode(), value.getTittle(), value.getStartDate(), value.getCredit(), value.getLecturerCode());
+            }
+        } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
 
-        System.out.printf("%-5s %-10s %-13s %-10s %-10s\n", "Code.", "Title", "StartDate", "Credit", "LecturerCode");
-        for (Map.Entry<String, Course> entry : readCourse.entrySet()) {
 
-            Course value = entry.getValue();
-            System.out.printf("%-5s %-10s %-13s %-10s %-10s\n", value.getCode(), value.getTittle(), value.getStartDate(), value.getCredit(), value.getLecturerCode());
-        }
     }
 
 

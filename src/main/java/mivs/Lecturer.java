@@ -1,6 +1,6 @@
 package mivs;
 
-import java.util.Scanner;
+import mivs.services.*;
 
 public class Lecturer extends User {
     public Lecturer(String username, String password, Role role, String firstName, String secondName, String code) {
@@ -16,7 +16,7 @@ public class Lecturer extends User {
         System.out.println("3. Add Course");
         System.out.println("4. Course List");
         System.out.println("5. Exit");
-        Scanner scanner = new Scanner(System.in);
-        int chooice = scanner.nextInt();
+
+        int chooice = ScannerService.scanInt();
     }
 }

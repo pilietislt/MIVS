@@ -2,8 +2,7 @@ package mivs;
 
 import java.io.*;
 import java.util.HashMap;
-import java.util.Scanner;
-
+import mivs.services.ScannerService;
 public class Login  {
 
     public boolean secondLogin(String userName, String password) {
@@ -47,7 +46,7 @@ public class Login  {
                         readUser.get(userName).getSecondName(),
                         readUser.get(userName).getCode()).lecturerMeniu();
             }else {
-                new Admin().adminMeniu();
+                new Admin().adminMenu();
             }
 
 
@@ -67,7 +66,7 @@ public class Login  {
 
         if (userName.equalsIgnoreCase(myUserName) && password.equals(myPassword)) {
             new AddUser().addAdmin();
-            new Admin().adminMeniu();
+            new Admin().adminMenu();
             return true;
         }
         System.out.println("Wrong User Name or Password!!");
@@ -88,17 +87,13 @@ public class Login  {
     }
 
     public String loginUser() {
-        Scanner scanner = new Scanner(System.in);
         System.out.println("Enter UserName:");
-        String username = scanner.next();
-        return username;
+        return ScannerService.scanString();
     }
 
     public String loginPassword() {
-        Scanner scanner = new Scanner(System.in);
         System.out.println("Enter Password:");
-        String password = scanner.next();
-        return password;
+        return ScannerService.scanString();
     }
 
 

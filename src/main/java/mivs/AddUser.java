@@ -3,26 +3,25 @@ package mivs;
 import java.io.*;
 import java.util.HashMap;
 import java.util.Random;
-import java.util.Scanner;
+import mivs.services.*;
 
 public class AddUser {
     public void add() {
         Role roles = null;
-        Scanner scanner = new Scanner(System.in);
         System.out.println("Enter UserName:");
-        String userName = scanner.next();
+        String userName = ScannerService.scanString();
         userName = checkUnique(userName);
         System.out.println("Enter password");
-        String password = scanner.next();
+        String password = ScannerService.scanString();
         System.out.println("Enter First Name:");
-        String firstName = scanner.next();
+        String firstName = ScannerService.scanString();
         System.out.println("Enter SecondName");
-        String secondName = scanner.next();
+        String secondName = ScannerService.scanString();
         System.out.println("Choose role");
         for (Role role : Role.values()) {
             System.out.println(role.get() + ". " + role);
         }
-        int role = scanner.nextInt();
+        int role = ScannerService.scanInt();
         switch (role) {
             case 1:
                 roles = Role.ADMIN;
@@ -40,71 +39,43 @@ public class AddUser {
 
                 break;
         }
-        //System.out.println(genereteCode(firstName,secondName,roles));
 
-        ObjectInputStream inputStream = null;
-        HashMap<String, User> readUser = new HashMap<String, User>();
         try {
-            inputStream = new ObjectInputStream(new FileInputStream("files/users"));
-            readUser = (HashMap<String, User>) inputStream.readObject();
-
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-
-        } catch (IOException e) {
+            HashMap<String, User> readUser = (HashMap<String, User> ) IOService.readObjectFromFile("files/users");
+            User user = new User(userName, password, roles, firstName, secondName,genereteCode(firstName,secondName,roles));
+            readUser.put(userName, user);
+            IOService.writeObjectToFile(readUser,"files/users");
+        } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-
-
-        User user = new User(userName, password, roles, firstName, secondName,genereteCode(firstName,secondName,roles));
-        readUser.put(userName, user);
-
-        // irasymas i failaadmin
-        ObjectOutputStream outputStream = null;
-        try {
-            outputStream = new ObjectOutputStream(new FileOutputStream("files/users"));
-            outputStream.writeObject(readUser);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
     }
 
 
     public void addAdmin() {
-        Scanner scanner = new Scanner(System.in);
+
         System.out.println("Enter First Name:");
-        String firstName = scanner.next();
+        String firstName = ScannerService.scanString();
         System.out.println("Enter SecondName");
-        String secondName = scanner.next();
+        String secondName = ScannerService.scanString();
         User user = new User("admin", "admin", Role.ADMIN, firstName, secondName,genereteCode(firstName,secondName,Role.ADMIN));
         HashMap<String, User> userHashMap = new HashMap<String, User>();
         userHashMap.put("admin", user);
-
-        // irasymas i faila
-
-        ObjectOutputStream outputStream = null;
-        try {
-            outputStream = new ObjectOutputStream(new FileOutputStream("files/users"));
-            outputStream.writeObject(userHashMap);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-
+        IOService.writeObjectToFile(userHashMap,"files/users");
     }
 
     private String checkUnique(String userName) {
         try {
-            readFile().get(userName).getUsername();
+            HashMap<String, User> readUser = (HashMap<String, User> ) IOService.readObjectFromFile("files/users");
+            readUser.get(userName).getUsername();
         } catch (NullPointerException e) {
             return userName;
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
         }
 
         System.out.println("User alredy exist");
-        Scanner scanner = new Scanner(System.in);
         System.out.println("Enter UserName:");
-        userName = scanner.next();
+        userName = ScannerService.scanString();
         checkUnique(userName);
         return userName;
     }
@@ -121,24 +92,6 @@ public class AddUser {
 
 
 
-    private HashMap<String, User> readFile() {
-        ObjectInputStream inputStream = null;
-        HashMap<String, User> readUser = new HashMap<String, User>();
-        try {
-            inputStream = new ObjectInputStream(new FileInputStream("files/users"));
-            readUser = (HashMap<String, User>) inputStream.readObject();
-
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-
-        } catch (EOFException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return readUser;
-
-    }
 
 
 }
