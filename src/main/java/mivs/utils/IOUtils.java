@@ -1,9 +1,9 @@
-package mivs.services;
+package mivs.utils;
 
 
 import java.io.*;
 
-public class IOService {
+public class IOUtils {
 
 
     public static void writeObjectToFile(Object obj, String filename){
@@ -17,15 +17,14 @@ public class IOService {
     }
 
 
-
     public static Object readObjectFromFile(String fileName) throws FileNotFoundException {
         try (
                 ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(fileName))
         ) {
             return  inputStream.readObject();
-        }  catch (FileNotFoundException e) {
+        }catch (FileNotFoundException e) {
             throw new FileNotFoundException();
-        } catch (IOException | ClassNotFoundException e) {
+        }catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
             return null;
         }

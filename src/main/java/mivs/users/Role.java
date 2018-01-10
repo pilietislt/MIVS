@@ -1,4 +1,4 @@
-package mivs;
+package mivs.users;
 
 public enum Role {
 

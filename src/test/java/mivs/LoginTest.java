@@ -1,5 +1,6 @@
 package mivs;
 
+import mivs.back_end.Login;
 import org.junit.Test;
 
 import java.io.ByteArrayInputStream;
@@ -14,7 +15,7 @@ public class LoginTest {
         Login inputOutput= new Login();
         String input = "admin";
         InputStream in = new ByteArrayInputStream(input.getBytes());
-        System.setIn(in);
+      //  System.setIn(in);
         assertEquals("admin", inputOutput.loginUser());
     }
 

@@ -1,8 +1,12 @@
-package mivs;
+package mivs.back_end;
 
 import java.io.*;
 import java.util.HashMap;
-import mivs.services.ScannerService;
+
+import mivs.users.User;
+import mivs.users.Role;
+import mivs.utils.ScannerUtils;
+import mivs.UI.*;
 public class Login  {
 
     public boolean secondLogin(String userName, String password) {
@@ -32,21 +36,14 @@ public class Login  {
         if (readUser.get(userName).getPassword().equals(password)) {
             System.out.println("OK");
             if (readUser.get(userName).getRole().equals(Role.STUDENT)) {
-                new Student(readUser.get(userName).getUsername(),
-                        readUser.get(userName).getPassword(),
-                        readUser.get(userName).getRole(),
-                        readUser.get(userName).getFirstName(),
-                        readUser.get(userName).getSecondName(),
-                        readUser.get(userName).getCode()).studentMeniu();
+                new StudentUI().Menu(userName);
+
             }else if (readUser.get(userName).getRole().equals(Role.LECTURER)) {
-                new Lecturer(readUser.get(userName).getUsername(),
-                        readUser.get(userName).getPassword(),
-                        readUser.get(userName).getRole(),
-                        readUser.get(userName).getFirstName(),
-                        readUser.get(userName).getSecondName(),
-                        readUser.get(userName).getCode()).lecturerMeniu();
+                new LecturerUI().Menu(userName);
+
             }else {
-                new Admin().adminMenu();
+                new AdminUI().Menu(userName);
+
             }
 
 
@@ -65,8 +62,8 @@ public class Login  {
         final String myPassword = "admin";
 
         if (userName.equalsIgnoreCase(myUserName) && password.equals(myPassword)) {
-            new AddUser().addAdmin();
-            new Admin().adminMenu();
+            new Services().addFirstAdmin();
+            new AdminUI().Menu(userName);
             return true;
         }
         System.out.println("Wrong User Name or Password!!");
@@ -88,12 +85,12 @@ public class Login  {
 
     public String loginUser() {
         System.out.println("Enter UserName:");
-        return ScannerService.scanString();
+        return ScannerUtils.scanString();
     }
 
     public String loginPassword() {
         System.out.println("Enter Password:");
-        return ScannerService.scanString();
+        return ScannerUtils.scanString();
     }
 
 

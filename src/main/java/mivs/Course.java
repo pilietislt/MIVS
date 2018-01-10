@@ -3,7 +3,7 @@ package mivs;
 import java.io.*;
 import java.util.HashMap;
 import java.util.Map;
-import mivs.services.*;
+import mivs.utils.*;
 
 public class Course implements Serializable {
 
@@ -79,13 +79,13 @@ public class Course implements Serializable {
         HashMap<String, Course> courses = new HashMap<String, Course>();
         courses.put("1", curs);
 
-        IOService.writeObjectToFile(courses,"files/courses");
+        IOUtils.writeObjectToFile(courses,"files/courses");
     }
 
     public void courseList() {
 
         try {
-            HashMap<String, Course> readCourse = (HashMap<String, Course>) IOService.readObjectFromFile("files/courses");
+            HashMap<String, Course> readCourse = (HashMap<String, Course>) IOUtils.readObjectFromFile("files/courses");
 
             System.out.printf("%-5s %-10s %-13s %-10s %-10s\n", "Code.", "Title", "StartDate", "Credit", "LecturerCode");
             for (Map.Entry<String, Course> entry : readCourse.entrySet()) {

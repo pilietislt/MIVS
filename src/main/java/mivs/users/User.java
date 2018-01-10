@@ -1,23 +1,22 @@
-package mivs;
+package mivs.users;
 
 import java.io.Serializable;
 
-public class User implements Serializable{
+public abstract class User implements Serializable{
 
     private String username;
     private String password;
     private Role role;
     private String firstName;
     private String secondName;
-    private String code;
 
-    public User(String username, String password, Role role, String firstName, String secondName, String code) {
+
+    public User(String username, String password, Role role, String firstName, String secondName) {
         this.username = username;
         this.password = password;
         this.role = role;
         this.firstName = firstName;
         this.secondName = secondName;
-        this.code = code;
     }
 
 
@@ -60,10 +59,6 @@ public class User implements Serializable{
     public void setSecondName(String secondName) {
         this.secondName = secondName;
     }
-    public String getCode(){
-        return code;
-    }
-    public void setCode (String code) {
-        this.code = code;
-    }
+
+
 }
