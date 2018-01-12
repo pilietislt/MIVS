@@ -1,7 +1,7 @@
 package mivs.UI;
 
 import mivs.back_end.Services;
-import mivs.Course;
+import mivs.courses.Course;
 import mivs.users.Admin;
 import mivs.users.User;
 import mivs.utils.IOUtils;
@@ -42,11 +42,11 @@ public class AdminUI {
                 Menu(username);
                 break;
             case 3:
-                new Course().addCourse();
+                new Services().addCourse();
                 Menu(username);
                 break;
             case 4:
-                new Course().courseList();
+                new Services().courseList();
                 Menu(username);
                 break;
             default:
@@ -71,5 +71,10 @@ public class AdminUI {
             e.printStackTrace();
         }
 
+
     }
+
+
+
+
 }

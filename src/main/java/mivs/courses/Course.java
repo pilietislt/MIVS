@@ -1,6 +1,7 @@
-package mivs;
+package mivs.courses;
 
 import java.io.*;
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 import mivs.utils.*;
@@ -10,14 +11,14 @@ public class Course implements Serializable {
     private String code;
     private String tittle;
     private String description;
-    private String startDate;
+    private LocalDate startDate;
     private int credit;
     private String lecturerCode;
 
     public Course() {
     }
 
-    public Course(String code, String tittle, String description, String startDate, int credit, String lecturerCode) {
+    public Course(String code, String tittle, String description, LocalDate startDate, int credit, String lecturerCode) {
         this.code = code;
         this.tittle = tittle;
         this.description = description;
@@ -50,11 +51,11 @@ public class Course implements Serializable {
         this.description = description;
     }
 
-    public String getStartDate() {
+    public LocalDate getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(String startDate) {
+    public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
     }
 
@@ -74,30 +75,8 @@ public class Course implements Serializable {
         this.lecturerCode = lecturerCode;
     }
 
-    public void addCourse() {
-        Course curs = new Course("s0", "ss", "di", "2018 01 01", 5, "153");
-        HashMap<String, Course> courses = new HashMap<String, Course>();
-        courses.put("1", curs);
-
-        IOUtils.writeObjectToFile(courses,"files/courses");
-    }
-
-    public void courseList() {
-
-        try {
-            HashMap<String, Course> readCourse = (HashMap<String, Course>) IOUtils.readObjectFromFile("files/courses");
-
-            System.out.printf("%-5s %-10s %-13s %-10s %-10s\n", "Code.", "Title", "StartDate", "Credit", "LecturerCode");
-            for (Map.Entry<String, Course> entry : readCourse.entrySet()) {
-                Course value = entry.getValue();
-                System.out.printf("%-5s %-10s %-13s %-10s %-10s\n", value.getCode(), value.getTittle(), value.getStartDate(), value.getCredit(), value.getLecturerCode());
-            }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
 
 
-    }
 
 
 }

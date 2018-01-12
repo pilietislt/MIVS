@@ -3,17 +3,17 @@ package mivs.users;
 public enum Gender {
 
 
-        MALE ("Male"),
-        FEMALE ("Female");
+        MALE (2),
+        FEMALE (1);
 
 
-        private final String role;
+        private final int gender;
 
-        Gender(String s) {
-            this.role = s;
+        Gender(int s) {
+            this.gender = s;
         }
-        public String get(){
-            return role;
+        public int get(){
+            return gender;
         }
 
 
