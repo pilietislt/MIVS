@@ -173,7 +173,6 @@ public class Services {
 
     }
 
-
     public ArrayList< String> getAllLecturer(){
         ArrayList<String> codes = new ArrayList<>();
         HashMap<String, Lecturer> readLecturer = null;
