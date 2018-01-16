@@ -15,13 +15,10 @@ import mivs.utils.*;
 public class Services {
 
 
-
     public void addFirstAdmin() {
 
-        System.out.println("Enter First Name:");
-        String firstName = ScannerUtils.scanString();
-        System.out.println("Enter SecondName");
-        String secondName = ScannerUtils.scanString();
+        String firstName = ScannerUtils.scanString("Enter First Name:");
+        String secondName = ScannerUtils.scanString("Enter SecondName");
         User user = new Admin("admin", "admin", Role.ADMIN, firstName, secondName);
         HashMap<String, User> userHashMap = new HashMap<String, User>();
         userHashMap.put("admin", user);
@@ -38,9 +35,7 @@ public class Services {
             e.printStackTrace();
         }
 
-        System.out.println("User alredy exist");
-        System.out.println("Enter UserName:");
-        userName = ScannerUtils.scanString();
+        userName = ScannerUtils.scanString("User alredy exist enter new UserName:");
         checkUnique(userName);
         return userName;
     }
@@ -53,15 +48,15 @@ public class Services {
         Integer i = role.get();
         Character a = firstName.toUpperCase().charAt(0);
         Character b = secondName.toUpperCase().charAt(0);
-        String code = i.toString() + a.toString() + b.toString() + rand1.toString()+ rand2.toString()+ rand3.toString();
+        String code = i.toString() + a.toString() + b.toString() + rand1.toString() + rand2.toString() + rand3.toString();
         return code;
     }
 
-    public ArrayList< String> getAllLecturer(){
+    public ArrayList<String> getAllLecturer() {
         ArrayList<String> codes = new ArrayList<>();
         HashMap<String, Lecturer> readLecturer = null;
         try {
-            readLecturer = (HashMap<String, Lecturer>)IOUtils.readObjectFromFile("files/users");
+            readLecturer = (HashMap<String, Lecturer>) IOUtils.readObjectFromFile("files/users");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -70,17 +65,17 @@ public class Services {
             //String key = entry.getKey();
             User value = entry.getValue();
 
-            if(value.getRole().equals(Role.LECTURER)){
-              //  System.out.println(readLecturer.get(value.getUsername()).getLecturerCode());
-                codes.add(readLecturer.get(value.getUsername()).getFirstName() +" "+
-                        readLecturer.get(value.getUsername()).getSecondName() +","+
+            if (value.getRole().equals(Role.LECTURER)) {
+                //  System.out.println(readLecturer.get(value.getUsername()).getLecturerCode());
+                codes.add(readLecturer.get(value.getUsername()).getFirstName() + " " +
+                        readLecturer.get(value.getUsername()).getSecondName() + "," +
                         readLecturer.get(value.getUsername()).getLecturerCode());
             }
         }
         return codes;
     }
 
-    public LocalDate datePicker(String messege){
+    public LocalDate datePicker(String messege) {
         System.out.println(messege);
 
 
@@ -96,7 +91,7 @@ public class Services {
         int monthNow = LocalDate.now().getMonthValue();
         int dayNow = LocalDate.now().getDayOfMonth();
 
-        return LocalDate.of(year,month,day);
+        return LocalDate.of(year, month, day);
     }
 
     public void courseList() {
@@ -116,7 +111,6 @@ public class Services {
 
 
     }
-
 
 
 }

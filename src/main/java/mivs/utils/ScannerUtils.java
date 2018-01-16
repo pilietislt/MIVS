@@ -7,9 +7,6 @@ public class ScannerUtils {
 
     private static final Scanner scanner = new Scanner(System.in);
 
-    public static String scanString() {
-        return scanner.next();
-    }
 
     public static String scanString(String message) {
         System.out.println(message);

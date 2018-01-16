@@ -7,7 +7,8 @@ import mivs.users.User;
 import mivs.users.Role;
 import mivs.utils.ScannerUtils;
 import mivs.UI.*;
-public class Login  {
+
+public class Login {
 
     public boolean secondLogin(String userName, String password) {
 
@@ -38,10 +39,10 @@ public class Login  {
             if (readUser.get(userName).getRole().equals(Role.STUDENT)) {
                 new StudentUI().Menu(userName);
 
-            }else if (readUser.get(userName).getRole().equals(Role.LECTURER)) {
+            } else if (readUser.get(userName).getRole().equals(Role.LECTURER)) {
                 new LecturerUI().Menu(userName);
 
-            }else {
+            } else {
                 new AdminUI().Menu(userName);
 
             }
@@ -84,13 +85,11 @@ public class Login  {
     }
 
     public String loginUser() {
-        System.out.println("Enter UserName:");
-        return ScannerUtils.scanString();
+        return ScannerUtils.scanString("Enter UserName:");
     }
 
     public String loginPassword() {
-        System.out.println("Enter Password:");
-        return ScannerUtils.scanString();
+        return ScannerUtils.scanString("Enter Password:");
     }
 
 

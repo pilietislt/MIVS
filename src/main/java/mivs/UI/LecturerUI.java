@@ -20,7 +20,8 @@ public class LecturerUI {
         System.out.println("1. View info");
         System.out.println("2. Edit info");
         System.out.println("3. View Your Own Courses");
-        System.out.println("4. Exit");
+        System.out.println("4. View Your Own Courses");
+        System.out.println("5. Exit");
 
 
         switch (ScannerUtils.scanInt()) {
@@ -34,6 +35,10 @@ public class LecturerUI {
                 break;
             case 3:
                 new LecturerServices().viewYourOwnCourses(username);
+                Menu(username);
+                break;
+            case 4:
+
                 Menu(username);
                 break;
             default:
