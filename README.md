@@ -22,14 +22,14 @@ FUNKCIONALUMO REIKALAVIMAI:
 
 >  įvedę:
 >  
-> >  firstName, secondName, password, userName
+> >  `firstName, secondName, password, userName`
 >   
 >   pasirinkę:
->  >   rolę iš admin, lecturer, student
+>  >   `rolę iš admin, lecturer, student`
 
  - Vartotojai turintys rolę lecturer arba student gali turėti ir keisti,
    pridėti informaciją apie save
->  userName
+>  `userName
 >  firstName
 >     lastName
 >     personalNumber
@@ -38,7 +38,7 @@ FUNKCIONALUMO REIKALAVIMAI:
 >     mobileNumber
 >     gender
 >     address
->     runningCourses (kursai, kuriuos veda)
+>     runningCourses (kursai, kuriuos veda)`
 
     Papildyta
     studentCode - negali būti keičiamasturi, turi būti unikalus ir sukuriamas naujo vartotojo kūrimo metu.
