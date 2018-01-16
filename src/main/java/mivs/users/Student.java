@@ -11,7 +11,9 @@ public class Student extends User{
     private int mobileNumber;
     private Gender gender;
     private String address;
-    private ArrayList<String> runningCourses;
+    private ArrayList<String> runningCourses = new ArrayList<String>();
+
+
 
     public Student(String username, String password, Role role, String firstName, String secondName, String studentCode) {
         super(username, password, role, firstName, secondName);
