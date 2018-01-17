@@ -20,7 +20,7 @@ public class LecturerUI {
         System.out.println("1. View info");
         System.out.println("2. Edit info");
         System.out.println("3. View Your Own Courses");
-        System.out.println("4. View Your Own Courses");
+        System.out.println("4. View all students of course");
         System.out.println("5. Exit");
 
 
@@ -38,6 +38,7 @@ public class LecturerUI {
                 Menu(username);
                 break;
             case 4:
+                new LecturerServices().viewAllStudentsOfOneCourse(username);
 
                 Menu(username);
                 break;

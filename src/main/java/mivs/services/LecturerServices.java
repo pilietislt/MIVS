@@ -3,9 +3,15 @@ package mivs.services;
 import mivs.back_end.Services;
 import mivs.courses.Course;
 import mivs.users.Lecturer;
+import mivs.users.Role;
+import mivs.users.Student;
+import mivs.users.User;
 import mivs.utils.*;
 
 import java.io.FileNotFoundException;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -235,7 +241,9 @@ public class LecturerServices {
 
     }
 
-    public void viewYourOwnCourses(String username) {
+    public ArrayList<String> viewYourOwnCourses(String username) {
+        int i = 0;
+        ArrayList<String> code = new ArrayList<>();
 
         HashMap<String, Lecturer> readUser = null;
         HashMap<String, Course> readCourse = null;
@@ -248,18 +256,52 @@ public class LecturerServices {
             System.out.println("No Courses Found");
 
         }
-        System.out.printf("%-7s %-10s %-13s %-10s %-10s\n", "Code", "Title", "StartDate", "Credit", "LecturerCode");
+
+        System.out.printf("%-4s %-7s %-10s %-13s %-10s %-10s\n", "Nr.", "Code", "Title", "StartDate", "Credit", "LecturerCode");
 
         for (Map.Entry<String, Course> entry : readCourse.entrySet()) {
             //String key = entry.getKey();
             Course value = entry.getValue();
 
             if (value.getLecturerCode().equals(readUser.get(username).getLecturerCode())) {
-
-                System.out.printf("%-7s %-10s %-13s %-10s %-10s\n", value.getCode(), value.getTittle(), value.getStartDate(), value.getCredit(), value.getLecturerCode());
+                i += 1;
+                code.add(value.getCode());
+                System.out.printf("%-4s %-7s %-10s %-13s %-10s %-10s\n", i + ".", value.getCode(), value.getTittle(), value.getStartDate(), value.getCredit(), value.getLecturerCode());
             }
+        }
+
+        return code;
+
+
+    }
+
+    public void viewAllStudentsOfOneCourse(String username) {
+
+        ArrayList<String> courses = viewYourOwnCourses(username);
+
+        String code = courses.get(ScannerUtils.scanInt("Select course", 1, courses.size()) - 1);
+       // System.out.println(code);
+        HashMap<String,User> readUsers = null;
+
+        try {
+            readUsers = (HashMap<String,User>)IOUtils.readObjectFromFile("files/users");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        for (Map.Entry<String, User> entry : readUsers.entrySet()) {
+            User value = entry.getValue();
+            if (value.getRole()== Role.STUDENT) {
+                Student value1 =(Student) value;
+                if(value1.getRunningCourses().contains(code)){
+                    System.out.println(value.getFirstName()+" "+value.getSecondName());
+                }
+
+            }
+
         }
 
 
     }
+
 }
