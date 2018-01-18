@@ -27,31 +27,31 @@ public class StudentUI {
         System.out.println("5. View Your selected courses");
         System.out.println("6. Exit");
 
-        switch (ScannerUtils.scanInt()) {
-            case 1:
-                new StudentServices().view(username);
-                Menu(username);
-                break;
-            case 2:
-                new StudentServices().edit(username);
-                Menu(username);
-                break;
-            case 3:
-                new Services().courseList();
-                Menu(username);
-                break;
-            case 4:
-                new StudentServices().selectCourses(username);
-                Menu(username);
-                break;
-            case 5:
-                new StudentServices().viewAdded(username);
-                Menu(username);
-                break;
-            default:
-                break;
-
-        }
+//        switch (ScannerUtils.scanInt()) {
+//            case 1:
+//                new StudentServices().view(username);
+//                Menu(username);
+//                break;
+//            case 2:
+//                new StudentServices().edit(username);
+//                Menu(username);
+//                break;
+//            case 3:
+//                new Services().courseList();
+//                Menu(username);
+//                break;
+//            case 4:
+//                new StudentServices().selectCourses(username);
+//                Menu(username);
+//                break;
+//            case 5:
+//                new StudentServices().viewAdded(username);
+//                Menu(username);
+//                break;
+//            default:
+//                break;
+//
+//        }
     }
 
 }

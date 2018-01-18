@@ -24,26 +24,26 @@ public class AdminUI {
         System.out.println("4. Course List");
         System.out.println("5. Logout");
 
-        switch (ScannerUtils.scanInt()) {
-            case 1:
-                new AdminServices().addUser();
-                Menu(username);
-                break;
-            case 2:
-                new UserServices().printUserList();
-                Menu(username);
-                break;
-            case 3:
-                new AdminServices().addCourse();
-                Menu(username);
-                break;
-            case 4:
-                new Services().courseList();
-                Menu(username);
-                break;
-            default:
-                break;
-        }
+//        switch (ScannerUtils.scanInt()) {
+//            case 1:
+//                new AdminServices().addUser();
+//                Menu(username);
+//                break;
+//            case 2:
+//                new UserServices().printUserList();
+//                Menu(username);
+//                break;
+//            case 3:
+//                new AdminServices().addCourse();
+//                Menu(username);
+//                break;
+//            case 4:
+//                new Services().courseList();
+//                Menu(username);
+//                break;
+//            default:
+//                break;
+//        }
     }
 
 

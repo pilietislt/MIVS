@@ -10,7 +10,6 @@ import mivs.utils.*;
 
 import java.io.FileNotFoundException;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -280,8 +279,7 @@ public class LecturerServices {
         ArrayList<String> courses = viewYourOwnCourses(username);
 
         String code = courses.get(ScannerUtils.scanInt("Select course", 1, courses.size()) - 1);
-       // System.out.println(code);
-        HashMap<String,User> readUsers = null;
+         HashMap<String,User> readUsers = null;
 
         try {
             readUsers = (HashMap<String,User>)IOUtils.readObjectFromFile("files/users");

@@ -24,28 +24,28 @@ public class LecturerUI {
         System.out.println("5. Exit");
 
 
-        switch (ScannerUtils.scanInt()) {
-            case 1:
-                new LecturerServices().view(username);
-                Menu(username);
-                break;
-            case 2:
-                new LecturerServices().edit(username);
-                Menu(username);
-                break;
-            case 3:
-                new LecturerServices().viewYourOwnCourses(username);
-                Menu(username);
-                break;
-            case 4:
-                new LecturerServices().viewAllStudentsOfOneCourse(username);
-
-                Menu(username);
-                break;
-            default:
-                break;
-
-        }
+//        switch (ScannerUtils.scanInt()) {
+//            case 1:
+//                new LecturerServices().view(username);
+//                Menu(username);
+//                break;
+//            case 2:
+//                new LecturerServices().edit(username);
+//                Menu(username);
+//                break;
+//            case 3:
+//                new LecturerServices().viewYourOwnCourses(username);
+//                Menu(username);
+//                break;
+//            case 4:
+//                new LecturerServices().viewAllStudentsOfOneCourse(username);
+//
+//                Menu(username);
+//                break;
+//            default:
+//                break;
+//
+//        }
     }
 
 
