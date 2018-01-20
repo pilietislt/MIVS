@@ -45,6 +45,27 @@ public class AdminServices {
 
     }
 
+    public void addCourseFX(String title, String description ,LocalDate date, int credit, String lcode) {
+
+
+        String lecturerCode = codeSelectionFX(lcode);
+        String code = new Services().genereteCode(title, description, Role.LECTURER);
+        Course course = new Course(code, title, description, date, credit, lecturerCode);
+
+        try {
+            HashMap<String, Course> readCourse = (HashMap<String, Course>) IOUtils.readObjectFromFile("files/courses");
+            readCourse.put(code, course);
+            IOUtils.writeObjectToFile(readCourse, "files/courses");
+        } catch (FileNotFoundException e) {
+            HashMap<String, Course> newCourse = new HashMap<String, Course>();
+            newCourse.put(code, course);
+            IOUtils.writeObjectToFile(newCourse, "files/courses");
+
+        }
+
+
+    }
+
     public String codeSelection() {
 
         int i = 0;
@@ -57,6 +78,11 @@ public class AdminServices {
         int choice = ScannerUtils.scanInt("Select Lectore", 0, allLecturerCodes.size());
 
         return allLecturerCodes.get(choice - 1).substring(allLecturerCodes.get(choice - 1).length() - 6);
+
+    }
+    public String codeSelectionFX(String code) {
+
+        return code.substring(code.length() - 6);
 
     }
 

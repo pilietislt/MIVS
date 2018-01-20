@@ -2,7 +2,7 @@ package mivs.users;
 
 import java.io.Serializable;
 
-public abstract class User implements Serializable{
+public class User implements Serializable{
 
     private String username;
     private String password;

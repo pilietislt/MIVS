@@ -2,29 +2,63 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane fx:id="mainPane" maxHeight="400.0" maxWidth="600.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mivs.application.controllers.AdminController">
+<Pane fx:id="mainPane" maxHeight="400.0" maxWidth="600.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" scaleShape="false" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mivs.application.controllers.AdminController">
    <children>
-      <Pane fx:id="viewUsersPane" prefHeight="400.0" prefWidth="600.0" visible="false">
+      <Pane fx:id="viewCoursesPane" prefHeight="400.0" prefWidth="600.0">
          <children>
-            <TableView fx:id="tableUsers" layoutX="29.0" layoutY="65.0" prefHeight="286.0" prefWidth="530.0">
+            <TableView fx:id="coursesTable" layoutY="27.0" prefHeight="373.0" prefWidth="600.0">
               <columns>
-                <TableColumn fx:id="columnFirstname" prefWidth="75.0" text="Firstname" />
-                <TableColumn fx:id="columnSecondname" prefWidth="75.0" text="Second name" />
+                <TableColumn fx:id="codeCol" prefWidth="48.79998779296875" text="Code" />
+                <TableColumn fx:id="titleCol" prefWidth="109.5999755859375" text="Title" />
+                  <TableColumn fx:id="startDateCol" prefWidth="68.0" text="Start date" />
+                  <TableColumn fx:id="creditsCol" prefWidth="47.20001220703125" text="Credit" />
+                  <TableColumn fx:id="lcodeCol" prefWidth="103.199951171875" text="Lecturer code" />
+                  <TableColumn fx:id="descriptionCol" prefWidth="221.59991455078125" text="Description" />
               </columns>
             </TableView>
          </children>
       </Pane>
-      <Pane fx:id="startPane" prefHeight="400.0" prefWidth="600.0">
+      <Pane fx:id="viewUsersPane" prefHeight="400.0" prefWidth="600.0" visible="false">
+         <children>
+            <TableView fx:id="tableUsers" layoutX="29.0" layoutY="65.0" prefHeight="286.0" prefWidth="530.0">
+               <columns>
+                  <TableColumn fx:id="usernameCol" prefWidth="92.80001831054688" text="Username" />
+                  <TableColumn fx:id="firstNameCol" prefWidth="175.199951171875" text="First Name" />
+                  <TableColumn fx:id="secondNameCol" prefWidth="158.4000244140625" text="Second Name" />
+                  <TableColumn fx:id="roleCol" minWidth="0.0" prefWidth="100.79998779296875" text="Role" />
+               </columns>
+            </TableView>
+         </children>
+      </Pane>
+      <Pane fx:id="addCoursePane" prefHeight="400.0" prefWidth="600.0" visible="false">
+         <children>
+            <DatePicker fx:id="datePicker" layoutX="37.0" layoutY="260.0" />
+            <Button layoutX="493.0" layoutY="347.0" mnemonicParsing="false" onAction="#addCourse" text="Add Course" textAlignment="CENTER" />
+            <TextField fx:id="title" layoutX="37.0" layoutY="71.0" prefHeight="25.0" prefWidth="174.0" />
+            <TextArea fx:id="description" layoutX="37.0" layoutY="123.0" prefHeight="114.0" prefWidth="174.0" />
+            <ListView fx:id="lecturerList" layoutX="274.0" layoutY="71.0" prefHeight="232.0" prefWidth="306.0" />
+            <Label layoutX="37.0" layoutY="54.0" text="Title" />
+            <Label layoutX="37.0" layoutY="106.0" text="Description" />
+            <Label layoutX="34.0" layoutY="243.0" text="Start date" />
+            <Label layoutX="34.0" layoutY="303.0" text="Credits" />
+            <Label layoutX="274.0" layoutY="54.0" text="Lecturer" />
+            <TextField fx:id="credits" layoutX="37.0" layoutY="320.0" />
+         </children>
+      </Pane>
+      <Pane fx:id="startPane" prefHeight="400.0" prefWidth="600.0" visible="false">
          <children>
             <Label fx:id="firstLable" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" text="Label" textAlignment="CENTER">
                <font>
@@ -38,8 +72,8 @@
             <Button alignment="CENTER" layoutX="505.0" layoutY="349.0" mnemonicParsing="false" onAction="#addUser" text="Add User" textAlignment="CENTER" />
             <TextField fx:id="username" layoutX="125.0" layoutY="87.0" />
             <TextField fx:id="password" layoutX="125.0" layoutY="121.0" />
-            <TextField fx:id="firstname" layoutX="125.0" layoutY="156.0" />
-            <TextField fx:id="secondname" layoutX="125.0" layoutY="187.0" />
+            <TextField fx:id="tFirstName" layoutX="125.0" layoutY="156.0" />
+            <TextField fx:id="tSecondName" layoutX="125.0" layoutY="187.0" />
             <ChoiceBox fx:id="role" layoutX="124.0" layoutY="231.0" prefWidth="150.0" />
             <Label layoutX="41.0" layoutY="91.0" text="Username" />
             <Label layoutX="41.0" layoutY="125.0" text="Password" />
@@ -59,11 +93,13 @@
           <Menu mnemonicParsing="false" text="Edit">
             <items>
               <MenuItem mnemonicParsing="false" onAction="#addUserPane" text="Add User" />
+                  <MenuItem mnemonicParsing="false" onAction="#addCoursePane" text="Add Course" />
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="View">
             <items>
               <MenuItem mnemonicParsing="false" onAction="#viewUsersPane" text="View Users" />
+                  <MenuItem mnemonicParsing="false" onAction="#viewCoursesPane" text="View Courses" />
             </items>
           </Menu>
         </menus>
