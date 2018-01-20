@@ -1,21 +1,53 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mivs.application.controllers.AdminController">
+<Pane fx:id="mainPane" maxHeight="400.0" maxWidth="600.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mivs.application.controllers.AdminController">
    <children>
-      <Label fx:id="firstLable" alignment="CENTER" layoutY="2.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" text="Label" textAlignment="CENTER">
-         <font>
-            <Font size="35.0" />
-         </font>
-      </Label>
-      <Button layoutX="274.0" layoutY="306.0" mnemonicParsing="false" onAction="#close" text="Button" />
+      <Pane fx:id="viewUsersPane" prefHeight="400.0" prefWidth="600.0" visible="false">
+         <children>
+            <TableView fx:id="tableUsers" layoutX="29.0" layoutY="65.0" prefHeight="286.0" prefWidth="530.0">
+              <columns>
+                <TableColumn fx:id="columnFirstname" prefWidth="75.0" text="Firstname" />
+                <TableColumn fx:id="columnSecondname" prefWidth="75.0" text="Second name" />
+              </columns>
+            </TableView>
+         </children>
+      </Pane>
+      <Pane fx:id="startPane" prefHeight="400.0" prefWidth="600.0">
+         <children>
+            <Label fx:id="firstLable" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" text="Label" textAlignment="CENTER">
+               <font>
+                  <Font size="35.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+      <Pane fx:id="addUserPane" prefHeight="400.0" prefWidth="600.0" visible="false">
+         <children>
+            <Button alignment="CENTER" layoutX="505.0" layoutY="349.0" mnemonicParsing="false" onAction="#addUser" text="Add User" textAlignment="CENTER" />
+            <TextField fx:id="username" layoutX="125.0" layoutY="87.0" />
+            <TextField fx:id="password" layoutX="125.0" layoutY="121.0" />
+            <TextField fx:id="firstname" layoutX="125.0" layoutY="156.0" />
+            <TextField fx:id="secondname" layoutX="125.0" layoutY="187.0" />
+            <ChoiceBox fx:id="role" layoutX="124.0" layoutY="231.0" prefWidth="150.0" />
+            <Label layoutX="41.0" layoutY="91.0" text="Username" />
+            <Label layoutX="41.0" layoutY="125.0" text="Password" />
+            <Label layoutX="41.0" layoutY="160.0" text="First name" />
+            <Label layoutX="41.0" layoutY="191.0" text="Second name" />
+            <Label layoutX="41.0" layoutY="235.0" text="Role" />
+         </children>
+      </Pane>
       <MenuBar layoutY="2.0" prefHeight="26.0" prefWidth="600.0">
         <menus>
           <Menu mnemonicParsing="false" text="File">
@@ -26,12 +58,12 @@
           </Menu>
           <Menu mnemonicParsing="false" text="Edit">
             <items>
-              <MenuItem mnemonicParsing="false" text="Delete" />
+              <MenuItem mnemonicParsing="false" onAction="#addUserPane" text="Add User" />
             </items>
           </Menu>
-          <Menu mnemonicParsing="false" text="Help">
+          <Menu mnemonicParsing="false" text="View">
             <items>
-              <MenuItem mnemonicParsing="false" text="About" />
+              <MenuItem mnemonicParsing="false" onAction="#viewUsersPane" text="View Users" />
             </items>
           </Menu>
         </menus>

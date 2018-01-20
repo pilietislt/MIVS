@@ -40,6 +40,24 @@ public class Services {
         return userName;
     }
 
+
+    public Boolean checkUniqueBoolen (String userName) {
+        try {
+            HashMap<String, User> readUser = (HashMap<String, User>) IOUtils.readObjectFromFile("files/users");
+            readUser.get(userName).getUsername();
+        } catch (NullPointerException e) {
+            return true;
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+       // userName = ScannerUtils.scanString("User alredy exist enter new UserName:");
+       // checkUnique(userName);
+        return false;
+    }
+
+
+
     public String genereteCode(String firstName, String secondName, Role role) {
         Random generator = new Random();
         Integer rand1 = generator.nextInt(9);
@@ -79,10 +97,10 @@ public class Services {
         System.out.println(messege);
 
 
-        System.out.println("Enter Year");
-        int year = ScannerUtils.scanInt();
+        //System.out.println("Enter Year");
+        int year = ScannerUtils.scanInt("Enter Year",2017,2019);
         System.out.println("Enter Month");
-        int month = ScannerUtils.scanInt();
+        int month = ScannerUtils.scanInt("Enter Month");
         System.out.println("Enter Day");
         int day = ScannerUtils.scanInt();
 

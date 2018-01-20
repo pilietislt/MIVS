@@ -31,7 +31,7 @@ public class LoginController {
 
     public void login () throws IOException {
 
-        if( new Login().secondLogin(username.getCharacters().toString(),password.getCharacters().toString())){
+        if( new Login().secondLogin(username.getText(),password.getText())){
 
             HashMap<String, User> readUser = null;
             try {
@@ -40,7 +40,7 @@ public class LoginController {
                 e.printStackTrace();
             }
 
-            Role role = readUser.get(username.getCharacters().toString()).getRole();
+            Role role = readUser.get(username.getText()).getRole();
 
             switch (role){
                 case STUDENT:
@@ -82,10 +82,9 @@ public class LoginController {
 
 
         AdminController adminController = fxmlLoader.getController();
-        adminController.init(username.getCharacters().toString());
+        adminController.init(username.getText());
 
         stage.show();
-
         Stage currentScene = (Stage) login.getScene().getWindow();
         currentScene.close();
 

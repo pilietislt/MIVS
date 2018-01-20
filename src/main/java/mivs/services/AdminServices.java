@@ -85,7 +85,7 @@ public class AdminServices {
         }
     }
 
-    private void addStudent(String userName, String password, String firstName, String secondName) {
+    public void addStudent(String userName, String password, String firstName, String secondName) {
         try {
             HashMap<String, User> readUser = (HashMap<String, User>) IOUtils.readObjectFromFile("files/users");
             User user = new Student(userName, password, Role.STUDENT, firstName, secondName, new Services().genereteCode(firstName, secondName, Role.STUDENT));
@@ -96,7 +96,7 @@ public class AdminServices {
         }
     }
 
-    private void addLecturer(String userName, String password, String firstName, String secondName) {
+    public void addLecturer(String userName, String password, String firstName, String secondName) {
         try {
             HashMap<String, User> readUser = (HashMap<String, User>) IOUtils.readObjectFromFile("files/users");
             User user = new Lecturer(userName, password, Role.LECTURER, firstName, secondName, new Services().genereteCode(firstName, secondName, Role.LECTURER));
@@ -107,7 +107,7 @@ public class AdminServices {
         }
     }
 
-    private void addAdmin(String userName, String password, String firstName, String secondName) {
+    public void addAdmin(String userName, String password, String firstName, String secondName) {
         try {
             HashMap<String, User> readUser = (HashMap<String, User>) IOUtils.readObjectFromFile("files/users");
             User user = new Admin(userName, password, Role.ADMIN, firstName, secondName);
