@@ -40,7 +40,6 @@ public class Services {
         return userName;
     }
 
-
     public Boolean checkUniqueBoolen (String userName) {
         try {
             HashMap<String, User> readUser = (HashMap<String, User>) IOUtils.readObjectFromFile("files/users");
@@ -55,8 +54,6 @@ public class Services {
        // checkUnique(userName);
         return false;
     }
-
-
 
     public String genereteCode(String firstName, String secondName, Role role) {
         Random generator = new Random();
@@ -91,6 +88,34 @@ public class Services {
             }
         }
         return codes;
+    }
+
+    public String getLecturerUsername(String code) {
+
+        HashMap<String, Lecturer> readLecturer = null;
+        try {
+            readLecturer = (HashMap<String, Lecturer>) IOUtils.readObjectFromFile("files/users");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        for (Map.Entry<String, Lecturer> entry : readLecturer.entrySet()) {
+            //String key = entry.getKey();
+            User value = entry.getValue();
+
+            if (value.getRole().equals(Role.LECTURER)) {
+
+                if(readLecturer.get(value.getUsername()).getLecturerCode().equals(code)){
+                    return value.getUsername();
+                }
+
+
+                //  System.out.println(readLecturer.get(value.getUsername()).getLecturerCode());
+               // codes.add(readLecturer.get(value.getUsername()).getUsername()+ "" +
+               //         readLecturer.get(value.getUsername()).getLecturerCode());
+            }
+        }
+        return null;
     }
 
     public LocalDate datePicker(String messege) {

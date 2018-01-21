@@ -3,9 +3,12 @@ package mivs.application.controllers;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
+import mivs.courses.Course;
 import mivs.users.Admin;
 import mivs.users.Gender;
 import mivs.users.Lecturer;
@@ -14,6 +17,7 @@ import mivs.utils.IOUtils;
 
 import java.io.FileNotFoundException;
 import java.util.HashMap;
+import java.util.Map;
 
 public class LecturerController extends Controller {
 
@@ -43,6 +47,22 @@ public class LecturerController extends Controller {
     private DatePicker datePicker;
     @FXML
     private ChoiceBox gender;
+    @FXML
+    private TableColumn codeCol;
+    @FXML
+    private TableColumn titleCol;
+    @FXML
+    private TableColumn startDateCol;
+    @FXML
+    private TableColumn creditsCol;
+    @FXML
+    private TableColumn lcodeCol;
+    @FXML
+    private TableColumn descriptionCol;
+    @FXML
+    private TableView coursesTable;
+    @FXML
+    private Pane viewMyCousesPane;
 
 
     private Lecturer lecturer;
@@ -104,6 +124,7 @@ public class LecturerController extends Controller {
     private void makePaneInvisible() {
         startPane.setVisible(false);
         viewPane.setVisible(false);
+        viewMyCousesPane.setVisible(false);
 
     }
 
@@ -181,5 +202,50 @@ public class LecturerController extends Controller {
 
         viewPane();
 
+    }
+
+    public void viewMyCoursesPane() {
+        makePaneInvisible();
+        viewMyCousesPane.setVisible(true);
+        courseList(myCourseList());
+    }
+
+    private void courseList(ObservableList data) {
+
+        coursesTable.setItems(data);
+
+        codeCol.setCellValueFactory(new PropertyValueFactory("code"));
+        titleCol.setCellValueFactory(new PropertyValueFactory("tittle"));
+        startDateCol.setCellValueFactory(new PropertyValueFactory("startDate"));
+        creditsCol.setCellValueFactory(new PropertyValueFactory("credit"));
+        lcodeCol.setCellValueFactory(new PropertyValueFactory("lecturerCode"));
+        descriptionCol.setCellValueFactory(new PropertyValueFactory("description"));
+        coursesTable.getColumns().setAll(codeCol, titleCol, startDateCol, creditsCol, lcodeCol, descriptionCol);
+
+    }
+
+    private ObservableList<Course> myCourseList() {
+        ObservableList<Course> courses = FXCollections.observableArrayList();
+
+        try {
+            HashMap<String, Course> readUser = (HashMap<String, Course>) IOUtils.readObjectFromFile("files/courses");
+
+            for (Map.Entry<String, Course> entry : readUser.entrySet()) {
+                Course value = entry.getValue();
+                for (String c : lecturer.getRunningCourses()) {
+
+                    if (value.getCode().equals(c)) {
+                        courses.add(new Course(value.getCode(), value.getTittle(), value.getDescription(), value.getStartDate(), value.getCredit(), value.getLecturerCode()));
+
+                    }
+
+                }
+
+
+            }
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+        return courses;
     }
 }

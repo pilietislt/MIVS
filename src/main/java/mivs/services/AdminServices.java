@@ -51,18 +51,20 @@ public class AdminServices {
         String lecturerCode = codeSelectionFX(lcode);
         String code = new Services().genereteCode(title, description, Role.LECTURER);
         Course course = new Course(code, title, description, date, credit, lecturerCode);
+        String username = new Services().getLecturerUsername(lecturerCode);
 
         try {
             HashMap<String, Course> readCourse = (HashMap<String, Course>) IOUtils.readObjectFromFile("files/courses");
             readCourse.put(code, course);
             IOUtils.writeObjectToFile(readCourse, "files/courses");
+            addCourseToLecturer(username,code);
+
         } catch (FileNotFoundException e) {
             HashMap<String, Course> newCourse = new HashMap<String, Course>();
             newCourse.put(code, course);
             IOUtils.writeObjectToFile(newCourse, "files/courses");
 
         }
-
 
     }
 
@@ -142,6 +144,22 @@ public class AdminServices {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+    }
+
+    public void addCourseToLecturer(String username, String code) {
+
+        try {
+            HashMap<String, Lecturer> readUser = (HashMap<String, Lecturer>) IOUtils.readObjectFromFile("files/users");
+            Lecturer lecturer = readUser.get(username);
+            lecturer.getRunningCourses().add(code);
+            readUser.put(username, lecturer);
+            IOUtils.writeObjectToFile(readUser, "files/users");
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+
     }
 
 

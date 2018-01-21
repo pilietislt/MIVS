@@ -14,6 +14,7 @@ import mivs.courses.Course;
 import mivs.services.AdminServices;
 import mivs.users.Admin;
 import mivs.users.Role;
+import mivs.users.Student;
 import mivs.users.User;
 import mivs.utils.IOUtils;
 import mivs.application.alert.Alert;
@@ -294,6 +295,7 @@ public class AdminController extends Controller {
 
         int credit = Integer.parseInt(credits.getText());
         String lCode = lecturerList.getSelectionModel().getSelectedItem().toString();
+        String code = new Services().genereteCode(title.getText(), description.getText(), Role.LECTURER);
         if (isFiledCourse()) {
             new AdminServices().addCourseFX(title.getText(), description.getText(), datePicker.getValue(), credit, lCode);
             emptycourseFieleds();
@@ -333,6 +335,10 @@ public class AdminController extends Controller {
 
         return true;
     }
+
+
+
+
 
 
 }

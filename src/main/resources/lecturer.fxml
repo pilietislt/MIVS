@@ -7,6 +7,8 @@
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.Pane?>
@@ -14,7 +16,21 @@
 
 <Pane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mivs.application.controllers.LecturerController">
    <children>
-      <Pane fx:id="viewPane" layoutY="2.0" prefHeight="400.0" prefWidth="600.0">
+      <Pane fx:id="viewMyCousesPane" layoutX="10.0" layoutY="10.0" prefHeight="400.0" prefWidth="600.0" visible="false">
+         <children>
+            <TableView fx:id="coursesTable" layoutY="26.0" prefHeight="373.0" prefWidth="600.0">
+               <columns>
+                  <TableColumn fx:id="codeCol" prefWidth="48.79998779296875" text="Code" />
+                  <TableColumn fx:id="titleCol" prefWidth="109.5999755859375" text="Title" />
+                  <TableColumn fx:id="startDateCol" prefWidth="68.0" text="Start date" />
+                  <TableColumn fx:id="creditsCol" prefWidth="47.20001220703125" text="Credit" />
+                  <TableColumn fx:id="lcodeCol" prefWidth="103.199951171875" text="Lecturer code" />
+                  <TableColumn fx:id="descriptionCol" prefWidth="221.59991455078125" text="Description" />
+               </columns>
+            </TableView>
+         </children>
+      </Pane>
+      <Pane fx:id="viewPane" layoutY="2.0" prefHeight="400.0" prefWidth="600.0" visible="false">
          <children>
             <Label layoutX="24.0" layoutY="107.0" text="Username" />
             <TextField fx:id="username" disable="true" layoutX="128.0" layoutY="97.0" />
@@ -62,7 +78,7 @@
           </Menu>
           <Menu mnemonicParsing="false" text="Courses">
             <items>
-              <MenuItem mnemonicParsing="false" text="View my courses" />
+              <MenuItem mnemonicParsing="false" onAction="#viewMyCoursesPane" text="View my courses" />
                   <MenuItem mnemonicParsing="false" text="View students from course" />
             </items>
           </Menu>
