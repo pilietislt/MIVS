@@ -127,6 +127,8 @@ public class AdminController extends Controller {
         makePaneInvisible();
         if (new Services().getAllLecturer().size() == 0) {
             new Alert().informationAlert("No Lecturer", "Please firs add Lecturer");
+            startPane.setVisible(true);
+
             return;
         }
         addCoursePane.setVisible(true);

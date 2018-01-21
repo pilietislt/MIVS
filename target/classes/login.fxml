@@ -7,8 +7,20 @@
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mivs.application.controllers.LoginController">
    <children>
-      <Button fx:id="login" layoutX="274.0" layoutY="340.0" mnemonicParsing="false" onAction="#login" text="Login" textAlignment="CENTER" />
-      <PasswordField fx:id="password" alignment="CENTER" layoutX="226.0" layoutY="256.0" promptText="passsword" />
-      <TextField fx:id="username" alignment="CENTER" layoutX="226.0" layoutY="188.0" promptText="username" />
+      <Pane fx:id="loginPane" prefHeight="400.0" prefWidth="600.0">
+         <children>
+            <TextField fx:id="username" alignment="CENTER" layoutX="225.0" layoutY="142.0" promptText="username" />
+            <PasswordField fx:id="password" alignment="CENTER" layoutX="225.0" layoutY="208.0" promptText="passsword" />
+            <Button fx:id="login" layoutX="277.0" layoutY="276.0" mnemonicParsing="false" onAction="#login" text="Login" textAlignment="CENTER" />
+         </children>
+      </Pane>
+      <Pane fx:id="firstLoginPane" layoutX="111.0" layoutY="88.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="226.0" prefWidth="377.0" visible="false">
+         <children>
+            <TextField fx:id="firstName" alignment="CENTER" layoutX="120.0" layoutY="81.0" promptText="First name" />
+            <TextField fx:id="secondName" alignment="CENTER" layoutX="120.0" layoutY="131.0" promptText="Second name" />
+            <Button layoutX="120.0" layoutY="175.0" mnemonicParsing="false" onAction="#ok" prefHeight="25.0" prefWidth="55.0" text="OK" />
+            <Button fx:id="login1" layoutX="214.0" layoutY="175.0" mnemonicParsing="false" onAction="#cancel" prefHeight="25.0" prefWidth="55.0" text="Cencel" textAlignment="CENTER" />
+         </children>
+      </Pane>
    </children>
 </Pane>

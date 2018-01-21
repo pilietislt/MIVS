@@ -71,6 +71,19 @@ public class Login {
         return false;
     }
 
+    public boolean firsLoginFX(String userName, String password) {
+        final String myUserName = "admin";
+        final String myPassword = "admin";
+
+        if (userName.equalsIgnoreCase(myUserName) && password.equals(myPassword)) {
+
+           // new AdminUI().Menu(userName);
+            return true;
+        }
+       // System.out.println("Wrong User Name or Password!!");
+        return false;
+    }
+
     public void login() {
         System.out.println("MIVS");
 

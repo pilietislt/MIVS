@@ -17,7 +17,7 @@
 
 <Pane fx:id="mainPane" maxHeight="400.0" maxWidth="600.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" scaleShape="false" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mivs.application.controllers.AdminController">
    <children>
-      <Pane fx:id="viewCoursesPane" prefHeight="400.0" prefWidth="600.0">
+      <Pane fx:id="viewCoursesPane" prefHeight="400.0" prefWidth="600.0" visible="false">
          <children>
             <TableView fx:id="coursesTable" layoutY="27.0" prefHeight="373.0" prefWidth="600.0">
               <columns>
@@ -31,9 +31,9 @@
             </TableView>
          </children>
       </Pane>
-      <Pane fx:id="viewUsersPane" prefHeight="400.0" prefWidth="600.0" visible="false">
+      <Pane fx:id="viewUsersPane" prefHeight="400.0" prefWidth="600.0">
          <children>
-            <TableView fx:id="tableUsers" layoutX="29.0" layoutY="65.0" prefHeight="286.0" prefWidth="530.0">
+            <TableView fx:id="tableUsers" layoutX="-1.0" layoutY="28.0" prefHeight="373.0" prefWidth="600.0">
                <columns>
                   <TableColumn fx:id="usernameCol" prefWidth="92.80001831054688" text="Username" />
                   <TableColumn fx:id="firstNameCol" prefWidth="175.199951171875" text="First Name" />

@@ -24,6 +24,13 @@ public class Services {
         userHashMap.put("admin", user);
         IOUtils.writeObjectToFile(userHashMap, "files/users");
     }
+    public void addFirstAdminFX(String firstName, String secondName) {
+
+        User user = new Admin("admin", "admin", Role.ADMIN, firstName, secondName);
+        HashMap<String, User> userHashMap = new HashMap<String, User>();
+        userHashMap.put("admin", user);
+        IOUtils.writeObjectToFile(userHashMap, "files/users");
+    }
 
     public String checkUnique(String userName) {
         try {
