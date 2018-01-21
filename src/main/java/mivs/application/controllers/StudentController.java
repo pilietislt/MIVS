@@ -209,8 +209,6 @@ public class StudentController extends Controller {
 
     }
 
-
-
     public void viewCoursesPane() {
         makePaneInvisible();
         viewAllCousesPane.setVisible(true);

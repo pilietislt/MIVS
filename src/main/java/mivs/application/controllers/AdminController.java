@@ -215,8 +215,6 @@ public class AdminController extends Controller {
     private ObservableList<Course> getCourseList() {
         ObservableList<Course> courses = FXCollections.observableArrayList();
 
-        courses.add(new Course("ddd", "ddd", "ddd", LocalDate.now(), 7, "kjklj"));
-
 
         try {
             HashMap<String, Course> readUser = (HashMap<String, Course>) IOUtils.readObjectFromFile("files/courses");

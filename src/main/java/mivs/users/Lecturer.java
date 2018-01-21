@@ -1,6 +1,7 @@
 package mivs.users;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 public class Lecturer extends User {
 
@@ -11,10 +12,19 @@ public class Lecturer extends User {
     private int mobileNumber;
     private Gender gender;
     private String address;
+    private ArrayList<String> runningCourses = new ArrayList<String>();
 
     public Lecturer(String username, String password, Role role, String firstName, String secondName, String lecturerCode) {
         super(username, password, role, firstName, secondName);
         this.lecturerCode = lecturerCode;
+    }
+
+    public ArrayList<String> getRunningCourses() {
+        return runningCourses;
+    }
+
+    public void setRunningCourses(ArrayList<String> runningCourses) {
+        this.runningCourses = runningCourses;
     }
 
     public String getLecturerCode() {

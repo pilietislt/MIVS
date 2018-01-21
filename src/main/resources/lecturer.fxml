@@ -1,19 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
 <Pane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mivs.application.controllers.LecturerController">
    <children>
-      <Label fx:id="firstLable" alignment="CENTER" layoutY="2.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" text="Label" textAlignment="CENTER">
-         <font>
-            <Font size="35.0" />
-         </font>
-      </Label>
+      <Pane fx:id="viewPane" layoutY="2.0" prefHeight="400.0" prefWidth="600.0">
+         <children>
+            <Label layoutX="24.0" layoutY="107.0" text="Username" />
+            <TextField fx:id="username" disable="true" layoutX="128.0" layoutY="97.0" />
+            <TextField fx:id="firstName" layoutX="128.0" layoutY="134.0" />
+            <Label layoutX="24.0" layoutY="144.0" text="First name" />
+            <TextField fx:id="secondName" layoutX="128.0" layoutY="167.0" />
+            <TextField fx:id="personalNumber" layoutX="128.0" layoutY="200.0" />
+            <Label layoutX="24.0" layoutY="177.0" text="Second name" />
+            <Label layoutX="24.0" layoutY="205.0" text="Personal number" />
+            <Label layoutX="24.0" layoutY="237.0" text="Date of birth" />
+            <Label layoutX="307.0" layoutY="100.0" text="Email" />
+            <Label layoutX="308.0" layoutY="134.0" text="Mobile number" />
+            <Label layoutX="310.0" layoutY="164.0" text="Gender" />
+            <Label layoutX="310.0" layoutY="200.0" text="Address" />
+            <TextField fx:id="email" layoutX="411.0" layoutY="96.0" />
+            <TextField fx:id="mobileNumber" layoutX="411.0" layoutY="129.0" />
+            <TextArea fx:id="address" layoutX="411.0" layoutY="192.0" prefHeight="83.0" prefWidth="149.0" />
+            <ChoiceBox fx:id="gender" layoutX="410.0" layoutY="160.0" prefWidth="150.0" />
+            <Button fx:id="updateButton" layoutX="488.0" layoutY="350.0" mnemonicParsing="false" onAction="#update" text="Update" textAlignment="CENTER" />
+            <DatePicker fx:id="datePicker" layoutX="128.0" layoutY="233.0" prefHeight="25.0" prefWidth="149.0" />
+         </children>
+      </Pane>
+      <Pane fx:id="startPane" prefHeight="400.0" prefWidth="606.0" visible="false">
+         <children>
+            <Label fx:id="firstLable" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" text="Label" textAlignment="CENTER">
+               <font>
+                  <Font size="35.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
       <MenuBar layoutY="2.0" prefHeight="26.0" prefWidth="600.0">
         <menus>
           <Menu mnemonicParsing="false" text="File">
@@ -22,14 +54,16 @@
               <MenuItem mnemonicParsing="false" onAction="#close" text="Close" />
             </items>
           </Menu>
-          <Menu mnemonicParsing="false" text="Edit">
+          <Menu mnemonicParsing="false" text="Info">
             <items>
-              <MenuItem mnemonicParsing="false" text="Delete" />
+              <MenuItem mnemonicParsing="false" onAction="#viewPane" text="View" />
+                  <MenuItem mnemonicParsing="false" onAction="#editable" text="Edit" />
             </items>
           </Menu>
-          <Menu mnemonicParsing="false" text="Help">
+          <Menu mnemonicParsing="false" text="Courses">
             <items>
-              <MenuItem mnemonicParsing="false" text="About" />
+              <MenuItem mnemonicParsing="false" text="View my courses" />
+                  <MenuItem mnemonicParsing="false" text="View students from course" />
             </items>
           </Menu>
         </menus>
