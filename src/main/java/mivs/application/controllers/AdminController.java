@@ -265,6 +265,14 @@ public class AdminController extends Controller {
         role.getSelectionModel().clearSelection();
     }
 
+    private void emptycourseFieleds() {
+        title.clear();
+        description.clear();
+        credits.clear();
+        datePicker.getEditor().clear();
+
+    }
+
     private void makePaneInvisible() {
 
         startPane.setVisible(false);
@@ -290,7 +298,10 @@ public class AdminController extends Controller {
         String lCode = lecturerList.getSelectionModel().getSelectedItem().toString();
         if (isFiledCourse()) {
             new AdminServices().addCourseFX(title.getText(), description.getText(), datePicker.getValue(), credit, lCode);
+            emptycourseFieleds();
             new Alert().informationAlert("Course added", title.getText()+" successfully added");
+
+
 
         }
 

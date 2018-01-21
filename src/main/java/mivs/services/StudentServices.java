@@ -311,7 +311,7 @@ public class StudentServices {
         }
     }
 
-    private int getLeftCredit(String username) {
+    public int getLeftCredit(String username) {
 
         HashMap<String, Student> readUser = null;
         HashMap<String, Course> readCourse = null;

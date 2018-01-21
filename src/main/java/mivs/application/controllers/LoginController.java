@@ -77,6 +77,7 @@ public class LoginController {
         Stage stage = new Stage();
         stage.setTitle("Administration panel");
         stage.setScene(new Scene(fxmlLoader.load()));
+        stage.setResizable(false);
 
 
         AdminController adminController = fxmlLoader.getController();
@@ -94,10 +95,11 @@ public class LoginController {
         Stage stage = new Stage();
         stage.setTitle("Student panel");
         stage.setScene(new Scene(fxmlLoader.load()));
+        stage.setResizable(false);
 
 
-        //AdminController adminController = fxmlLoader.getController();
-       // adminController.init(username.getCharacters().toString());
+        StudentController studentController = fxmlLoader.getController();
+        studentController.init(username.getCharacters().toString());
 
         stage.show();
 
@@ -112,10 +114,11 @@ public class LoginController {
         Stage stage = new Stage();
         stage.setTitle("Lecturer panel");
         stage.setScene(new Scene(fxmlLoader.load()));
+        stage.setResizable(false);
 
 
-       // AdminController adminController = fxmlLoader.getController();
-       // adminController.init(username.getCharacters().toString());
+       LecturerController lecturerController = fxmlLoader.getController();
+       lecturerController.init(username.getCharacters().toString());
 
         stage.show();
 
