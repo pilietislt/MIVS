@@ -16,9 +16,9 @@
 
 <Pane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mivs.application.controllers.LecturerController">
    <children>
-      <Pane fx:id="viewMyCousesPane" layoutX="10.0" layoutY="10.0" prefHeight="400.0" prefWidth="600.0" visible="false">
+      <Pane fx:id="viewMyCousesPane" prefHeight="400.0" prefWidth="600.0" visible="false">
          <children>
-            <TableView fx:id="coursesTable" layoutY="26.0" prefHeight="373.0" prefWidth="600.0">
+            <TableView fx:id="coursesTable" layoutX="-6.0" layoutY="29.0" prefHeight="374.0" prefWidth="606.0">
                <columns>
                   <TableColumn fx:id="codeCol" prefWidth="48.79998779296875" text="Code" />
                   <TableColumn fx:id="titleCol" prefWidth="109.5999755859375" text="Title" />
@@ -28,6 +28,35 @@
                   <TableColumn fx:id="descriptionCol" prefWidth="221.59991455078125" text="Description" />
                </columns>
             </TableView>
+         </children>
+      </Pane>
+      <Pane fx:id="viewStudentsPane" prefHeight="400.0" prefWidth="600.0">
+         <children>
+            <TableView fx:id="studentList" layoutX="24.0" layoutY="60.0" prefHeight="322.0" prefWidth="242.0">
+              <columns>
+                <TableColumn fx:id="studentCodeCol" prefWidth="55.99999809265137" text="Code" />
+                <TableColumn fx:id="studentFirstNameCol" prefWidth="94.39997100830078" text="First name" />
+                  <TableColumn fx:id="studentSecondNameCol" prefWidth="90.80001831054688" text="Second name" />
+              </columns>
+            </TableView>
+            <TableView fx:id="courseList" layoutX="320.0" layoutY="60.0" onMouseClicked="#selectCourse" prefHeight="322.0" prefWidth="251.0">
+              <columns>
+                <TableColumn fx:id="courseCodeCol" prefWidth="52.79998779296875" text="Code" />
+                <TableColumn fx:id="courseTitleCol" prefWidth="103.199951171875" text="Title" />
+                  <TableColumn fx:id="courseStartDateCol" prefWidth="85.60006713867188" text="Start Date" />
+              </columns>
+            </TableView>
+            <Label layoutX="24.0" layoutY="37.0" text="Students List" />
+            <Label layoutX="320.0" layoutY="37.0" text="My Courses" />
+         </children>
+      </Pane>
+      <Pane fx:id="startPane" prefHeight="400.0" prefWidth="606.0" visible="false">
+         <children>
+            <Label fx:id="firstLable" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" text="Label" textAlignment="CENTER">
+               <font>
+                  <Font size="35.0" />
+               </font>
+            </Label>
          </children>
       </Pane>
       <Pane fx:id="viewPane" layoutY="2.0" prefHeight="400.0" prefWidth="600.0" visible="false">
@@ -53,15 +82,6 @@
             <DatePicker fx:id="datePicker" layoutX="128.0" layoutY="233.0" prefHeight="25.0" prefWidth="149.0" />
          </children>
       </Pane>
-      <Pane fx:id="startPane" prefHeight="400.0" prefWidth="606.0" visible="false">
-         <children>
-            <Label fx:id="firstLable" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" text="Label" textAlignment="CENTER">
-               <font>
-                  <Font size="35.0" />
-               </font>
-            </Label>
-         </children>
-      </Pane>
       <MenuBar layoutY="2.0" prefHeight="26.0" prefWidth="600.0">
         <menus>
           <Menu mnemonicParsing="false" text="File">
@@ -79,7 +99,7 @@
           <Menu mnemonicParsing="false" text="Courses">
             <items>
               <MenuItem mnemonicParsing="false" onAction="#viewMyCoursesPane" text="View my courses" />
-                  <MenuItem mnemonicParsing="false" text="View students from course" />
+                  <MenuItem mnemonicParsing="false" onAction="#viewStudentsPane" text="View students from course" />
             </items>
           </Menu>
         </menus>
