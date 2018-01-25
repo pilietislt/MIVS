@@ -46,7 +46,7 @@ public class AdminServices {
 
     }
 
-    public void addCourseFX(String title, String description ,LocalDate date, int credit, String lcode) {
+    public void addCourseFX(String title, String description, LocalDate date, int credit, String lcode) {
 
 
         String lecturerCode = codeSelectionFX(lcode);
@@ -58,7 +58,7 @@ public class AdminServices {
             HashMap<String, Course> readCourse = (HashMap<String, Course>) IOUtils.readObjectFromFile("files/courses");
             readCourse.put(code, course);
             IOUtils.writeObjectToFile(readCourse, "files/courses");
-            addCourseToLecturer(username,code);
+            addCourseToLecturer(username, code);
 
         } catch (FileNotFoundException e) {
             HashMap<String, Course> newCourse = new HashMap<String, Course>();
@@ -83,6 +83,7 @@ public class AdminServices {
         return allLecturerCodes.get(choice - 1).substring(allLecturerCodes.get(choice - 1).length() - 6);
 
     }
+
     public String codeSelectionFX(String code) {
 
         return code.substring(code.length() - 6);
@@ -101,7 +102,7 @@ public class AdminServices {
             System.out.println(role.get() + ". " + role);
         }
 
-        switch (ScannerUtils.scanInt("Choose role: ",1,3)) {
+        switch (ScannerUtils.scanInt("Choose role: ", 1, 3)) {
             case 1:
                 addAdmin(userName, password, firstName, secondName);
                 break;
@@ -115,7 +116,7 @@ public class AdminServices {
     }
 
     public void addStudent(String userName, String password, String firstName, String secondName) {
-        new DB().insertUserToDb(userName,password,firstName,secondName,3);
+        new DB().insertUserToDb(userName, password, firstName, secondName, 3);
 //        try {
 //            HashMap<String, User> readUser = (HashMap<String, User>) IOUtils.readObjectFromFile("files/users");
 //            User user = new Student(userName, password, Role.STUDENT, firstName, secondName, new Services().genereteCode(firstName, secondName, Role.STUDENT));
@@ -127,7 +128,7 @@ public class AdminServices {
     }
 
     public void addLecturer(String userName, String password, String firstName, String secondName) {
-        new DB().insertUserToDb(userName,password,firstName,secondName,2);
+        new DB().insertUserToDb(userName, password, firstName, secondName, 2);
 //        try {
 //            HashMap<String, User> readUser = (HashMap<String, User>) IOUtils.readObjectFromFile("files/users");
 //            User user = new Lecturer(userName, password, Role.LECTURER, firstName, secondName, new Services().genereteCode(firstName, secondName, Role.LECTURER));
@@ -139,7 +140,7 @@ public class AdminServices {
     }
 
     public void addAdmin(String userName, String password, String firstName, String secondName) {
-        new DB().insertUserToDb(userName,password,firstName,secondName,1);
+        new DB().insertUserToDb(userName, password, firstName, secondName, 1);
 
 //        try {
 //            HashMap<String, User> readUser = (HashMap<String, User>) IOUtils.readObjectFromFile("files/users");

@@ -88,6 +88,14 @@ public class DB {
         querys.add(query5);
         querys.add(query6);
         querys.add(query7);
+        querys.add(query8);
+        querys.add(query9);
+        querys.add(query10);
+        querys.add(query11);
+        querys.add(query12);
+        querys.add(query13);
+        querys.add(query14);
+        querys.add(query15);
 
     }
 
@@ -152,39 +160,36 @@ public class DB {
 
     String query1 = "CREATE TABLE IF NOT EXISTS user\n" +
             "(\n" +
-            "    user_id INTEGER NOT NULL AUTO_INCREMENT,\n" +
             "    user_username VARCHAR(255) NOT NULL UNIQUE,\n" +
             "    user_password VARCHAR(255) NOT NULL,\n" +
             "    user_firstName VARCHAR(255) NOT NULL,\n" +
             "    user_secondName VARCHAR(255),\n" +
             "    user_role_id INTEGER NOT NULL,\n" +
-            "    CONSTRAINT user_pk PRIMARY KEY(user_id)\n" +
+            "    CONSTRAINT user_pk PRIMARY KEY(user_username)\n" +
             ");";
     String query2 = "CREATE TABLE IF NOT EXISTS student\n" +
             "(\n" +
-            "    student_id INTEGER NOT NULL AUTO_INCREMENT,\n" +
-            "    user_id INTEGER NOT NULL,\n" +
+            "    user_username VARCHAR(255) NOT NULL UNIQUE,\n" +
             "    student_studentCode VARCHAR(255) NOT NULL UNIQUE,\n" +
             "    student_personalNumber INTEGER,\n" +
             "    student_dateOfBirth DATE,\n" +
             "    student_email VARCHAR(255),\n" +
             "    student_mobileNumber INTEGER,\n" +
-            "    student_gender_id VARCHAR(10),\n" +
+            "    gender_id INTEGER,\n" +
             "    student_address VARCHAR(500),\n" +
-            "    CONSTRAINT student_pk PRIMARY KEY(student_id)\n" +
+            "    CONSTRAINT student_pk PRIMARY KEY(user_username)\n" +
             ");";
     String query3 = "CREATE TABLE IF NOT EXISTS lecturer\n" +
             "(\n" +
-            "    lecturer_id INTEGER NOT NULL AUTO_INCREMENT,\n" +
-            "    user_id INTEGER NOT NULL,\n" +
+            "    user_username VARCHAR(255) NOT NULL UNIQUE,\n" +
             "    lecturer_lecturerCode VARCHAR(255) NOT NULL UNIQUE,\n" +
             "    lecturer_personalNumber INTEGER,\n" +
             "    lecturer_dateOfBirth DATE,\n" +
             "    lecturer_email VARCHAR(255),\n" +
             "    lecturer_mobileNumber INTEGER,\n" +
-            "    lecturer_gender_id INTEGER,\n" +
+            "    gender_id INTEGER,\n" +
             "    lecturer_address VARCHAR(500),\n" +
-            "    CONSTRAINT lecturer_pk PRIMARY KEY(lecturer_id)\n" +
+            "    CONSTRAINT lecturer_pk PRIMARY KEY(user_username)\n" +
             ");";
     String query4 = "CREATE TABLE IF NOT EXISTS role\n" +
             "(\n" +
@@ -200,22 +205,54 @@ public class DB {
             ");";
     String query6 = "CREATE TABLE IF NOT EXISTS course\n" +
             "(\n" +
-            "    course_id INTEGER NOT NULL AUTO_INCREMENT,\n" +
-            "    course_code varchar(255),\n" +
-            "    course_title VARCHAR(255),\n" +
-            "    course_description VARCHAR(255),\n" +
+            "    course_code VARCHAR(255)NOT NULL UNIQUE,\n" +
+            "    course_title VARCHAR(255)NOT NULL,\n" +
+            "    course_description VARCHAR(255) NOT NULL,\n" +
             "    course_startDate DATE NOT NULL,\n" +
             "    course_credit INTEGER NOT NULL,\n" +
             "    course_lecturerCode VARCHAR(255) NOT NULL,\n" +
-            "    CONSTRAINT course_pk PRIMARY KEY(course_id)\n" +
+            "    CONSTRAINT course_pk PRIMARY KEY(course_code)\n" +
             ");";
     String query7 = "CREATE TABLE IF NOT EXISTS runningCourses\n" +
             "(\n" +
             "    runningCourses_id INTEGER NOT NULL AUTO_INCREMENT,\n" +
-            "    runningCourses_course_code VARCHAR(255) NOT NULL,\n" +
+            "    course_code VARCHAR(255) NOT NULL,\n" +
             "    user_code VARCHAR(255) NOT NULL,\n" +
             "    CONSTRAINT runningcourses_pk PRIMARY KEY(runningCourses_id)\n" +
             ");";
+    String query8 = "ALTER TABLE user\n" +
+            "    ADD    FOREIGN KEY (user_role_id)\n" +
+            "    REFERENCES role(role_id)\n" +
+            ";";
+    String query9 = "ALTER TABLE lecturer\n" +
+            "    ADD    FOREIGN KEY (user_username)\n" +
+            "    REFERENCES user(user_username)\n" +
+            ";";
+    String query10 = "ALTER TABLE lecturer\n" +
+            "    ADD    FOREIGN KEY (gender_id)\n" +
+            "    REFERENCES gender(gender_id)\n" +
+            ";";
+    String query11 = "ALTER TABLE student\n" +
+            "    ADD    FOREIGN KEY (gender_id)\n" +
+            "    REFERENCES gender(gender_id)\n" +
+            ";";
+    String query12 = "ALTER TABLE course\n" +
+            "    ADD    FOREIGN KEY (course_lecturerCode)\n" +
+            "    REFERENCES lecturer(lecturer_lecturerCode)\n" +
+            ";";
+    String query13 ="ALTER TABLE runningcourses\n"+
+            "    ADD    FOREIGN KEY (course_code)\n"+
+            "    REFERENCES course(course_code)\n"+
+            ";";
+    String query14 = "ALTER TABLE runningCourses\n" +
+            "    ADD    FOREIGN KEY (user_code)\n" +
+            "    REFERENCES lecturer(lecturer_lecturerCode)\n" +
+            ";";
+    String query15 = "ALTER TABLE runningCourses\n" +
+            "    ADD    FOREIGN KEY (user_code)\n" +
+            "    REFERENCES student(student_studentCode)\n" +
+            ";";
+
 
 
 }

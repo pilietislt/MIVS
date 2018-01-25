@@ -107,9 +107,6 @@ public class AdminController extends Controller {
             while (rs.next()) {
                 admin = new Admin(rs.getString(2),rs.getString(3),Role.ADMIN,rs.getString(4),rs.getString(4));
                 }
-
-                //  System.out.println(rs.getString(1));
-
             con.close();
         } catch (Exception e) {
             System.out.println(e);

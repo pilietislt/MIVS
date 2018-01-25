@@ -9,12 +9,18 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import mivs.courses.Course;
+import mivs.db.DB;
 import mivs.services.StudentServices;
+import mivs.users.Admin;
 import mivs.users.Gender;
+import mivs.users.Role;
 import mivs.users.Student;
 import mivs.utils.IOUtils;
 
 import java.io.FileNotFoundException;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -74,6 +80,18 @@ public class StudentController extends Controller {
     public void init(String user) {
         makePaneInvisible();
         startPane.setVisible(true);
+
+        try {
+            Connection con = new DB().connection();
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery("select * from user where user_username='"+user+"'");
+            while (rs.next()) {
+               // student = new Student(rs.getString(2),rs.getString(3), Role.ADMIN,rs.getString(4),rs.getString(4));
+            }
+            con.close();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
 
         HashMap<String, Student> readUser = null;
         try {

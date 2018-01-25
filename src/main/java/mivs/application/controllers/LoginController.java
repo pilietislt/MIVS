@@ -122,9 +122,7 @@ public class LoginController {
             int r = 0;
 
             try {
-                Class.forName("com.mysql.jdbc.Driver");
-                Connection con = DriverManager.getConnection(
-                        "jdbc:mysql://localhost:3306/mivs", "java", "java");
+                Connection con = new DB().connection();
                 Statement stmt = con.createStatement();
                 ResultSet rs = stmt.executeQuery("select user_role_id from user where user_username='"+username.getText()+"'");
 
