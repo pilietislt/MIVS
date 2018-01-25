@@ -5,11 +5,9 @@ import mivs.db.DB;
 
 public class Main {
     public static void main(String[] args)  {
+      new  DB().mydb();
 
-        new DB().bdConnect();
 
-        //new DB().newDBcreate();
-        //new DB().db();
 
 
 

@@ -8,13 +8,6 @@ public class DB {
 
     private ArrayList<String> querys = new ArrayList<String>();
 
-    public void bdConnect (){
-        if (ifDBexists()){
-            return;
-        }
-        newDBcreate();
-
-    }
 
     public void mydb() {
         try {
@@ -22,7 +15,7 @@ public class DB {
             Connection con = DriverManager.getConnection(
                     "jdbc:mysql://localhost:3306/mivs", "java", "java");
             Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery("select * from new_table");
+            ResultSet rs = stmt.executeQuery("select * from user");
             while (rs.next())
                 System.out.println(rs.getInt(1) + "  " + rs.getString(2) + "  " + rs.getString(3));
             con.close();
@@ -32,22 +25,28 @@ public class DB {
     }
 
     private void createTablesforDb() {
+
+
         try {
-            Class.forName("com.mysql.jdbc.Driver");
-            Connection connection = DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/mivs", "java", "java");
-            Statement statement = connection.createStatement();
+            Statement statement = connection().createStatement();
             crateQuerys();
             for (String q : querys) {
                 statement.execute(q);
             }
-            connection.close();
-        } catch (Exception e) {
-            System.out.println(e);
+            connection().close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
+
+
+        fillRoleDb();
+        fillGenderDb();
+
+
     }
 
-    private void newDBcreate() {
+    public void newDBcreate() {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             Connection connection = DriverManager.getConnection(
@@ -70,10 +69,10 @@ public class DB {
                     "jdbc:mysql://localhost:3306/mivs", "java", "java");
 
             connection.close();
-        } catch (com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException e){
+        } catch (com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException e) {
             return false;
 
-        }catch (Exception e) {
+        } catch (Exception e) {
             System.out.println(e);
         }
         return true;
@@ -89,6 +88,64 @@ public class DB {
         querys.add(query5);
         querys.add(query6);
         querys.add(query7);
+
+    }
+
+    private void fillRoleDb() {
+        try {
+
+            Statement statement = connection().createStatement();
+            statement.execute("INSERT INTO role (role)VALUES ( 'ADMIN');");
+            statement.execute("INSERT INTO role (role)VALUES ( 'LECTURER');");
+            statement.execute("INSERT INTO role (role)VALUES ( 'STUDENT');");
+            connection().close();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
+    }
+
+    private void fillGenderDb() {
+        try {
+
+            Statement statement = connection().createStatement();
+            statement.execute("INSERT INTO gender (gender)VALUES ( 'FEMALE');");
+            statement.execute("INSERT INTO gender (gender)VALUES ( 'MALE');");
+
+            connection().close();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
+    }
+
+    public void insertUserToDb(String username, String password, String firstName, String secondName, int role) {
+
+        try {
+
+            Statement statement = connection().createStatement();
+            statement.execute("INSERT INTO user (user_username, user_password,user_firstName, user_secondName,user_role_id)VALUES ( '" + username + "','" + password + "','" + firstName + "','" + secondName + "'," + role + ");");
+            connection().close();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
+    }
+
+    public Connection connection() {
+        Connection connection = null;
+
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            connection = DriverManager.getConnection(
+                    "jdbc:mysql://localhost:3306/mivs", "java", "java");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        return connection;
 
     }
 
@@ -129,19 +186,19 @@ public class DB {
             "    lecturer_address VARCHAR(500),\n" +
             "    CONSTRAINT lecturer_pk PRIMARY KEY(lecturer_id)\n" +
             ");";
-    String query4 = "CREATE TABLE role\n" +
+    String query4 = "CREATE TABLE IF NOT EXISTS role\n" +
             "(\n" +
             "    role_id INTEGER NOT NULL AUTO_INCREMENT,\n" +
             "    role VARCHAR(10) NOT NULL UNIQUE,\n" +
             "    CONSTRAINT role_pk PRIMARY KEY(role_id)\n" +
             ");";
-    String query5 = "CREATE TABLE gender\n" +
+    String query5 = "CREATE TABLE IF NOT EXISTS gender\n" +
             "(\n" +
             "    gender_id INTEGER NOT NULL AUTO_INCREMENT,\n" +
             "    gender VARCHAR(10) NOT NULL UNIQUE,\n" +
             "    CONSTRAINT gender_pk PRIMARY KEY(gender_id)\n" +
             ");";
-    String query6 = "CREATE TABLE course\n" +
+    String query6 = "CREATE TABLE IF NOT EXISTS course\n" +
             "(\n" +
             "    course_id INTEGER NOT NULL AUTO_INCREMENT,\n" +
             "    course_code varchar(255),\n" +
@@ -152,7 +209,7 @@ public class DB {
             "    course_lecturerCode VARCHAR(255) NOT NULL,\n" +
             "    CONSTRAINT course_pk PRIMARY KEY(course_id)\n" +
             ");";
-    String query7 = "CREATE TABLE runningCourses\n" +
+    String query7 = "CREATE TABLE IF NOT EXISTS runningCourses\n" +
             "(\n" +
             "    runningCourses_id INTEGER NOT NULL AUTO_INCREMENT,\n" +
             "    runningCourses_course_code VARCHAR(255) NOT NULL,\n" +

@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Random;
 
 import mivs.courses.Course;
+import mivs.db.DB;
 import mivs.users.*;
 import mivs.users.Role;
 import mivs.utils.*;
@@ -24,12 +25,16 @@ public class Services {
         userHashMap.put("admin", user);
         IOUtils.writeObjectToFile(userHashMap, "files/users");
     }
+
     public void addFirstAdminFX(String firstName, String secondName) {
 
-        User user = new Admin("admin", "admin", Role.ADMIN, firstName, secondName);
-        HashMap<String, User> userHashMap = new HashMap<String, User>();
-        userHashMap.put("admin", user);
-        IOUtils.writeObjectToFile(userHashMap, "files/users");
+        new DB().newDBcreate();
+        new DB().insertUserToDb("admin","admin",firstName,secondName,1);
+
+//        User user = new Admin("admin", "admin", Role.ADMIN, firstName, secondName);
+//        HashMap<String, User> userHashMap = new HashMap<String, User>();
+//        userHashMap.put("admin", user);
+//        IOUtils.writeObjectToFile(userHashMap, "files/users");
     }
 
     public String checkUnique(String userName) {

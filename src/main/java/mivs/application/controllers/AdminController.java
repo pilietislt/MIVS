@@ -11,6 +11,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import mivs.back_end.Services;
 import mivs.courses.Course;
+import mivs.db.DB;
 import mivs.services.AdminServices;
 import mivs.users.Admin;
 import mivs.users.Role;
@@ -21,6 +22,10 @@ import mivs.application.alert.Alert;
 
 
 import java.io.FileNotFoundException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
@@ -95,15 +100,33 @@ public class AdminController extends Controller {
         makePaneInvisible();
         startPane.setVisible(true);
 
-        HashMap<String, Admin> readUser = null;
         try {
-            readUser = (HashMap<String, Admin>) IOUtils.readObjectFromFile("files/users");
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+            Connection con = new DB().connection();
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery("select * from user where user_username='"+user+"'");
+            while (rs.next()) {
+                admin = new Admin(rs.getString(2),rs.getString(3),Role.ADMIN,rs.getString(4),rs.getString(4));
+                }
 
-        this.admin = readUser.get(user);
-        firstLable.setText("Hello " + this.admin.getRole() + " " + this.admin.getFirstName());
+                //  System.out.println(rs.getString(1));
+
+            con.close();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        firstLable.setText("Hello " +Role.ADMIN + " " + admin.getFirstName());
+
+
+//
+//        HashMap<String, Admin> readUser = null;
+//        try {
+//            readUser = (HashMap<String, Admin>) IOUtils.readObjectFromFile("files/users");
+//        } catch (FileNotFoundException e) {
+//            e.printStackTrace();
+//        }
+//
+//        this.admin = readUser.get(user);
+     //   firstLable.setText("Hello " +Role.ADMIN + " " + this.admin.getFirstName());
 
     }
 
