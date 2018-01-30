@@ -94,8 +94,6 @@ public class DB {
         querys.add(query11);
         querys.add(query12);
         querys.add(query13);
-        querys.add(query14);
-        querys.add(query15);
 
     }
 
@@ -133,6 +131,35 @@ public class DB {
 
             Statement statement = connection().createStatement();
             statement.execute("INSERT INTO user (user_username, user_password,user_firstName, user_secondName,user_role_id)VALUES ( '" + username + "','" + password + "','" + firstName + "','" + secondName + "'," + role + ");");
+            connection().close();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
+    }
+
+    public void insertStudentToDb(String username, String password, String firstName, String secondName, int role, String studentCode) {
+
+        try {
+
+            Statement statement = connection().createStatement();
+            statement.execute("INSERT INTO user (user_username, user_password,user_firstName, user_secondName,user_role_id)VALUES ( '" + username + "','" + password + "','" + firstName + "','" + secondName + "'," + role + ");");
+            statement.execute("INSERT INTO student (user_username, student_studentCode)VALUES ( '" + username + "','" + studentCode + "');");
+
+            connection().close();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
+    }
+    public void insertLecturerToDb(String username, String password, String firstName, String secondName, int role, String lecturerCode) {
+
+        try {
+
+            Statement statement = connection().createStatement();
+            statement.execute("INSERT INTO user (user_username, user_password,user_firstName, user_secondName,user_role_id)VALUES ( '" + username + "','" + password + "','" + firstName + "','" + secondName + "'," + role + ");");
+            statement.execute("INSERT INTO lecturer (user_username, lecturer_lecturerCode)VALUES ( '" + username + "','" + lecturerCode + "');");
+
             connection().close();
         } catch (Exception e) {
             System.out.println(e);
@@ -244,14 +271,8 @@ public class DB {
             "    ADD    FOREIGN KEY (course_code)\n"+
             "    REFERENCES course(course_code)\n"+
             ";";
-    String query14 = "ALTER TABLE runningCourses\n" +
-            "    ADD    FOREIGN KEY (user_code)\n" +
-            "    REFERENCES lecturer(lecturer_lecturerCode)\n" +
-            ";";
-    String query15 = "ALTER TABLE runningCourses\n" +
-            "    ADD    FOREIGN KEY (user_code)\n" +
-            "    REFERENCES student(student_studentCode)\n" +
-            ";";
+
+
 
 
 

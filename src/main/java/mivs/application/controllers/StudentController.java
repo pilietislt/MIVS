@@ -80,27 +80,39 @@ public class StudentController extends Controller {
     public void init(String user) {
         makePaneInvisible();
         startPane.setVisible(true);
+        String userName = null;
+        String password = null;
+        String firstName = null;
+        String secondName = null;
+        String studentCode = null;
 
         try {
             Connection con = new DB().connection();
             Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery("select * from user where user_username='"+user+"'");
+            ResultSet rs = stmt.executeQuery("select u.user_username, user_password, user_firstName, user_secondName, student_studentCode from user u,student s where s.user_username = u.user_username AND s.user_username ='" + user + "';");
             while (rs.next()) {
-               // student = new Student(rs.getString(2),rs.getString(3), Role.ADMIN,rs.getString(4),rs.getString(4));
+                userName = rs.getString(1);
+                password = rs.getString(2);
+                firstName = rs.getString(3);
+                secondName = rs.getString(4);
+                studentCode = rs.getString(5);
+
+                student =new Student(userName,password,Role.STUDENT,firstName,secondName,studentCode);
+
             }
             con.close();
         } catch (Exception e) {
             System.out.println(e);
         }
 
-        HashMap<String, Student> readUser = null;
-        try {
-            readUser = (HashMap<String, Student>) IOUtils.readObjectFromFile("files/users");
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        this.student = readUser.get(user);
+//        HashMap<String, Student> readUser = null;
+//        try {
+//            readUser = (HashMap<String, Student>) IOUtils.readObjectFromFile("files/users");
+//        } catch (FileNotFoundException e) {
+//            e.printStackTrace();
+//        }
+//
+//        this.student = readUser.get(user);
         firstLable.setText("Hello " + this.student.getRole() + " " + this.student.getFirstName());
 
     }

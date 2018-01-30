@@ -10,19 +10,15 @@ import javafx.stage.Stage;
 import mivs.back_end.Login;
 import mivs.back_end.Services;
 import mivs.db.DB;
-import mivs.users.Role;
-import mivs.users.User;
-import mivs.utils.IOUtils;
+
 import mivs.application.alert.Alert;
 
-import java.io.File;
-import java.io.FileNotFoundException;
+
 import java.io.IOException;
 import java.sql.Connection;
-import java.sql.DriverManager;
+
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.util.HashMap;
 
 public class LoginController {
 

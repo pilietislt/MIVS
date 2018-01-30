@@ -8,6 +8,10 @@ import mivs.utils.ScannerUtils;
 import mivs.back_end.Services;
 
 import java.io.FileNotFoundException;
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -51,21 +55,44 @@ public class AdminServices {
 
         String lecturerCode = codeSelectionFX(lcode);
         String code = new Services().genereteCode(title, description, Role.LECTURER);
-        Course course = new Course(code, title, description, date, credit, lecturerCode);
+      //  Course course = new Course(code, title, description, date, credit, lecturerCode);
         String username = new Services().getLecturerUsername(lecturerCode);
 
         try {
-            HashMap<String, Course> readCourse = (HashMap<String, Course>) IOUtils.readObjectFromFile("files/courses");
-            readCourse.put(code, course);
-            IOUtils.writeObjectToFile(readCourse, "files/courses");
-            addCourseToLecturer(username, code);
+            Connection connection = new DB().connection();
+            PreparedStatement statement = connection.prepareStatement(
+                    "insert into course (course_code, course_title, course_description, course_startDate, course_credit, course_lecturerCode) values (?,?,?,?,?,?);"
 
-        } catch (FileNotFoundException e) {
-            HashMap<String, Course> newCourse = new HashMap<String, Course>();
-            newCourse.put(code, course);
-            IOUtils.writeObjectToFile(newCourse, "files/courses");
+            );
+            statement.setString(1, code);
+            statement.setString(2, title);
+            statement.setString(3, description);
+            statement.setDate(4, Date.valueOf(date));
+            statement.setInt(5,credit);
+            statement.setString(6, lecturerCode);
+            statement.execute();
+            statement.execute("insert into runningcourses (course_code, user_code) values ('"+code+"','"+lecturerCode+"');");
 
+            connection.close();
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
+
+
+//        try {
+//            HashMap<String, Course> readCourse = (HashMap<String, Course>) IOUtils.readObjectFromFile("files/courses");
+//            readCourse.put(code, course);
+//            IOUtils.writeObjectToFile(readCourse, "files/courses");
+//            addCourseToLecturer(username, code);
+//
+//        } catch (FileNotFoundException e) {
+//            HashMap<String, Course> newCourse = new HashMap<String, Course>();
+//            newCourse.put(code, course);
+//            IOUtils.writeObjectToFile(newCourse, "files/courses");
+//
+//        }
 
     }
 
@@ -116,40 +143,18 @@ public class AdminServices {
     }
 
     public void addStudent(String userName, String password, String firstName, String secondName) {
-        new DB().insertUserToDb(userName, password, firstName, secondName, 3);
-//        try {
-//            HashMap<String, User> readUser = (HashMap<String, User>) IOUtils.readObjectFromFile("files/users");
-//            User user = new Student(userName, password, Role.STUDENT, firstName, secondName, new Services().genereteCode(firstName, secondName, Role.STUDENT));
-//            readUser.put(userName, user);
-//            IOUtils.writeObjectToFile(readUser, "files/users");
-//        } catch (FileNotFoundException e) {
-//            e.printStackTrace();
-//        }
+        String studentCode = new Services().genereteCode(firstName, secondName, Role.STUDENT);
+        new DB().insertStudentToDb(userName, password, firstName, secondName, 3,studentCode );
+
     }
 
     public void addLecturer(String userName, String password, String firstName, String secondName) {
-        new DB().insertUserToDb(userName, password, firstName, secondName, 2);
-//        try {
-//            HashMap<String, User> readUser = (HashMap<String, User>) IOUtils.readObjectFromFile("files/users");
-//            User user = new Lecturer(userName, password, Role.LECTURER, firstName, secondName, new Services().genereteCode(firstName, secondName, Role.LECTURER));
-//            readUser.put(userName, user);
-//            IOUtils.writeObjectToFile(readUser, "files/users");
-//        } catch (FileNotFoundException e) {
-//            e.printStackTrace();
-//        }
+        String lecturerCode = new Services().genereteCode(firstName, secondName, Role.LECTURER);
+        new DB().insertLecturerToDb(userName, password, firstName, secondName, 2,lecturerCode);
     }
 
     public void addAdmin(String userName, String password, String firstName, String secondName) {
         new DB().insertUserToDb(userName, password, firstName, secondName, 1);
-
-//        try {
-//            HashMap<String, User> readUser = (HashMap<String, User>) IOUtils.readObjectFromFile("files/users");
-//            User user = new Admin(userName, password, Role.ADMIN, firstName, secondName);
-//            readUser.put(userName, user);
-//            IOUtils.writeObjectToFile(readUser, "files/users");
-//        } catch (FileNotFoundException e) {
-//            e.printStackTrace();
-//        }
     }
 
     public void addCourseToLecturer(String username, String code) {

@@ -22,10 +22,7 @@ import mivs.application.alert.Alert;
 
 
 import java.io.FileNotFoundException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
@@ -103,27 +100,16 @@ public class AdminController extends Controller {
         try {
             Connection con = new DB().connection();
             Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery("select * from user where user_username='"+user+"'");
+            ResultSet rs = stmt.executeQuery("select * from user where user_username='" + user + "'");
             while (rs.next()) {
-                admin = new Admin(rs.getString(2),rs.getString(3),Role.ADMIN,rs.getString(4),rs.getString(4));
-                }
+                admin = new Admin(rs.getString(1), rs.getString(2), Role.ADMIN, rs.getString(3), rs.getString(4));
+            }
             con.close();
         } catch (Exception e) {
             System.out.println(e);
         }
-        firstLable.setText("Hello " +Role.ADMIN + " " + admin.getFirstName());
+        firstLable.setText("Hello " + Role.ADMIN + " " + admin.getFirstName());
 
-
-//
-//        HashMap<String, Admin> readUser = null;
-//        try {
-//            readUser = (HashMap<String, Admin>) IOUtils.readObjectFromFile("files/users");
-//        } catch (FileNotFoundException e) {
-//            e.printStackTrace();
-//        }
-//
-//        this.admin = readUser.get(user);
-     //   firstLable.setText("Hello " +Role.ADMIN + " " + this.admin.getFirstName());
 
     }
 
@@ -221,34 +207,77 @@ public class AdminController extends Controller {
 
     private ObservableList<User> getUserList() {
         ObservableList<User> users = FXCollections.observableArrayList();
-
         try {
-            HashMap<String, User> readUser = (HashMap<String, User>) IOUtils.readObjectFromFile("files/users");
+            Connection connection =new DB().connection();
+            PreparedStatement statement = connection.prepareStatement(
+                    "SELECT * FROM user ; "
+            );
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()){
 
-            for (Map.Entry<String, User> entry : readUser.entrySet()) {
-                User value = entry.getValue();
-                users.add(new User(value.getUsername(), value.getPassword(), value.getRole(), value.getFirstName(), value.getSecondName()));
+                if (resultSet.getInt(5)==1){
+                    users.add( new User(resultSet.getString(1),resultSet.getString(2),Role.ADMIN,resultSet.getString(3),resultSet.getString(4)));
+                }else if(resultSet.getInt(5)==2){
+                    users.add( new User(resultSet.getString(1),resultSet.getString(2),Role.LECTURER,resultSet.getString(3),resultSet.getString(4)));
+                }else if(resultSet.getInt(5)==3){
+                    users.add( new User(resultSet.getString(1),resultSet.getString(2),Role.STUDENT,resultSet.getString(3),resultSet.getString(4)));
+                }
+
             }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            connection.close();
+
+        } catch (SQLException e) {
+            System.out.println("list error");
         }
+
+
+//        try {
+//            HashMap<String, User> readUser = (HashMap<String, User>) IOUtils.readObjectFromFile("files/users");
+//
+//            for (Map.Entry<String, User> entry : readUser.entrySet()) {
+//                User value = entry.getValue();
+//
+//
+//                users.add(new User(value.getUsername(), value.getPassword(), value.getRole(), value.getFirstName(), value.getSecondName()));
+//            }
+//        } catch (FileNotFoundException e) {
+//            e.printStackTrace();
+//        }
         return users;
     }
 
     private ObservableList<Course> getCourseList() {
         ObservableList<Course> courses = FXCollections.observableArrayList();
 
-
         try {
-            HashMap<String, Course> readUser = (HashMap<String, Course>) IOUtils.readObjectFromFile("files/courses");
+            Connection connection =new DB().connection();
+            PreparedStatement statement = connection.prepareStatement(
+                    "SELECT * FROM course; "
+            );
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()){
+                LocalDate date = resultSet.getDate(4).toLocalDate();
+                courses.add(new Course(resultSet.getString(1),resultSet.getString(2),resultSet.getString(3) , date, resultSet.getInt(5), resultSet.getString(6)));
 
-            for (Map.Entry<String, Course> entry : readUser.entrySet()) {
-                Course value = entry.getValue();
-                courses.add(new Course(value.getCode(), value.getTittle(), value.getDescription(), value.getStartDate(), value.getCredit(), value.getLecturerCode()));
             }
-        } catch (FileNotFoundException e) {
+            connection.close();
+
+        } catch (SQLException e) {
             e.printStackTrace();
+            System.out.println("list error");
         }
+
+//
+//        try {
+//            HashMap<String, Course> readUser = (HashMap<String, Course>) IOUtils.readObjectFromFile("files/courses");
+//
+//            for (Map.Entry<String, Course> entry : readUser.entrySet()) {
+//                Course value = entry.getValue();
+//                courses.add(new Course(value.getCode(), value.getTittle(), value.getDescription(), value.getStartDate(), value.getCredit(), value.getLecturerCode()));
+//            }
+//        } catch (FileNotFoundException e) {
+//            e.printStackTrace();
+//        }
         return courses;
     }
 
@@ -306,26 +335,42 @@ public class AdminController extends Controller {
 
     public void addCourse() {
 
-        if(lecturerList.getSelectionModel().getSelectedItem() == null){
+        if (lecturerList.getSelectionModel().getSelectedItem() == null) {
             new Alert().informationAlert("NO Lecturer selected", "Please select Lecturer");
-            return ;
-        }else if(datePicker.getValue() == null){
+            return;
+        } else if (datePicker.getValue() == null) {
             new Alert().informationAlert("NO Date selected", "Please select Start date");
+            return;
+
+        } else if (title.getText().trim().isEmpty()) {
+            new Alert().informationAlert("NO Title", "Please fill title");
+            return;
+
+        } else if (title.getText().trim().isEmpty()) {
+            new Alert().informationAlert("NO Title", "Please fill title");
+            return ;
+
+        } else if (description.getText().trim().isEmpty()) {
+            new Alert().informationAlert("NO password", "Please fill description");
+            return ;
+
+        } else if (credits.getText().trim().isEmpty()) {
+            new Alert().informationAlert("NO credits", "Please fill credits");
             return ;
 
         }
 
-        int credit = Integer.parseInt(credits.getText());
         String lCode = lecturerList.getSelectionModel().getSelectedItem().toString();
-        String code = new Services().genereteCode(title.getText(), description.getText(), Role.LECTURER);
-        if (isFiledCourse()) {
+      //  String code = new Services().genereteCode(title.getText(), description.getText(), Role.LECTURER);
+
+            int credit = Integer.parseInt(credits.getText());
             new AdminServices().addCourseFX(title.getText(), description.getText(), datePicker.getValue(), credit, lCode);
+
             emptycourseFieleds();
-            new Alert().informationAlert("Course added", title.getText()+" successfully added");
+            new Alert().informationAlert("Course added", title.getText() + " successfully added");
 
 
 
-        }
 
     }
 
@@ -339,26 +384,6 @@ public class AdminController extends Controller {
         viewCoursesPane.setVisible(true);
         courseList();
     }
-
-    private boolean isFiledCourse() {
-        if (title.getText().trim().isEmpty()) {
-            new Alert().informationAlert("NO Title", "Please fill title");
-            return false;
-
-        } else if (description.getText().trim().isEmpty()) {
-            new Alert().informationAlert("NO password", "Please fill password");
-            return false;
-
-        }  else if (credits.getText().trim().isEmpty()) {
-            new Alert().informationAlert("NO credits", "Please fill credits");
-            return false;
-
-        }
-
-        return true;
-    }
-
-
 
 
 

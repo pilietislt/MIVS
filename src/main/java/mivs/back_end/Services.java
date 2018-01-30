@@ -1,11 +1,13 @@
 package mivs.back_end;
 
 import java.io.*;
+import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
+
 
 import mivs.courses.Course;
 import mivs.db.DB;
@@ -27,14 +29,8 @@ public class Services {
     }
 
     public void addFirstAdminFX(String firstName, String secondName) {
-
         new DB().newDBcreate();
         new DB().insertUserToDb("admin","admin",firstName,secondName,1);
-
-//        User user = new Admin("admin", "admin", Role.ADMIN, firstName, secondName);
-//        HashMap<String, User> userHashMap = new HashMap<String, User>();
-//        userHashMap.put("admin", user);
-//        IOUtils.writeObjectToFile(userHashMap, "files/users");
     }
 
     public String checkUnique(String userName) {
@@ -53,17 +49,25 @@ public class Services {
     }
 
     public Boolean checkUniqueBoolen (String userName) {
+        String uname = null;
+        Connection connection = new DB().connection();
         try {
-            HashMap<String, User> readUser = (HashMap<String, User>) IOUtils.readObjectFromFile("files/users");
-            readUser.get(userName).getUsername();
-        } catch (NullPointerException e) {
-            return true;
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+            Statement stmt = connection.createStatement();
 
-       // userName = ScannerUtils.scanString("User alredy exist enter new UserName:");
-       // checkUnique(userName);
+            ResultSet rs = stmt.executeQuery("select user_username from user where user_username='"+userName+"'");
+            while (rs.next())
+                uname = rs.getString(1);
+
+
+            if (uname.equals(null)){
+                return true;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }catch (NullPointerException e){
+            return true;
+        }
         return false;
     }
 
@@ -81,24 +85,42 @@ public class Services {
 
     public ArrayList<String> getAllLecturer() {
         ArrayList<String> codes = new ArrayList<>();
-        HashMap<String, Lecturer> readLecturer = null;
         try {
-            readLecturer = (HashMap<String, Lecturer>) IOUtils.readObjectFromFile("files/users");
-        } catch (FileNotFoundException e) {
+            Connection connection = new DB().connection();
+            PreparedStatement statement = connection.prepareStatement(
+                    "select user_firstName, user_secondName, lecturer_lecturerCode from user u  , lecturer l  where l.user_username = u.user_username ;"
+            );
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()){
+                codes.add(resultSet.getString(1)+ " " +resultSet.getString(2) + "," + resultSet.getString(3));
+            }
+
+
+
+        } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        for (Map.Entry<String, Lecturer> entry : readLecturer.entrySet()) {
-            //String key = entry.getKey();
-            User value = entry.getValue();
-
-            if (value.getRole().equals(Role.LECTURER)) {
-                //  System.out.println(readLecturer.get(value.getUsername()).getLecturerCode());
-                codes.add(readLecturer.get(value.getUsername()).getFirstName() + " " +
-                        readLecturer.get(value.getUsername()).getSecondName() + "," +
-                        readLecturer.get(value.getUsername()).getLecturerCode());
-            }
-        }
+//
+//        HashMap<String, Lecturer> readLecturer = null;
+//        try {
+//            readLecturer = (HashMap<String, Lecturer>) IOUtils.readObjectFromFile("files/users");
+//        } catch (FileNotFoundException e) {
+//            e.printStackTrace();
+//        }
+//
+//        for (Map.Entry<String, Lecturer> entry : readLecturer.entrySet()) {
+//            //String key = entry.getKey();
+//            User value = entry.getValue();
+//
+//            if (value.getRole().equals(Role.LECTURER)) {
+//                //  System.out.println(readLecturer.get(value.getUsername()).getLecturerCode());
+//                codes.add(readLecturer.get(value.getUsername()).getFirstName() + " " +
+//                        readLecturer.get(value.getUsername()).getSecondName() + "," +
+//                        readLecturer.get(value.getUsername()).getLecturerCode());
+//            }
+//        }
         return codes;
     }
 
