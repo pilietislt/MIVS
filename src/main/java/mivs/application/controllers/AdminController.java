@@ -246,7 +246,7 @@ public class AdminController extends Controller {
         return users;
     }
 
-    private ObservableList<Course> getCourseList() {
+    public ObservableList<Course> getCourseList() {
         ObservableList<Course> courses = FXCollections.observableArrayList();
 
         try {

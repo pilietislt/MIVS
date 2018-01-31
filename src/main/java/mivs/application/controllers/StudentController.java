@@ -8,19 +8,18 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
+import mivs.application.alert.Alert;
 import mivs.courses.Course;
 import mivs.db.DB;
 import mivs.services.StudentServices;
-import mivs.users.Admin;
+
 import mivs.users.Gender;
 import mivs.users.Role;
 import mivs.users.Student;
 import mivs.utils.IOUtils;
 
 import java.io.FileNotFoundException;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -80,24 +79,40 @@ public class StudentController extends Controller {
     public void init(String user) {
         makePaneInvisible();
         startPane.setVisible(true);
-        String userName = null;
-        String password = null;
-        String firstName = null;
-        String secondName = null;
-        String studentCode = null;
+
 
         try {
             Connection con = new DB().connection();
             Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery("select u.user_username, user_password, user_firstName, user_secondName, student_studentCode from user u,student s where s.user_username = u.user_username AND s.user_username ='" + user + "';");
+            ResultSet rs = stmt.executeQuery("select u.user_username, user_password, user_firstName, user_secondName, student_studentCode, student_personalNumber, student_dateOfBirth , student_email , student_mobileNumber , gender_id , student_address  from user u,student s where s.user_username = u.user_username AND s.user_username ='" + user + "';");
             while (rs.next()) {
-                userName = rs.getString(1);
-                password = rs.getString(2);
-                firstName = rs.getString(3);
-                secondName = rs.getString(4);
-                studentCode = rs.getString(5);
+                String userName = rs.getString(1);
+                String password = rs.getString(2);
+                String firstName = rs.getString(3);
+                String secondName = rs.getString(4);
+                String studentCode = rs.getString(5);
+                int personalNumber = rs.getInt(6);
 
-                student =new Student(userName,password,Role.STUDENT,firstName,secondName,studentCode);
+                String email = rs.getString(8);
+                int mobileNUmber = rs.getInt(9);
+                int gender = rs.getInt(10);
+                String address = rs.getString(11);
+
+
+                student = new Student(userName, password, Role.STUDENT, firstName, secondName, studentCode);
+                student.setPersonalNumber(personalNumber);
+                if (rs.getDate(7) != null) {
+                    student.setDateOfBirth(rs.getDate(7).toLocalDate());
+                }
+                student.setEmail(email);
+
+                student.setMobileNumber(mobileNUmber);
+                student.setAddress(address);
+                if (gender == 1) {
+                    student.setGender(Gender.FEMALE);
+                } else if (gender == 2) {
+                    student.setGender(Gender.MALE);
+                }
 
             }
             con.close();
@@ -105,14 +120,6 @@ public class StudentController extends Controller {
             System.out.println(e);
         }
 
-//        HashMap<String, Student> readUser = null;
-//        try {
-//            readUser = (HashMap<String, Student>) IOUtils.readObjectFromFile("files/users");
-//        } catch (FileNotFoundException e) {
-//            e.printStackTrace();
-//        }
-//
-//        this.student = readUser.get(user);
         firstLable.setText("Hello " + this.student.getRole() + " " + this.student.getFirstName());
 
     }
@@ -198,43 +205,69 @@ public class StudentController extends Controller {
 
     public void update() {
 
-        try {
-            HashMap<String, Student> readUser = (HashMap<String, Student>) IOUtils.readObjectFromFile("files/users");
+        int pNumber = 0;
+        int mNumber = 0;
 
-            student = readUser.get(username.getText());
-            int pNumber = 0;
-            int mNumber = 0;
-
-            if (!(personalNumber.getText().equals(""))) {
-                pNumber = Integer.parseInt(personalNumber.getText());
-            }
-            if (!(mobileNumber.getText().trim().equals(""))) {
-                mNumber = Integer.parseInt(mobileNumber.getText());
-            }
-
-            this.student.setFirstName(firstName.getText());
-            this.student.setSecondName(secondName.getText());
-            this.student.setPersonalNumber(pNumber);
-            this.student.setDateOfBirth(datePicker.getValue());
-            this.student.setEmail(email.getText());
-            this.student.setMobileNumber(mNumber);
-            this.student.setAddress(address.getText());
-
-            if (gender.getValue() == null) {
-
-            } else if (gender.getValue().equals(Gender.MALE)) {
-                this.student.setGender(Gender.MALE);
-            } else if (gender.getValue().equals(Gender.FEMALE)) {
-                this.student.setGender(Gender.FEMALE);
-            }
-
-
-            readUser.put(username.getText(), this.student);
-            IOUtils.writeObjectToFile(readUser, "files/users");
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+        if (!(personalNumber.getText().equals(""))) {
+            pNumber = Integer.parseInt(personalNumber.getText());
+        }
+        if (!(mobileNumber.getText().trim().equals(""))) {
+            mNumber = Integer.parseInt(mobileNumber.getText());
+        }
+        if (firstName.getText().equals("") || secondName.getText().equals("")) {
+            new Alert().informationAlert("NO First name or Second name ", "Please fill First name and Second name");
+            return;
         }
 
+        this.student.setFirstName(firstName.getText());
+        this.student.setSecondName(secondName.getText());
+        this.student.setPersonalNumber(pNumber);
+        this.student.setDateOfBirth(datePicker.getValue());
+        this.student.setEmail(email.getText());
+        this.student.setMobileNumber(mNumber);
+        this.student.setAddress(address.getText());
+
+        if (gender.getValue() == null) {
+
+        } else if (gender.getValue().equals(Gender.MALE)) {
+            this.student.setGender(Gender.MALE);
+        } else if (gender.getValue().equals(Gender.FEMALE)) {
+            this.student.setGender(Gender.FEMALE);
+        }
+
+        try {
+            Connection connection = new DB().connection();
+            PreparedStatement statement = connection.prepareStatement("update user set user_firstName = ? , user_secondName = ? where user_username = ?;");
+            statement.setString(1, this.student.getFirstName());
+            statement.setString(2, this.student.getSecondName());
+            statement.setString(3, this.student.getUsername());
+            statement.execute();
+            statement = connection.prepareStatement("update student set student_personalNumber = ?, student_dateOfBirth =?, student_email = ?, student_mobileNumber = ?, gender_id =?, student_address =? where user_username = ?; ");
+            statement.setInt(1, this.student.getPersonalNumber());
+            if (datePicker.getValue() == null) {
+                statement.setNull(2, Types.DATE);
+            } else {
+                statement.setDate(2, Date.valueOf(this.student.getDateOfBirth()));
+            }
+            statement.setString(3, this.student.getEmail());
+            statement.setInt(4, this.student.getMobileNumber());
+            if (this.student.getGender() == Gender.FEMALE) {
+                statement.setInt(5, 1);
+            } else if (this.student.getGender() == Gender.MALE) {
+                statement.setInt(5, 2);
+            } else {
+                statement.setNull(5, Types.INTEGER);
+            }
+            statement.setString(6, this.student.getAddress());
+            statement.setString(7, this.student.getUsername());
+            statement.execute();
+
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+
+        }
         viewPane();
 
     }
@@ -242,7 +275,7 @@ public class StudentController extends Controller {
     public void viewCoursesPane() {
         makePaneInvisible();
         viewAllCousesPane.setVisible(true);
-        courseList(getCourseList());
+        courseList(new AdminController().getCourseList());
     }
 
     public void viewMyCoursesPane() {
@@ -259,21 +292,6 @@ public class StudentController extends Controller {
         // courseList(myCourseList());
     }
 
-    private ObservableList<Course> getCourseList() {
-        ObservableList<Course> courses = FXCollections.observableArrayList();
-
-        try {
-            HashMap<String, Course> readUser = (HashMap<String, Course>) IOUtils.readObjectFromFile("files/courses");
-
-            for (Map.Entry<String, Course> entry : readUser.entrySet()) {
-                Course value = entry.getValue();
-                courses.add(new Course(value.getCode(), value.getTittle(), value.getDescription(), value.getStartDate(), value.getCredit(), value.getLecturerCode()));
-            }
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        return courses;
-    }
 
     private ObservableList<Course> myCourseList() {
         ObservableList<Course> courses = FXCollections.observableArrayList();
@@ -315,7 +333,12 @@ public class StudentController extends Controller {
     }
 
     private ArrayList<String> availableCourseList() {
+        try {
+            Connection connection = new DB().connection();
+            PreparedStatement statement = connection.prepareStatement("");
+        }catch (SQLException e){
 
+        }
         HashMap<String, Student> readUser = null;
         HashMap<String, Course> readCourse = null;
         ArrayList<String> availableCourse = new ArrayList<>();
@@ -334,6 +357,8 @@ public class StudentController extends Controller {
             if (value.getStartDate().isAfter(LocalDate.now()) &&
                     value.getCredit() < new StudentServices().getLeftCredit(this.student.getUsername()) &&
                     !readUser.get(this.student.getUsername()).getRunningCourses().contains(value.getCode())) {
+
+
                 availableCourse.add(value.getTittle() + " " + value.getStartDate() + " " + value.getCredit() + " " + value.getCode());
             }
 

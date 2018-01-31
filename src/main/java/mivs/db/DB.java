@@ -190,7 +190,7 @@ public class DB {
             "    user_username VARCHAR(255) NOT NULL UNIQUE,\n" +
             "    user_password VARCHAR(255) NOT NULL,\n" +
             "    user_firstName VARCHAR(255) NOT NULL,\n" +
-            "    user_secondName VARCHAR(255),\n" +
+            "    user_secondName VARCHAR(255)NOT NULL,\n" +
             "    user_role_id INTEGER NOT NULL,\n" +
             "    CONSTRAINT user_pk PRIMARY KEY(user_username)\n" +
             ");";
