@@ -28,7 +28,7 @@ public class AdminServices {
     }
 
     public void addFirstAdmin(String firstName, String secondName) {
-        new DB().newDBcreate();
+        new DB().newDbCreate();
         new DB().insertUserToDb("admin","admin",firstName,secondName,1);
     }
 
@@ -69,13 +69,13 @@ public class AdminServices {
 
     public void addStudent(String userName, String password, String firstName, String secondName) {
         String studentCode = new Services().generateCode(firstName, secondName, Role.STUDENT);
-        new DB().insertStudentToDb(userName, password, firstName, secondName, 3,studentCode );
+        new StudentServices().insertStudentToDb(userName, password, firstName, secondName, 3,studentCode );
 
     }
 
     public void addLecturer(String userName, String password, String firstName, String secondName) {
         String lecturerCode = new Services().generateCode(firstName, secondName, Role.LECTURER);
-        new DB().insertLecturerToDb(userName, password, firstName, secondName, 2,lecturerCode);
+        new LecturerServices().insertLecturerToDb(userName, password, firstName, secondName, 2,lecturerCode);
     }
 
     public void addAdmin(String userName, String password, String firstName, String secondName) {

@@ -9,27 +9,12 @@ public class DB {
     private ArrayList<String> querys = new ArrayList<String>();
 
 
-    public void mydb() {
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-            Connection con = DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/mivs", "java", "java");
-            Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery("select * from user");
-            while (rs.next())
-                System.out.println(rs.getInt(1) + "  " + rs.getString(2) + "  " + rs.getString(3));
-            con.close();
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-    }
-
-    private void createTablesforDb() {
+    private void createTablesForDb() {
 
 
         try {
             Statement statement = connection().createStatement();
-            crateQuerys();
+            crateQueries();
             for (String q : querys) {
                 statement.execute(q);
             }
@@ -46,7 +31,7 @@ public class DB {
 
     }
 
-    public void newDBcreate() {
+    public void newDbCreate() {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             Connection connection = DriverManager.getConnection(
@@ -57,12 +42,12 @@ public class DB {
         } catch (Exception e) {
             System.out.println(e);
         }
-        createTablesforDb();
+        createTablesForDb();
 
 
     }
 
-    public boolean ifDBexists() {
+    public boolean ifDdExists() {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             Connection connection = DriverManager.getConnection(
@@ -80,7 +65,7 @@ public class DB {
 
     }
 
-    private void crateQuerys() {
+    private void crateQueries() {
         querys.add(query1);
         querys.add(query2);
         querys.add(query3);
@@ -93,8 +78,8 @@ public class DB {
         querys.add(query10);
         querys.add(query11);
         querys.add(query12);
-     //   querys.add(query13);
-        querys.add(query14);
+        querys.add(query13);
+
 
     }
 
@@ -139,34 +124,6 @@ public class DB {
 
     }
 
-    public void insertStudentToDb(String username, String password, String firstName, String secondName, int role, String studentCode) {
-
-        try {
-
-            Statement statement = connection().createStatement();
-            statement.execute("INSERT INTO user (user_username, user_password,user_firstName, user_secondName,user_role_id)VALUES ( '" + username + "','" + password + "','" + firstName + "','" + secondName + "'," + role + ");");
-            statement.execute("INSERT INTO student (user_username, student_studentCode)VALUES ( '" + username + "','" + studentCode + "');");
-
-            connection().close();
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-
-    }
-    public void insertLecturerToDb(String username, String password, String firstName, String secondName, int role, String lecturerCode) {
-
-        try {
-
-            Statement statement = connection().createStatement();
-            statement.execute("INSERT INTO user (user_username, user_password,user_firstName, user_secondName,user_role_id)VALUES ( '" + username + "','" + password + "','" + firstName + "','" + secondName + "'," + role + ");");
-            statement.execute("INSERT INTO lecturer (user_username, lecturer_lecturerCode)VALUES ( '" + username + "','" + lecturerCode + "');");
-
-            connection().close();
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-
-    }
 
     public Connection connection() {
         Connection connection = null;
@@ -268,11 +225,7 @@ public class DB {
             "    ADD    FOREIGN KEY (course_lecturerCode)\n" +
             "    REFERENCES lecturer(lecturer_lecturerCode)\n" +
             ";";
-    String query13 ="ALTER TABLE runningcourses\n"+
-            "    ADD    FOREIGN KEY (course_code)\n"+
-            "    REFERENCES course(course_code)\n"+
-            ";";
-    String query14 = "CREATE TABLE IF NOT EXISTS lecturerRunningCourses\n" +
+    String query13 = "CREATE TABLE IF NOT EXISTS lecturerRunningCourses\n" +
             "(\n" +
             "    lrunningCourses_id INTEGER NOT NULL AUTO_INCREMENT,\n" +
             "    course_code VARCHAR(255) NOT NULL,\n" +

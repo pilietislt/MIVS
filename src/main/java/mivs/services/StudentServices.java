@@ -253,4 +253,21 @@ public class StudentServices {
 
         return students;
     }
+
+    public void insertStudentToDb(String username, String password, String firstName, String secondName, int role, String studentCode) {
+
+        try {
+            Connection connection = new DB().connection();
+
+            Statement statement = connection.createStatement();
+            statement.execute("INSERT INTO user (user_username, user_password,user_firstName, user_secondName,user_role_id)VALUES ( '" + username + "','" + password + "','" + firstName + "','" + secondName + "'," + role + ");");
+            statement.execute("INSERT INTO student (user_username, student_studentCode)VALUES ( '" + username + "','" + studentCode + "');");
+
+            connection.close();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
+    }
+
 }

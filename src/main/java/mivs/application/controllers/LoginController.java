@@ -40,7 +40,7 @@ public class LoginController {
 
     public void login() throws IOException {
 
-        if ( new DB().ifDBexists()) {
+        if ( new DB().ifDdExists()) {
             //System.out.println("not first login");
             secondLogin();
         } else {

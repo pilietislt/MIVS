@@ -163,5 +163,21 @@ public class LecturerServices {
         }
     }
 
+    public void insertLecturerToDb(String username, String password, String firstName, String secondName, int role, String lecturerCode) {
+
+        try {
+            Connection connection = new DB().connection();
+
+            Statement statement = connection.createStatement();
+            statement.execute("INSERT INTO user (user_username, user_password,user_firstName, user_secondName,user_role_id)VALUES ( '" + username + "','" + password + "','" + firstName + "','" + secondName + "'," + role + ");");
+            statement.execute("INSERT INTO lecturer (user_username, lecturer_lecturerCode)VALUES ( '" + username + "','" + lecturerCode + "');");
+
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+    }
+
 
 }
