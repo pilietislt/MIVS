@@ -295,24 +295,47 @@ public class StudentController extends Controller {
 
     private ObservableList<Course> myCourseList() {
         ObservableList<Course> courses = FXCollections.observableArrayList();
-
         try {
-            HashMap<String, Course> readUser = (HashMap<String, Course>) IOUtils.readObjectFromFile("files/courses");
+            Connection connection = new DB().connection();
+            PreparedStatement statement = connection.prepareStatement(
+                    "SELECT \n" +
+                    " * \n" +
+                    "FROM  \n" +
+                    " course c,\n" +
+                    " studentrunningcourses s\n" +
+                    "WHERE \n" +
+                    " s.course_code = c.course_code and \n" +
+                    " s.student_code = ?  ;");
+            statement.setString(1,this.student.getStudentCode());
 
-            for (Map.Entry<String, Course> entry : readUser.entrySet()) {
-                Course value = entry.getValue();
-                for (String c : student.getRunningCourses()) {
-
-                    if (value.getCode().equals(c)) {
-                        courses.add(new Course(value.getCode(), value.getTittle(), value.getDescription(), value.getStartDate(), value.getCredit(), value.getLecturerCode()));
-
-                    }
-
-                }
-
-
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()){
+                courses.add(new Course(resultSet.getString(1), resultSet.getString(2), resultSet.getString(3), resultSet.getDate(4).toLocalDate(), resultSet.getInt(5), resultSet.getString(6)));
             }
-        } catch (FileNotFoundException e) {
+
+
+            connection.close();
+        }catch (SQLException e){
+
+//        }
+//
+//        try {
+//            HashMap<String, Course> readUser = (HashMap<String, Course>) IOUtils.readObjectFromFile("files/courses");
+//
+//            for (Map.Entry<String, Course> entry : readUser.entrySet()) {
+//                Course value = entry.getValue();
+//                for (String c : student.getRunningCourses()) {
+//
+//                    if (value.getCode().equals(c)) {
+//                        courses.add(new Course(value.getCode(), value.getTittle(), value.getDescription(), value.getStartDate(), value.getCredit(), value.getLecturerCode()));
+//
+//                    }
+//
+//                }
+//
+//
+//            }
+//        } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
         return courses;
@@ -333,36 +356,63 @@ public class StudentController extends Controller {
     }
 
     private ArrayList<String> availableCourseList() {
+
+        ArrayList<String> availableCourse = new ArrayList<>();
         try {
             Connection connection = new DB().connection();
-            PreparedStatement statement = connection.prepareStatement("");
-        }catch (SQLException e){
+            PreparedStatement statement = connection.prepareStatement(
+                    "SELECT \n" +
+                            " course_title, \n" +
+                            " course_startDate, \n" +
+                            " course_credit ,\n" +
+                            " course_code \n" +
+                            "FROM  \n" +
+                            " course c   \n" +
+                            " \n" +
+                            "where \n" +
+                            " course_startDate >  ? and \n" +
+                            " course_credit < ? and\n" +
+                            " not exists (select 1 from studentrunningcourses s where s.course_code = c.course_code and s.student_code = ?);"
+            );
+            statement.setDate(1, Date.valueOf(LocalDate.now()));
+            statement.setInt(2, new StudentServices().getLeftCredit(this.student.getStudentCode()));
+            System.out.println(this.student.getStudentCode());
+            statement.setString(3, this.student.getStudentCode());
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()){
+                availableCourse.add(resultSet.getString(1) + " " + resultSet.getDate(2) + " " + resultSet.getInt(3) + " " + resultSet.getString(4));
 
-        }
-        HashMap<String, Student> readUser = null;
-        HashMap<String, Course> readCourse = null;
-        ArrayList<String> availableCourse = new ArrayList<>();
-
-        try {
-            readUser = (HashMap<String, Student>) IOUtils.readObjectFromFile("files/users");
-            readCourse = (HashMap<String, Course>) IOUtils.readObjectFromFile("files/courses");
-
-        } catch (FileNotFoundException e) {
-
-        }
-
-
-        for (Map.Entry<String, Course> entry : readCourse.entrySet()) {
-            Course value = entry.getValue();
-            if (value.getStartDate().isAfter(LocalDate.now()) &&
-                    value.getCredit() < new StudentServices().getLeftCredit(this.student.getUsername()) &&
-                    !readUser.get(this.student.getUsername()).getRunningCourses().contains(value.getCode())) {
-
-
-                availableCourse.add(value.getTittle() + " " + value.getStartDate() + " " + value.getCredit() + " " + value.getCode());
             }
 
+
+        }catch (SQLException e){
+            e.printStackTrace();
         }
+
+//        HashMap<String, Student> readUser = null;
+//        HashMap<String, Course> readCourse = null;
+//
+//
+//        try {
+//            readUser = (HashMap<String, Student>) IOUtils.readObjectFromFile("files/users");
+//            readCourse = (HashMap<String, Course>) IOUtils.readObjectFromFile("files/courses");
+//
+//        } catch (FileNotFoundException e) {
+//
+//        }
+//
+//
+//        for (Map.Entry<String, Course> entry : readCourse.entrySet()) {
+//            Course value = entry.getValue();
+//            if (value.getStartDate().isAfter(LocalDate.now()) &&
+ //                   value.getCredit() < new StudentServices().getLeftCredit(this.student.getUsername()) &&
+//                    !readUser.get(this.student.getUsername()).getRunningCourses().contains(value.getCode())) {
+//
+//
+//                availableCourse.add(value.getTittle() + " " + value.getStartDate() + " " + value.getCredit() + " " + value.getCode());
+//            }
+//
+//        }
         return availableCourse;
     }
 
@@ -372,15 +422,27 @@ public class StudentController extends Controller {
         course = course.substring(course.length() - 6);
 
         try {
-            HashMap<String, Student> readUser = (HashMap<String, Student>) IOUtils.readObjectFromFile("files/users");
-            student = readUser.get(student.getUsername());
-            student.getRunningCourses().add(course);
-            readUser.put(student.getUsername(), student);
-            IOUtils.writeObjectToFile(readUser, "files/users");
+            Connection connection = new DB().connection();
+            PreparedStatement statement = connection.prepareStatement("insert into studentrunningcourses (course_code, student_code) values (?,?);");
+            statement.setString(1,course);
+            statement.setString(2,this.student.getStudentCode());
+            statement.execute();
+            connection.close();
 
-        } catch (FileNotFoundException e) {
+        }catch (SQLException e){
             e.printStackTrace();
         }
+//
+//        try {
+//            HashMap<String, Student> readUser = (HashMap<String, Student>) IOUtils.readObjectFromFile("files/users");
+//            student = readUser.get(student.getUsername());
+//            student.getRunningCourses().add(course);
+//            readUser.put(student.getUsername(), student);
+//            IOUtils.writeObjectToFile(readUser, "files/users");
+//
+//        } catch (FileNotFoundException e) {
+//            e.printStackTrace();
+//        }
         registerToCoursesPane();
 
     }

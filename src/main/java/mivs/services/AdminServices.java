@@ -71,7 +71,7 @@ public class AdminServices {
             statement.setInt(5,credit);
             statement.setString(6, lecturerCode);
             statement.execute();
-            statement.execute("insert into runningcourses (course_code, user_code) values ('"+code+"','"+lecturerCode+"');");
+            statement.execute("insert into lecturerrunningcourses (course_code, lecturer_code) values ('"+code+"','"+lecturerCode+"');");
 
             connection.close();
 

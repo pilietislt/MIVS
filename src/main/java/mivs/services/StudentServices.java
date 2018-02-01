@@ -2,11 +2,16 @@ package mivs.services;
 
 import mivs.back_end.Services;
 import mivs.courses.Course;
+import mivs.db.DB;
 import mivs.users.Student;
 import mivs.utils.IOUtils;
 import mivs.utils.ScannerUtils;
 
 import java.io.FileNotFoundException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -311,31 +316,58 @@ public class StudentServices {
         }
     }
 
-    public int getLeftCredit(String username) {
+    public int getLeftCredit(String studentCode) {
 
-        HashMap<String, Student> readUser = null;
-        HashMap<String, Course> readCourse = null;
-
-        try {
-            readUser = (HashMap<String, Student>) IOUtils.readObjectFromFile("files/users");
-            readCourse = (HashMap<String, Course>) IOUtils.readObjectFromFile("files/courses");
-
-        } catch (FileNotFoundException e) {
-            System.out.println("No Courses Found");
-        }
-
+       // HashMap<String, Student> readUser = null;
+    //    HashMap<String, Course> readCourse = null;
         int credit = 0;
+
         try {
-            for (String s : readUser.get(username).getRunningCourses()) {
+            Connection connection = new DB().connection();
+            PreparedStatement statement = connection.prepareStatement(
+                    "SELECT \n" +
+                            " course_credit\n" +
+                            "FROM  \n" +
+                            " course c,\n" +
+                            " studentrunningcourses s\n" +
+                            "WHERE \n" +
+                            " s.course_code = c.course_code and \n" +
+                            " s.student_code = ?  ;"
+            );
+            statement.setString(1,studentCode);
+            ResultSet resultSet = statement.executeQuery();
 
-                credit += readCourse.get(s).getCredit();
-
+            while (resultSet.next()){
+                credit += resultSet.getInt(1);
             }
 
-            return 12 - credit;
-        } catch (NullPointerException e) {
-            return 12;
+            connection.close();
+
+        }catch (SQLException e){
+
         }
+        return 12 - credit;
+
+//        try {
+//            readUser = (HashMap<String, Student>) IOUtils.readObjectFromFile("files/users");
+//            readCourse = (HashMap<String, Course>) IOUtils.readObjectFromFile("files/courses");
+//
+//        } catch (FileNotFoundException e) {
+//            System.out.println("No Courses Found");
+//        }
+//
+//
+//        try {
+//            for (String s : readUser.get(username).getRunningCourses()) {
+//
+//                credit += readCourse.get(s).getCredit();
+//
+//            }
+//
+//            return 12 - credit;
+//        } catch (NullPointerException e) {
+//            return 12;
+//        }
 
 
     }

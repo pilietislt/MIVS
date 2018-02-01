@@ -93,7 +93,8 @@ public class DB {
         querys.add(query10);
         querys.add(query11);
         querys.add(query12);
-        querys.add(query13);
+     //   querys.add(query13);
+        querys.add(query14);
 
     }
 
@@ -240,12 +241,12 @@ public class DB {
             "    course_lecturerCode VARCHAR(255) NOT NULL,\n" +
             "    CONSTRAINT course_pk PRIMARY KEY(course_code)\n" +
             ");";
-    String query7 = "CREATE TABLE IF NOT EXISTS runningCourses\n" +
+    String query7 = "CREATE TABLE IF NOT EXISTS studentRunningCourses\n" +
             "(\n" +
-            "    runningCourses_id INTEGER NOT NULL AUTO_INCREMENT,\n" +
+            "    srunningCourses_id INTEGER NOT NULL AUTO_INCREMENT,\n" +
             "    course_code VARCHAR(255) NOT NULL,\n" +
-            "    user_code VARCHAR(255) NOT NULL,\n" +
-            "    CONSTRAINT runningcourses_pk PRIMARY KEY(runningCourses_id)\n" +
+            "    student_code VARCHAR(255) NOT NULL,\n" +
+            "    CONSTRAINT studentrunningcourses_pk PRIMARY KEY(srunningCourses_id)\n" +
             ");";
     String query8 = "ALTER TABLE user\n" +
             "    ADD    FOREIGN KEY (user_role_id)\n" +
@@ -271,6 +272,13 @@ public class DB {
             "    ADD    FOREIGN KEY (course_code)\n"+
             "    REFERENCES course(course_code)\n"+
             ";";
+    String query14 = "CREATE TABLE IF NOT EXISTS lecturerRunningCourses\n" +
+            "(\n" +
+            "    lrunningCourses_id INTEGER NOT NULL AUTO_INCREMENT,\n" +
+            "    course_code VARCHAR(255) NOT NULL,\n" +
+            "    lecturer_code VARCHAR(255) NOT NULL,\n" +
+            "    CONSTRAINT lecturerrunningcourses_pk PRIMARY KEY(lrunningCourses_id)\n" +
+            ");";
 
 
 

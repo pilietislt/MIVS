@@ -6,11 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="ad1f7652-61e2-4ab8-ab14-709e66e91299" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/mivs/application/controllers/AdminController.java" afterPath="$PROJECT_DIR$/src/main/java/mivs/application/controllers/AdminController.java" />
       <change beforePath="$PROJECT_DIR$/src/main/java/mivs/application/controllers/StudentController.java" afterPath="$PROJECT_DIR$/src/main/java/mivs/application/controllers/StudentController.java" />
       <change beforePath="$PROJECT_DIR$/src/main/java/mivs/db/DB.java" afterPath="$PROJECT_DIR$/src/main/java/mivs/db/DB.java" />
-      <change beforePath="$PROJECT_DIR$/target/classes/mivs/application/controllers/AdminController.class" afterPath="$PROJECT_DIR$/target/classes/mivs/application/controllers/AdminController.class" />
-      <change beforePath="$PROJECT_DIR$/target/classes/mivs/application/controllers/StudentController.class" afterPath="$PROJECT_DIR$/target/classes/mivs/application/controllers/StudentController.class" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/mivs/services/AdminServices.java" afterPath="$PROJECT_DIR$/src/main/java/mivs/services/AdminServices.java" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/mivs/services/StudentServices.java" afterPath="$PROJECT_DIR$/src/main/java/mivs/services/StudentServices.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -50,8 +49,8 @@
       <file leaf-file-name="AdminController.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/mivs/application/controllers/AdminController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="264">
-              <caret line="345" column="74" lean-forward="true" selection-start-line="345" selection-start-column="12" selection-end-line="345" selection-end-column="74" />
+            <state relative-caret-position="160">
+              <caret line="366" column="0" lean-forward="false" selection-start-line="366" selection-start-column="0" selection-end-line="366" selection-end-column="0" />
               <folding>
                 <element signature="method#addUserPane#0;class#AdminController#0" expanded="false" />
                 <element signature="method#viewUsersPane#0;class#AdminController#0" expanded="false" />
@@ -86,8 +85,8 @@
       <file leaf-file-name="StudentController.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/mivs/application/controllers/StudentController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="295">
-              <caret line="361" column="39" lean-forward="false" selection-start-line="361" selection-start-column="36" selection-end-line="361" selection-end-column="39" />
+            <state relative-caret-position="536">
+              <caret line="387" column="32" lean-forward="true" selection-start-line="387" selection-start-column="32" selection-end-line="387" selection-end-column="32" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="method#init#0;class#StudentController#0" expanded="false" />
@@ -101,6 +100,31 @@
                 <element signature="method#myCourseList#0;class#StudentController#0" expanded="false" />
                 <element signature="method#courseList#0;class#StudentController#0" expanded="false" />
                 <element signature="method#addCourseToStudentList#0;class#StudentController#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="StudentServices.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/mivs/services/StudentServices.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="170">
+              <caret line="321" column="6" lean-forward="false" selection-start-line="321" selection-start-column="6" selection-end-line="321" selection-end-column="6" />
+              <folding>
+                <element signature="method#view#0;class#StudentServices#0" expanded="false" />
+                <element signature="e#532#616#0" expanded="false" />
+                <element signature="method#edit#0;class#StudentServices#0" expanded="false" />
+                <element signature="method#editFirstName#0;class#StudentServices#0" expanded="false" />
+                <element signature="method#editSecondName#0;class#StudentServices#0" expanded="false" />
+                <element signature="method#editPersonalNr#0;class#StudentServices#0" expanded="false" />
+                <element signature="method#editDateOfBirth#0;class#StudentServices#0" expanded="false" />
+                <element signature="method#editEmail#0;class#StudentServices#0" expanded="false" />
+                <element signature="method#editGender#0;class#StudentServices#0" expanded="false" />
+                <element signature="method#editMobileNr#0;class#StudentServices#0" expanded="false" />
+                <element signature="method#editAddress#0;class#StudentServices#0" expanded="false" />
+                <element signature="method#selectCourses#0;class#StudentServices#0" expanded="false" />
+                <element signature="method#addCourseToStudentList#0;class#StudentServices#0" expanded="false" />
+                <element signature="method#viewAdded#0;class#StudentServices#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -126,8 +150,8 @@
       <file leaf-file-name="AdminServices.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/mivs/services/AdminServices.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="336">
-              <caret line="79" column="32" lean-forward="true" selection-start-line="79" selection-start-column="12" selection-end-line="79" selection-end-column="32" />
+            <state relative-caret-position="624">
+              <caret line="73" column="88" lean-forward="false" selection-start-line="73" selection-start-column="88" selection-end-line="73" selection-end-column="88" />
               <folding>
                 <element signature="method#addCourse#0;class#AdminServices#0" expanded="false" />
                 <element signature="method#codeSelection#0;class#AdminServices#0" expanded="false" />
@@ -136,7 +160,7 @@
                 <element signature="method#addStudent#0;class#AdminServices#0" expanded="false" />
                 <element signature="method#addLecturer#0;class#AdminServices#0" expanded="false" />
                 <element signature="method#addAdmin#0;class#AdminServices#0" expanded="false" />
-                <marker date="1517347156792" expanded="false" signature="3360:3376" ph="&lt;~&gt;" />
+                <marker date="1517441832591" expanded="false" signature="3372:3388" ph="&lt;~&gt;" />
               </folding>
             </state>
           </provider>
@@ -166,15 +190,14 @@
       <file leaf-file-name="DB.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/mivs/db/DB.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="241">
-              <caret line="194" column="67" lean-forward="true" selection-start-line="194" selection-start-column="67" selection-end-line="194" selection-end-column="67" />
+            <state relative-caret-position="127">
+              <caret line="95" column="7" lean-forward="false" selection-start-line="95" selection-start-column="7" selection-end-line="95" selection-end-column="7" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="method#mydb#0;class#DB#0" expanded="false" />
                 <element signature="method#createTablesforDb#0;class#DB#0" expanded="false" />
                 <element signature="method#newDBcreate#0;class#DB#0" expanded="false" />
                 <element signature="method#ifDBexists#0;class#DB#0" expanded="false" />
-                <element signature="method#crateQuerys#0;class#DB#0" expanded="false" />
                 <element signature="method#fillRoleDb#0;class#DB#0" expanded="false" />
                 <element signature="method#fillGenderDb#0;class#DB#0" expanded="false" />
                 <element signature="method#insertUserToDb#0;class#DB#0" expanded="false" />
@@ -278,7 +301,6 @@
         <option value="$PROJECT_DIR$/src/main/java/mivs/application/Alert/Alert.java" />
         <option value="$PROJECT_DIR$/src/main/resources/student.fxml" />
         <option value="$PROJECT_DIR$/src/main/java/mivs/application/MIVS.java" />
-        <option value="$PROJECT_DIR$/src/main/java/mivs/services/StudentServices.java" />
         <option value="$PROJECT_DIR$/src/main/java/mivs/users/Lecturer.java" />
         <option value="$PROJECT_DIR$/src/main/java/mivs/application/controllers/LecturerController.java" />
         <option value="$PROJECT_DIR$/src/main/resources/firstLogin.fxml" />
@@ -288,9 +310,10 @@
         <option value="$PROJECT_DIR$/src/main/java/mivs/Main.java" />
         <option value="$PROJECT_DIR$/src/main/java/mivs/application/controllers/LoginController.java" />
         <option value="$PROJECT_DIR$/src/main/java/mivs/back_end/Services.java" />
-        <option value="$PROJECT_DIR$/src/main/java/mivs/services/AdminServices.java" />
         <option value="$PROJECT_DIR$/src/main/java/mivs/application/controllers/AdminController.java" />
         <option value="$PROJECT_DIR$/src/main/java/mivs/db/DB.java" />
+        <option value="$PROJECT_DIR$/src/main/java/mivs/services/AdminServices.java" />
+        <option value="$PROJECT_DIR$/src/main/java/mivs/services/StudentServices.java" />
         <option value="$PROJECT_DIR$/src/main/java/mivs/application/controllers/StudentController.java" />
       </list>
     </option>
@@ -708,7 +731,7 @@
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3854048" sideWeight="0.5021482" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3854048" sideWeight="0.49785176" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1927024" sideWeight="0.49785176" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3295325" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -763,7 +786,7 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="94" />
+      <option name="time" value="101" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -843,28 +866,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="192">
           <caret line="35" column="32" lean-forward="false" selection-start-line="35" selection-start-column="32" selection-end-line="35" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/mivs/services/StudentServices.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="293">
-          <caret line="286" column="9" lean-forward="true" selection-start-line="286" selection-start-column="9" selection-end-line="286" selection-end-column="9" />
-          <folding>
-            <element signature="method#view#0;class#StudentServices#0" expanded="false" />
-            <element signature="e#393#477#0" expanded="false" />
-            <element signature="method#edit#0;class#StudentServices#0" expanded="false" />
-            <element signature="method#editFirstName#0;class#StudentServices#0" expanded="false" />
-            <element signature="method#editSecondName#0;class#StudentServices#0" expanded="false" />
-            <element signature="method#editPersonalNr#0;class#StudentServices#0" expanded="false" />
-            <element signature="method#editDateOfBirth#0;class#StudentServices#0" expanded="false" />
-            <element signature="method#editEmail#0;class#StudentServices#0" expanded="false" />
-            <element signature="method#editGender#0;class#StudentServices#0" expanded="false" />
-            <element signature="method#editMobileNr#0;class#StudentServices#0" expanded="false" />
-            <element signature="method#editAddress#0;class#StudentServices#0" expanded="false" />
-            <element signature="method#viewAdded#0;class#StudentServices#0" expanded="false" />
-            <element signature="method#getLeftCredit#0;class#StudentServices#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1146,23 +1147,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/mivs/services/AdminServices.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="336">
-          <caret line="79" column="32" lean-forward="true" selection-start-line="79" selection-start-column="12" selection-end-line="79" selection-end-column="32" />
-          <folding>
-            <element signature="method#addCourse#0;class#AdminServices#0" expanded="false" />
-            <element signature="method#codeSelection#0;class#AdminServices#0" expanded="false" />
-            <element signature="method#codeSelectionFX#0;class#AdminServices#0" expanded="false" />
-            <element signature="method#addUser#0;class#AdminServices#0" expanded="false" />
-            <element signature="method#addStudent#0;class#AdminServices#0" expanded="false" />
-            <element signature="method#addLecturer#0;class#AdminServices#0" expanded="false" />
-            <element signature="method#addAdmin#0;class#AdminServices#0" expanded="false" />
-            <marker date="1517347156792" expanded="false" signature="3360:3376" ph="&lt;~&gt;" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/mivs/back_end/Services.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="103">
@@ -1179,59 +1163,6 @@
             <element signature="method#datePicker#0;class#Services#0" expanded="false" />
             <element signature="method#courseList#0;class#Services#0" expanded="false" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/mivs/db/DB.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="241">
-          <caret line="194" column="67" lean-forward="true" selection-start-line="194" selection-start-column="67" selection-end-line="194" selection-end-column="67" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="method#mydb#0;class#DB#0" expanded="false" />
-            <element signature="method#createTablesforDb#0;class#DB#0" expanded="false" />
-            <element signature="method#newDBcreate#0;class#DB#0" expanded="false" />
-            <element signature="method#ifDBexists#0;class#DB#0" expanded="false" />
-            <element signature="method#crateQuerys#0;class#DB#0" expanded="false" />
-            <element signature="method#fillRoleDb#0;class#DB#0" expanded="false" />
-            <element signature="method#fillGenderDb#0;class#DB#0" expanded="false" />
-            <element signature="method#insertUserToDb#0;class#DB#0" expanded="false" />
-            <element signature="method#insertStudentToDb#0;class#DB#0" expanded="false" />
-            <element signature="method#insertLecturerToDb#0;class#DB#0" expanded="false" />
-            <element signature="method#connection#0;class#DB#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/mivs/application/controllers/AdminController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="264">
-          <caret line="345" column="74" lean-forward="true" selection-start-line="345" selection-start-column="12" selection-end-line="345" selection-end-column="74" />
-          <folding>
-            <element signature="method#addUserPane#0;class#AdminController#0" expanded="false" />
-            <element signature="method#viewUsersPane#0;class#AdminController#0" expanded="false" />
-            <element signature="method#addCoursePane#0;class#AdminController#0" expanded="false" />
-            <element signature="method#addUser#0;class#AdminController#0" expanded="false" />
-            <element signature="method#userList#0;class#AdminController#0" expanded="false" />
-            <element signature="method#courseList#0;class#AdminController#0" expanded="false" />
-            <element signature="method#getUserList#0;class#AdminController#0" expanded="false" />
-            <element signature="e#7634#7649#0" expanded="false" />
-            <element signature="method#getCourseList#0;class#AdminController#0" expanded="false" />
-            <element signature="method#isFiledUser#0;class#AdminController#0" expanded="false" />
-            <element signature="method#emptyUserFieleds#0;class#AdminController#0" expanded="false" />
-            <element signature="method#emptycourseFieleds#0;class#AdminController#0" expanded="false" />
-            <element signature="method#makePaneInvisible#0;class#AdminController#0" expanded="false" />
-            <element signature="method#lecturerList#0;class#AdminController#0" expanded="false" />
-            <element signature="method#viewCoursesPane#0;class#AdminController#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/mivs/users/User.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="144">
-          <caret line="18" column="17" lean-forward="true" selection-start-line="18" selection-start-column="17" selection-end-line="18" selection-end-column="17" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1266,10 +1197,102 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/mivs/users/User.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="144">
+          <caret line="18" column="17" lean-forward="true" selection-start-line="18" selection-start-column="17" selection-end-line="18" selection-end-column="17" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/mivs/db/DB.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="127">
+          <caret line="95" column="7" lean-forward="false" selection-start-line="95" selection-start-column="7" selection-end-line="95" selection-end-column="7" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#mydb#0;class#DB#0" expanded="false" />
+            <element signature="method#createTablesforDb#0;class#DB#0" expanded="false" />
+            <element signature="method#newDBcreate#0;class#DB#0" expanded="false" />
+            <element signature="method#ifDBexists#0;class#DB#0" expanded="false" />
+            <element signature="method#fillRoleDb#0;class#DB#0" expanded="false" />
+            <element signature="method#fillGenderDb#0;class#DB#0" expanded="false" />
+            <element signature="method#insertUserToDb#0;class#DB#0" expanded="false" />
+            <element signature="method#insertStudentToDb#0;class#DB#0" expanded="false" />
+            <element signature="method#insertLecturerToDb#0;class#DB#0" expanded="false" />
+            <element signature="method#connection#0;class#DB#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/mivs/application/controllers/AdminController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="160">
+          <caret line="366" column="0" lean-forward="false" selection-start-line="366" selection-start-column="0" selection-end-line="366" selection-end-column="0" />
+          <folding>
+            <element signature="method#addUserPane#0;class#AdminController#0" expanded="false" />
+            <element signature="method#viewUsersPane#0;class#AdminController#0" expanded="false" />
+            <element signature="method#addCoursePane#0;class#AdminController#0" expanded="false" />
+            <element signature="method#addUser#0;class#AdminController#0" expanded="false" />
+            <element signature="method#userList#0;class#AdminController#0" expanded="false" />
+            <element signature="method#courseList#0;class#AdminController#0" expanded="false" />
+            <element signature="method#getUserList#0;class#AdminController#0" expanded="false" />
+            <element signature="e#7634#7649#0" expanded="false" />
+            <element signature="method#getCourseList#0;class#AdminController#0" expanded="false" />
+            <element signature="method#isFiledUser#0;class#AdminController#0" expanded="false" />
+            <element signature="method#emptyUserFieleds#0;class#AdminController#0" expanded="false" />
+            <element signature="method#emptycourseFieleds#0;class#AdminController#0" expanded="false" />
+            <element signature="method#makePaneInvisible#0;class#AdminController#0" expanded="false" />
+            <element signature="method#lecturerList#0;class#AdminController#0" expanded="false" />
+            <element signature="method#viewCoursesPane#0;class#AdminController#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/mivs/services/AdminServices.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="624">
+          <caret line="73" column="88" lean-forward="false" selection-start-line="73" selection-start-column="88" selection-end-line="73" selection-end-column="88" />
+          <folding>
+            <element signature="method#addCourse#0;class#AdminServices#0" expanded="false" />
+            <element signature="method#codeSelection#0;class#AdminServices#0" expanded="false" />
+            <element signature="method#codeSelectionFX#0;class#AdminServices#0" expanded="false" />
+            <element signature="method#addUser#0;class#AdminServices#0" expanded="false" />
+            <element signature="method#addStudent#0;class#AdminServices#0" expanded="false" />
+            <element signature="method#addLecturer#0;class#AdminServices#0" expanded="false" />
+            <element signature="method#addAdmin#0;class#AdminServices#0" expanded="false" />
+            <marker date="1517441832591" expanded="false" signature="3372:3388" ph="&lt;~&gt;" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/mivs/services/StudentServices.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="321" column="6" lean-forward="false" selection-start-line="321" selection-start-column="6" selection-end-line="321" selection-end-column="6" />
+          <folding>
+            <element signature="method#view#0;class#StudentServices#0" expanded="false" />
+            <element signature="e#532#616#0" expanded="false" />
+            <element signature="method#edit#0;class#StudentServices#0" expanded="false" />
+            <element signature="method#editFirstName#0;class#StudentServices#0" expanded="false" />
+            <element signature="method#editSecondName#0;class#StudentServices#0" expanded="false" />
+            <element signature="method#editPersonalNr#0;class#StudentServices#0" expanded="false" />
+            <element signature="method#editDateOfBirth#0;class#StudentServices#0" expanded="false" />
+            <element signature="method#editEmail#0;class#StudentServices#0" expanded="false" />
+            <element signature="method#editGender#0;class#StudentServices#0" expanded="false" />
+            <element signature="method#editMobileNr#0;class#StudentServices#0" expanded="false" />
+            <element signature="method#editAddress#0;class#StudentServices#0" expanded="false" />
+            <element signature="method#selectCourses#0;class#StudentServices#0" expanded="false" />
+            <element signature="method#addCourseToStudentList#0;class#StudentServices#0" expanded="false" />
+            <element signature="method#viewAdded#0;class#StudentServices#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/mivs/application/controllers/StudentController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="295">
-          <caret line="361" column="39" lean-forward="false" selection-start-line="361" selection-start-column="36" selection-end-line="361" selection-end-column="39" />
+        <state relative-caret-position="536">
+          <caret line="387" column="32" lean-forward="true" selection-start-line="387" selection-start-column="32" selection-end-line="387" selection-end-column="32" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="method#init#0;class#StudentController#0" expanded="false" />
