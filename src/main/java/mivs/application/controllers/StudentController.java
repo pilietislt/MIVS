@@ -9,21 +9,16 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import mivs.application.alert.Alert;
-import mivs.courses.Course;
 import mivs.db.DB;
+import mivs.services.CourseServices;
 import mivs.services.StudentServices;
-
 import mivs.users.Gender;
 import mivs.users.Role;
 import mivs.users.Student;
-import mivs.utils.IOUtils;
 
-import java.io.FileNotFoundException;
 import java.sql.*;
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
+
+
 
 public class StudentController extends Controller {
     @FXML
@@ -72,6 +67,8 @@ public class StudentController extends Controller {
     private TableView coursesTable;
     @FXML
     private ListView availableCourseList;
+    @FXML
+    private Button addCourse;
 
 
     private Student student;
@@ -232,40 +229,7 @@ public class StudentController extends Controller {
         } else if (gender.getValue().equals(Gender.FEMALE)) {
             this.student.setGender(Gender.FEMALE);
         }
-
-        try {
-            Connection connection = new DB().connection();
-            PreparedStatement statement = connection.prepareStatement("update user set user_firstName = ? , user_secondName = ? where user_username = ?;");
-            statement.setString(1, this.student.getFirstName());
-            statement.setString(2, this.student.getSecondName());
-            statement.setString(3, this.student.getUsername());
-            statement.execute();
-            statement = connection.prepareStatement("update student set student_personalNumber = ?, student_dateOfBirth =?, student_email = ?, student_mobileNumber = ?, gender_id =?, student_address =? where user_username = ?; ");
-            statement.setInt(1, this.student.getPersonalNumber());
-            if (datePicker.getValue() == null) {
-                statement.setNull(2, Types.DATE);
-            } else {
-                statement.setDate(2, Date.valueOf(this.student.getDateOfBirth()));
-            }
-            statement.setString(3, this.student.getEmail());
-            statement.setInt(4, this.student.getMobileNumber());
-            if (this.student.getGender() == Gender.FEMALE) {
-                statement.setInt(5, 1);
-            } else if (this.student.getGender() == Gender.MALE) {
-                statement.setInt(5, 2);
-            } else {
-                statement.setNull(5, Types.INTEGER);
-            }
-            statement.setString(6, this.student.getAddress());
-            statement.setString(7, this.student.getUsername());
-            statement.execute();
-
-            connection.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-
-
-        }
+        new StudentServices().editStudent(this.student, datePicker);
         viewPane();
 
     }
@@ -279,45 +243,15 @@ public class StudentController extends Controller {
     public void viewMyCoursesPane() {
         makePaneInvisible();
         viewAllCousesPane.setVisible(true);
-        courseList(myCourseList());
+        courseList(new StudentServices().myCourseList(this.student));
     }
 
     public void registerToCoursesPane() {
         makePaneInvisible();
         registerToCoursesPane.setVisible(true);
-        ObservableList<String> items = FXCollections.observableArrayList(availableCourseList());
+        ObservableList<String> items = FXCollections.observableArrayList(new CourseServices().availableCourseList(student));
         availableCourseList.setItems(items);
-        // courseList(myCourseList());
-    }
 
-
-    private ObservableList<Course> myCourseList() {
-        ObservableList<Course> courses = FXCollections.observableArrayList();
-        try {
-            Connection connection = new DB().connection();
-            PreparedStatement statement = connection.prepareStatement(
-                    "SELECT \n" +
-                    " * \n" +
-                    "FROM  \n" +
-                    " course c,\n" +
-                    " studentrunningcourses s\n" +
-                    "WHERE \n" +
-                    " s.course_code = c.course_code and \n" +
-                    " s.student_code = ?  ;");
-            statement.setString(1,this.student.getStudentCode());
-
-            ResultSet resultSet = statement.executeQuery();
-            while (resultSet.next()){
-                courses.add(new Course(resultSet.getString(1), resultSet.getString(2), resultSet.getString(3), resultSet.getDate(4).toLocalDate(), resultSet.getInt(5), resultSet.getString(6)));
-            }
-
-
-            connection.close();
-        }catch (SQLException e){
-
-                        e.printStackTrace();
-        }
-        return courses;
     }
 
     private void courseList(ObservableList data) {
@@ -334,96 +268,24 @@ public class StudentController extends Controller {
 
     }
 
-    private ArrayList<String> availableCourseList() {
-
-        ArrayList<String> availableCourse = new ArrayList<>();
-        try {
-            Connection connection = new DB().connection();
-            PreparedStatement statement = connection.prepareStatement(
-                    "SELECT \n" +
-                            " course_title, \n" +
-                            " course_startDate, \n" +
-                            " course_credit ,\n" +
-                            " course_code \n" +
-                            "FROM  \n" +
-                            " course c   \n" +
-                            " \n" +
-                            "where \n" +
-                            " course_startDate >  ? and \n" +
-                            " course_credit < ? and\n" +
-                            " not exists (select 1 from studentrunningcourses s where s.course_code = c.course_code and s.student_code = ?);"
-            );
-            statement.setDate(1, Date.valueOf(LocalDate.now()));
-            statement.setInt(2, new StudentServices().getLeftCredit(this.student.getStudentCode()));
-            System.out.println(this.student.getStudentCode());
-            statement.setString(3, this.student.getStudentCode());
-            ResultSet resultSet = statement.executeQuery();
-            while (resultSet.next()){
-                availableCourse.add(resultSet.getString(1) + " " + resultSet.getDate(2) + " " + resultSet.getInt(3) + " " + resultSet.getString(4));
-
-            }
-
-
-        }catch (SQLException e){
-            e.printStackTrace();
-        }
-
-//        HashMap<String, Student> readUser = null;
-//        HashMap<String, Course> readCourse = null;
-//
-//
-//        try {
-//            readUser = (HashMap<String, Student>) IOUtils.readObjectFromFile("files/users");
-//            readCourse = (HashMap<String, Course>) IOUtils.readObjectFromFile("files/courses");
-//
-//        } catch (FileNotFoundException e) {
-//
-//        }
-//
-//
-//        for (Map.Entry<String, Course> entry : readCourse.entrySet()) {
-//            Course value = entry.getValue();
-//            if (value.getStartDate().isAfter(LocalDate.now()) &&
- //                   value.getCredit() < new StudentServices().getLeftCredit(this.student.getUsername()) &&
-//                    !readUser.get(this.student.getUsername()).getRunningCourses().contains(value.getCode())) {
-//
-//
-//                availableCourse.add(value.getTittle() + " " + value.getStartDate() + " " + value.getCredit() + " " + value.getCode());
-//            }
-//
-//        }
-        return availableCourse;
-    }
-
     public void addCourseToStudentList() {
 
-        String course = availableCourseList.getSelectionModel().getSelectedItem().toString();
-        course = course.substring(course.length() - 6);
-
-        try {
-            Connection connection = new DB().connection();
-            PreparedStatement statement = connection.prepareStatement("insert into studentrunningcourses (course_code, student_code) values (?,?);");
-            statement.setString(1,course);
-            statement.setString(2,this.student.getStudentCode());
-            statement.execute();
-            connection.close();
-
-        }catch (SQLException e){
-            e.printStackTrace();
-        }
-//
-//        try {
-//            HashMap<String, Student> readUser = (HashMap<String, Student>) IOUtils.readObjectFromFile("files/users");
-//            student = readUser.get(student.getUsername());
-//            student.getRunningCourses().add(course);
-//            readUser.put(student.getUsername(), student);
-//            IOUtils.writeObjectToFile(readUser, "files/users");
-//
-//        } catch (FileNotFoundException e) {
-//            e.printStackTrace();
-//        }
+       new StudentServices().insetNewStudentCourse(this.student, availableCourseList);
+        disableButton();
         registerToCoursesPane();
 
+    }
+
+    public void makeButtonActive() {
+
+        if (!availableCourseList.getSelectionModel().isEmpty()) {
+            addCourse.setDisable(false);
+
+        }
+    }
+
+    private void disableButton() {
+        addCourse.setDisable(true);
     }
 
 }
