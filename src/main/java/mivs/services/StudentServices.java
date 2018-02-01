@@ -7,11 +7,76 @@ import javafx.scene.control.ListView;
 import mivs.courses.Course;
 import mivs.db.DB;
 import mivs.users.Gender;
+import mivs.users.Role;
 import mivs.users.Student;
 import java.sql.*;
 
 
 public class StudentServices {
+
+    public Student getStudent(String studentUsername){
+        Student student = null;
+
+        try {
+            Connection con = new DB().connection();
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery(
+                    "SELECT " +
+                            "u.user_username, " +
+                            "user_password, " +
+                            "user_firstName, " +
+                            "user_secondName, " +
+                            "student_studentCode, " +
+                            "student_personalNumber, " +
+                            "student_dateOfBirth , " +
+                            "student_email , " +
+                            "student_mobileNumber , " +
+                            "gender_id , " +
+                            "student_address  " +
+                            "FROM " +
+                            "user u," +
+                            "student s " +
+                            "WHERE " +
+                            "s.user_username = u.user_username AND " +
+                            "s.user_username ='" + studentUsername + "';");
+            while (rs.next()) {
+                String userName = rs.getString(1);
+                String password = rs.getString(2);
+                String firstName = rs.getString(3);
+                String secondName = rs.getString(4);
+                String studentCode = rs.getString(5);
+                int personalNumber = rs.getInt(6);
+                String email = rs.getString(8);
+                int mobileNUmber = rs.getInt(9);
+                int gender = rs.getInt(10);
+                String address = rs.getString(11);
+
+
+                student = new Student(userName, password, Role.STUDENT, firstName, secondName, studentCode);
+                student.setPersonalNumber(personalNumber);
+                if (rs.getDate(7) != null) {
+                    student.setDateOfBirth(rs.getDate(7).toLocalDate());
+                }
+                student.setEmail(email);
+
+                student.setMobileNumber(mobileNUmber);
+                student.setAddress(address);
+                if (gender == 1) {
+                    student.setGender(Gender.FEMALE);
+                } else if (gender == 2) {
+                    student.setGender(Gender.MALE);
+                }
+
+            }
+            con.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+
+        return student;
+
+    }
 
     public int getLeftCredit(String studentCode) {
 
@@ -148,5 +213,44 @@ public class StudentServices {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public ObservableList<Student> allStudentsOfCourseList(String code) {
+        ObservableList<Student> students = FXCollections.observableArrayList();
+
+
+        try {
+            Connection connection = new DB().connection();
+            PreparedStatement statement = connection.prepareStatement(
+                    "SELECT \n" +
+                            " u.user_username,\n" +
+                            " user_password,\n" +
+                            " user_firstName,\n" +
+                            " user_secondName,\n" +
+                            " s.student_studentCode\n" +
+                            "FROM  \n" +
+                            " user u,\n" +
+                            " student s,\n" +
+                            " studentrunningcourses sr\n" +
+                            "WHERE\n" +
+                            " u.user_username = s.user_username and\n" +
+                            " s.student_studentCode = sr.student_code and\n" +
+                            " sr.course_code = ? ;"
+            );
+            statement.setString(1, code);
+
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                students.add(new Student(resultSet.getString(1), resultSet.getString(2), Role.STUDENT, resultSet.getString(3), resultSet.getString(4), resultSet.getString(5)));
+            }
+
+
+            connection.close();
+        } catch (SQLException e) {
+
+            e.printStackTrace();
+        }
+
+        return students;
     }
 }

@@ -76,45 +76,7 @@ public class StudentController extends Controller {
     public void init(String user) {
         makePaneInvisible();
         startPane.setVisible(true);
-
-        try {
-            Connection con = new DB().connection();
-            Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery("select u.user_username, user_password, user_firstName, user_secondName, student_studentCode, student_personalNumber, student_dateOfBirth , student_email , student_mobileNumber , gender_id , student_address  from user u,student s where s.user_username = u.user_username AND s.user_username ='" + user + "';");
-            while (rs.next()) {
-                String userName = rs.getString(1);
-                String password = rs.getString(2);
-                String firstName = rs.getString(3);
-                String secondName = rs.getString(4);
-                String studentCode = rs.getString(5);
-                int personalNumber = rs.getInt(6);
-                String email = rs.getString(8);
-                int mobileNUmber = rs.getInt(9);
-                int gender = rs.getInt(10);
-                String address = rs.getString(11);
-
-
-                student = new Student(userName, password, Role.STUDENT, firstName, secondName, studentCode);
-                student.setPersonalNumber(personalNumber);
-                if (rs.getDate(7) != null) {
-                    student.setDateOfBirth(rs.getDate(7).toLocalDate());
-                }
-                student.setEmail(email);
-
-                student.setMobileNumber(mobileNUmber);
-                student.setAddress(address);
-                if (gender == 1) {
-                    student.setGender(Gender.FEMALE);
-                } else if (gender == 2) {
-                    student.setGender(Gender.MALE);
-                }
-
-            }
-            con.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
+        student = new StudentServices().getStudent(user);
         firstLable.setText("Hello " + this.student.getRole() + " " + this.student.getFirstName());
 
     }
@@ -237,7 +199,7 @@ public class StudentController extends Controller {
     public void viewCoursesPane() {
         makePaneInvisible();
         viewAllCousesPane.setVisible(true);
-        courseList(new AdminController().getCourseList());
+        courseList(new CourseServices().getCourseList());
     }
 
     public void viewMyCoursesPane() {

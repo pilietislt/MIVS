@@ -9,14 +9,10 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import mivs.courses.Course;
-import mivs.db.DB;
+import mivs.services.LecturerServices;
+import mivs.services.StudentServices;
 import mivs.users.*;
-import mivs.utils.IOUtils;
 
-import java.io.FileNotFoundException;
-import java.sql.*;
-import java.util.HashMap;
-import java.util.Map;
 
 public class LecturerController extends Controller {
 
@@ -87,46 +83,7 @@ public class LecturerController extends Controller {
     public void init(String user) {
         makePaneInvisible();
         startPane.setVisible(true);
-
-        try {
-            Connection con = new DB().connection();
-            Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery("select u.user_username, user_password, user_firstName, user_secondName, lecturer_lecturerCode, lecturer_personalNumber, lecturer_dateOfBirth , lecturer_email , lecturer_mobileNumber , gender_id , lecturer_address  from user u,lecturer l where l.user_username = u.user_username AND l.user_username ='" + user + "';");
-            while (rs.next()) {
-                String userName = rs.getString(1);
-                String password = rs.getString(2);
-                String firstName = rs.getString(3);
-                String secondName = rs.getString(4);
-                String lecturerCode = rs.getString(5);
-                int personalNumber = rs.getInt(6);
-                String email = rs.getString(8);
-                int mobileNUmber = rs.getInt(9);
-                int gender = rs.getInt(10);
-                String address = rs.getString(11);
-
-
-                lecturer = new Lecturer(userName, password, Role.LECTURER, firstName, secondName, lecturerCode);
-                lecturer.setPersonalNumber(personalNumber);
-                if (rs.getDate(7) != null) {
-                    lecturer.setDateOfBirth(rs.getDate(7).toLocalDate());
-                }
-                lecturer.setEmail(email);
-
-                lecturer.setMobileNumber(mobileNUmber);
-                lecturer.setAddress(address);
-                if (gender == 1) {
-                    lecturer.setGender(Gender.FEMALE);
-                } else if (gender == 2) {
-                    lecturer.setGender(Gender.MALE);
-                }
-
-            }
-            con.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        //  this.lecturer = readUser.get(user);
+        lecturer = new LecturerServices().getLecturer(user);
         firstLable.setText("Hello " + this.lecturer.getRole() + " " + this.lecturer.getFirstName());
 
     }
@@ -238,41 +195,7 @@ public class LecturerController extends Controller {
         } else if (gender.getValue().equals(Gender.FEMALE)) {
             this.lecturer.setGender(Gender.FEMALE);
         }
-
-        try {
-            Connection connection = new DB().connection();
-            PreparedStatement statement = connection.prepareStatement("update user set user_firstName = ? , user_secondName = ? where user_username = ?;");
-            statement.setString(1, this.lecturer.getFirstName());
-            statement.setString(2, this.lecturer.getSecondName());
-            statement.setString(3, this.lecturer.getUsername());
-            statement.execute();
-            statement = connection.prepareStatement("update lecturer set lecturer_personalNumber = ?, lecturer_dateOfBirth =?, lecturer_email = ?, lecturer_mobileNumber = ?, gender_id =?, lecturer_address =? where user_username = ?; ");
-            statement.setInt(1, this.lecturer.getPersonalNumber());
-            if (datePicker.getValue() == null) {
-                statement.setNull(2, Types.DATE);
-            } else {
-                statement.setDate(2, Date.valueOf(this.lecturer.getDateOfBirth()));
-            }
-            statement.setString(3, this.lecturer.getEmail());
-            statement.setInt(4, this.lecturer.getMobileNumber());
-            if (this.lecturer.getGender() == Gender.FEMALE) {
-                statement.setInt(5, 1);
-            } else if (this.lecturer.getGender() == Gender.MALE) {
-                statement.setInt(5, 2);
-            } else {
-                statement.setNull(5, Types.INTEGER);
-            }
-            statement.setString(6, this.lecturer.getAddress());
-            statement.setString(7, this.lecturer.getUsername());
-            statement.execute();
-
-            connection.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-
-
-        }
-
+        new LecturerServices().editLecturer(lecturer,datePicker);
         viewPane();
 
     }
@@ -280,7 +203,7 @@ public class LecturerController extends Controller {
     public void viewMyCoursesPane() {
         makePaneInvisible();
         viewMyCousesPane.setVisible(true);
-        courseList(myCourseList());
+        courseList(new LecturerServices().lecturerCourseList(this.lecturer));
     }
 
     private void courseList(ObservableList data) {
@@ -298,67 +221,17 @@ public class LecturerController extends Controller {
 
     }
 
-    private ObservableList<Course> myCourseList() {
-        ObservableList<Course> courses = FXCollections.observableArrayList();
-
-        try {
-            Connection connection = new DB().connection();
-            PreparedStatement statement = connection.prepareStatement(
-                    "SELECT \n" +
-                            " * \n" +
-                            "FROM  \n" +
-                            " course c,\n" +
-                            " lecturerrunningcourses l\n" +
-                            "WHERE \n" +
-                            " l.course_code = c.course_code and \n" +
-                            " lecturer_code = ?  ;");
-            statement.setString(1, this.lecturer.getLecturerCode());
-
-            ResultSet resultSet = statement.executeQuery();
-            while (resultSet.next()) {
-                courses.add(new Course(resultSet.getString(1), resultSet.getString(2), resultSet.getString(3), resultSet.getDate(4).toLocalDate(), resultSet.getInt(5), resultSet.getString(6)));
-            }
-
-
-            connection.close();
-        } catch (SQLException e) {
-
-            e.printStackTrace();
-        }
-
-//        try {
-//            HashMap<String, Course> readUser = (HashMap<String, Course>) IOUtils.readObjectFromFile("files/courses");
-//
-//            for (Map.Entry<String, Course> entry : readUser.entrySet()) {
-//                Course value = entry.getValue();
-//                for (String c : lecturer.getRunningCourses()) {
-//
-//                    if (value.getCode().equals(c)) {
-//                        courses.add(new Course(value.getCode(), value.getTittle(), value.getDescription(), value.getStartDate(), value.getCredit(), value.getLecturerCode()));
-//
-//                    }
-//
-//                }
-//
-//
-//            }
-//        } catch (FileNotFoundException e) {
-//            e.printStackTrace();
-//        }
-        return courses;
-    }
-
     public void viewStudentsPane() {
 
         makePaneInvisible();
         viewStudentsPane.setVisible(true);
-        viewMyCourseList(myCourseList());
+        viewMyCourseList(new LecturerServices().lecturerCourseList(this.lecturer));
     }
 
     public void selectCourse() {
         if (courseList.getSelectionModel().getSelectedItem() != null) {
             Course selectedCourse = (Course) courseList.getSelectionModel().getSelectedItem();
-            viewAllStudentsList(allStudentsList(selectedCourse.getCode()));
+            viewAllStudentsList(new StudentServices().allStudentsOfCourseList(selectedCourse.getCode()));
         }
 
 
@@ -374,45 +247,6 @@ public class LecturerController extends Controller {
         courseList.getColumns().setAll(courseCodeCol, courseTitleCol, courseStartDateCol);
 
 
-    }
-
-    private ObservableList<Student> allStudentsList(String code) {
-        ObservableList<Student> students = FXCollections.observableArrayList();
-
-
-        try {
-            Connection connection = new DB().connection();
-            PreparedStatement statement = connection.prepareStatement(
-                    "SELECT \n" +
-                            " u.user_username,\n" +
-                            " user_password,\n" +
-                            " user_firstName,\n" +
-                            " user_secondName,\n" +
-                            " s.student_studentCode\n" +
-                            "FROM  \n" +
-                            " user u,\n" +
-                            " student s,\n" +
-                            " studentrunningcourses sr\n" +
-                            "WHERE\n" +
-                            " u.user_username = s.user_username and\n" +
-                            " s.student_studentCode = sr.student_code and\n" +
-                            " sr.course_code = ? ;"
-            );
-            statement.setString(1, code);
-
-            ResultSet resultSet = statement.executeQuery();
-            while (resultSet.next()) {
-                students.add(new Student(resultSet.getString(1), resultSet.getString(2), Role.STUDENT, resultSet.getString(3), resultSet.getString(4), resultSet.getString(5)));
-            }
-
-
-            connection.close();
-        } catch (SQLException e) {
-
-            e.printStackTrace();
-        }
-
-        return students;
     }
 
     private void viewAllStudentsList(ObservableList data) {

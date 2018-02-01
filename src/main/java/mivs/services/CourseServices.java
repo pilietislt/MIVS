@@ -1,5 +1,8 @@
 package mivs.services;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import mivs.courses.Course;
 import mivs.db.DB;
 import mivs.users.Student;
 
@@ -44,6 +47,30 @@ public class CourseServices {
         }
 
         return availableCourse;
+    }
+
+    public ObservableList<Course> getCourseList() {
+        ObservableList<Course> courses = FXCollections.observableArrayList();
+
+        try {
+            Connection connection =new DB().connection();
+            PreparedStatement statement = connection.prepareStatement(
+                    "SELECT * FROM course; "
+            );
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()){
+                LocalDate date = resultSet.getDate(4).toLocalDate();
+                courses.add(new Course(resultSet.getString(1),resultSet.getString(2),resultSet.getString(3) , date, resultSet.getInt(5), resultSet.getString(6)));
+
+            }
+            connection.close();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("list error");
+        }
+
+        return courses;
     }
 
 

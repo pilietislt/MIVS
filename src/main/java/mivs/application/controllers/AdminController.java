@@ -13,6 +13,7 @@ import mivs.back_end.Services;
 import mivs.courses.Course;
 import mivs.db.DB;
 import mivs.services.AdminServices;
+import mivs.services.CourseServices;
 import mivs.users.Admin;
 import mivs.users.Role;
 import mivs.users.Student;
@@ -192,7 +193,7 @@ public class AdminController extends Controller {
 
     private void courseList() {
 
-        ObservableList data = getCourseList();
+        ObservableList data = new CourseServices().getCourseList();
         coursesTable.setItems(data);
 
         codeCol.setCellValueFactory(new PropertyValueFactory("code"));
@@ -246,40 +247,7 @@ public class AdminController extends Controller {
         return users;
     }
 
-    public ObservableList<Course> getCourseList() {
-        ObservableList<Course> courses = FXCollections.observableArrayList();
 
-        try {
-            Connection connection =new DB().connection();
-            PreparedStatement statement = connection.prepareStatement(
-                    "SELECT * FROM course; "
-            );
-            ResultSet resultSet = statement.executeQuery();
-            while (resultSet.next()){
-                LocalDate date = resultSet.getDate(4).toLocalDate();
-                courses.add(new Course(resultSet.getString(1),resultSet.getString(2),resultSet.getString(3) , date, resultSet.getInt(5), resultSet.getString(6)));
-
-            }
-            connection.close();
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-            System.out.println("list error");
-        }
-
-//
-//        try {
-//            HashMap<String, Course> readUser = (HashMap<String, Course>) IOUtils.readObjectFromFile("files/courses");
-//
-//            for (Map.Entry<String, Course> entry : readUser.entrySet()) {
-//                Course value = entry.getValue();
-//                courses.add(new Course(value.getCode(), value.getTittle(), value.getDescription(), value.getStartDate(), value.getCredit(), value.getLecturerCode()));
-//            }
-//        } catch (FileNotFoundException e) {
-//            e.printStackTrace();
-//        }
-        return courses;
-    }
 
     private boolean isFiledUser() {
         if (username.getText().trim().isEmpty()) {
