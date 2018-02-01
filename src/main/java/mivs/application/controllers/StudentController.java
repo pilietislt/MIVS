@@ -80,7 +80,6 @@ public class StudentController extends Controller {
         makePaneInvisible();
         startPane.setVisible(true);
 
-
         try {
             Connection con = new DB().connection();
             Statement stmt = con.createStatement();
@@ -92,7 +91,6 @@ public class StudentController extends Controller {
                 String secondName = rs.getString(4);
                 String studentCode = rs.getString(5);
                 int personalNumber = rs.getInt(6);
-
                 String email = rs.getString(8);
                 int mobileNUmber = rs.getInt(9);
                 int gender = rs.getInt(10);
@@ -116,8 +114,8 @@ public class StudentController extends Controller {
 
             }
             con.close();
-        } catch (Exception e) {
-            System.out.println(e);
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
 
         firstLable.setText("Hello " + this.student.getRole() + " " + this.student.getFirstName());
@@ -317,26 +315,7 @@ public class StudentController extends Controller {
             connection.close();
         }catch (SQLException e){
 
-//        }
-//
-//        try {
-//            HashMap<String, Course> readUser = (HashMap<String, Course>) IOUtils.readObjectFromFile("files/courses");
-//
-//            for (Map.Entry<String, Course> entry : readUser.entrySet()) {
-//                Course value = entry.getValue();
-//                for (String c : student.getRunningCourses()) {
-//
-//                    if (value.getCode().equals(c)) {
-//                        courses.add(new Course(value.getCode(), value.getTittle(), value.getDescription(), value.getStartDate(), value.getCredit(), value.getLecturerCode()));
-//
-//                    }
-//
-//                }
-//
-//
-//            }
-//        } catch (FileNotFoundException e) {
-            e.printStackTrace();
+                        e.printStackTrace();
         }
         return courses;
     }

@@ -9,10 +9,12 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import mivs.courses.Course;
+import mivs.db.DB;
 import mivs.users.*;
 import mivs.utils.IOUtils;
 
 import java.io.FileNotFoundException;
+import java.sql.*;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
@@ -86,14 +88,46 @@ public class LecturerController extends Controller {
     public void init(String user) {
         makePaneInvisible();
         startPane.setVisible(true);
-        HashMap<String, Lecturer> readUser = null;
+
         try {
-            readUser = (HashMap<String, Lecturer>) IOUtils.readObjectFromFile("files/users");
-        } catch (FileNotFoundException e) {
+            Connection con = new DB().connection();
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery("select u.user_username, user_password, user_firstName, user_secondName, lecturer_lecturerCode, lecturer_personalNumber, lecturer_dateOfBirth , lecturer_email , lecturer_mobileNumber , gender_id , lecturer_address  from user u,lecturer l where l.user_username = u.user_username AND l.user_username ='" + user + "';");
+            while (rs.next()) {
+                String userName = rs.getString(1);
+                String password = rs.getString(2);
+                String firstName = rs.getString(3);
+                String secondName = rs.getString(4);
+                String lecturerCode = rs.getString(5);
+                int personalNumber = rs.getInt(6);
+                String email = rs.getString(8);
+                int mobileNUmber = rs.getInt(9);
+                int gender = rs.getInt(10);
+                String address = rs.getString(11);
+
+
+                lecturer = new Lecturer(userName, password, Role.LECTURER, firstName, secondName, lecturerCode);
+                lecturer.setPersonalNumber(personalNumber);
+                if (rs.getDate(7) != null) {
+                    lecturer.setDateOfBirth(rs.getDate(7).toLocalDate());
+                }
+                lecturer.setEmail(email);
+
+                lecturer.setMobileNumber(mobileNUmber);
+                lecturer.setAddress(address);
+                if (gender == 1) {
+                    lecturer.setGender(Gender.FEMALE);
+                } else if (gender == 2) {
+                    lecturer.setGender(Gender.MALE);
+                }
+
+            }
+            con.close();
+        } catch (SQLException e) {
             e.printStackTrace();
         }
 
-        this.lecturer = readUser.get(user);
+      //  this.lecturer = readUser.get(user);
         firstLable.setText("Hello "+this.lecturer.getRole()+" "+this.lecturer.getFirstName());
 
     }
@@ -180,10 +214,6 @@ public class LecturerController extends Controller {
 
     public void update() {
 
-        try {
-            HashMap<String, Lecturer> readUser = (HashMap<String, Lecturer>) IOUtils.readObjectFromFile("files/users");
-
-            lecturer = readUser.get(username.getText());
             int pNumber = 0;
             int mNumber = 0;
 
@@ -210,12 +240,39 @@ public class LecturerController extends Controller {
                 this.lecturer.setGender(Gender.FEMALE);
             }
 
+            try {
+                Connection connection = new DB().connection();
+                PreparedStatement statement = connection.prepareStatement("update user set user_firstName = ? , user_secondName = ? where user_username = ?;");
+                statement.setString(1, this.lecturer.getFirstName());
+                statement.setString(2, this.lecturer.getSecondName());
+                statement.setString(3, this.lecturer.getUsername());
+                statement.execute();
+                statement = connection.prepareStatement("update lecturer set lecturer_personalNumber = ?, lecturer_dateOfBirth =?, lecturer_email = ?, lecturer_mobileNumber = ?, gender_id =?, lecturer_address =? where user_username = ?; ");
+                statement.setInt(1, this.lecturer.getPersonalNumber());
+                if (datePicker.getValue() == null) {
+                    statement.setNull(2, Types.DATE);
+                } else {
+                    statement.setDate(2, Date.valueOf(this.lecturer.getDateOfBirth()));
+                }
+                statement.setString(3, this.lecturer.getEmail());
+                statement.setInt(4, this.lecturer.getMobileNumber());
+                if (this.lecturer.getGender() == Gender.FEMALE) {
+                    statement.setInt(5, 1);
+                } else if (this.lecturer.getGender() == Gender.MALE) {
+                    statement.setInt(5, 2);
+                } else {
+                    statement.setNull(5, Types.INTEGER);
+                }
+                statement.setString(6, this.lecturer.getAddress());
+                statement.setString(7, this.lecturer.getUsername());
+                statement.execute();
 
-            readUser.put(username.getText(), this.lecturer);
-            IOUtils.writeObjectToFile(readUser, "files/users");
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+                connection.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+
+
+            }
 
         viewPane();
 

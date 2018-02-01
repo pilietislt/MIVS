@@ -6,10 +6,8 @@
   <component name="ChangeListManager">
     <list default="true" id="ad1f7652-61e2-4ab8-ab14-709e66e91299" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/mivs/application/controllers/LecturerController.java" afterPath="$PROJECT_DIR$/src/main/java/mivs/application/controllers/LecturerController.java" />
       <change beforePath="$PROJECT_DIR$/src/main/java/mivs/application/controllers/StudentController.java" afterPath="$PROJECT_DIR$/src/main/java/mivs/application/controllers/StudentController.java" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/mivs/db/DB.java" afterPath="$PROJECT_DIR$/src/main/java/mivs/db/DB.java" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/mivs/services/AdminServices.java" afterPath="$PROJECT_DIR$/src/main/java/mivs/services/AdminServices.java" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/mivs/services/StudentServices.java" afterPath="$PROJECT_DIR$/src/main/java/mivs/services/StudentServices.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -82,24 +80,47 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="StudentController.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="StudentController.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/mivs/application/controllers/StudentController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="536">
-              <caret line="387" column="32" lean-forward="true" selection-start-line="387" selection-start-column="32" selection-end-line="387" selection-end-column="32" />
+            <state relative-caret-position="528">
+              <caret line="248" column="13" lean-forward="true" selection-start-line="248" selection-start-column="13" selection-end-line="248" selection-end-column="13" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="method#init#0;class#StudentController#0" expanded="false" />
                 <element signature="method#viewPane#0;class#StudentController#0" expanded="false" />
                 <element signature="method#makePaneInvisible#0;class#StudentController#0" expanded="false" />
                 <element signature="method#editable#0;class#StudentController#0" expanded="false" />
-                <element signature="method#update#0;class#StudentController#0" expanded="false" />
                 <element signature="method#viewCoursesPane#0;class#StudentController#0" expanded="false" />
                 <element signature="method#viewMyCoursesPane#0;class#StudentController#0" expanded="false" />
                 <element signature="method#registerToCoursesPane#0;class#StudentController#0" expanded="false" />
                 <element signature="method#myCourseList#0;class#StudentController#0" expanded="false" />
                 <element signature="method#courseList#0;class#StudentController#0" expanded="false" />
+                <element signature="method#availableCourseList#0;class#StudentController#0" expanded="false" />
                 <element signature="method#addCourseToStudentList#0;class#StudentController#0" expanded="false" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="LecturerController.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/mivs/application/controllers/LecturerController.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-182">
+              <caret line="253" column="200" lean-forward="false" selection-start-line="253" selection-start-column="200" selection-end-line="253" selection-end-column="200" />
+              <folding>
+                <element signature="method#init#0;class#LecturerController#0" expanded="false" />
+                <element signature="method#viewPane#0;class#LecturerController#0" expanded="false" />
+                <element signature="method#makePaneInvisible#0;class#LecturerController#0" expanded="false" />
+                <element signature="method#editable#0;class#LecturerController#0" expanded="false" />
+                <element signature="method#viewMyCoursesPane#0;class#LecturerController#0" expanded="false" />
+                <element signature="method#courseList#0;class#LecturerController#0" expanded="false" />
+                <element signature="method#myCourseList#0;class#LecturerController#0" expanded="false" />
+                <element signature="method#viewStudentsPane#0;class#LecturerController#0" expanded="false" />
+                <element signature="method#selectCourse#0;class#LecturerController#0" expanded="false" />
+                <element signature="method#viewMyCourseList#0;class#LecturerController#0" expanded="false" />
+                <element signature="method#allStudentsList#0;class#LecturerController#0" expanded="false" />
+                <element signature="method#viewallStudentsList#0;class#LecturerController#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -133,11 +154,10 @@
       <file leaf-file-name="LoginController.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/mivs/application/controllers/LoginController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="160">
+            <state relative-caret-position="219">
               <caret line="45" column="0" lean-forward="false" selection-start-line="45" selection-start-column="0" selection-end-line="45" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="method#lecturer#0;class#LoginController#0" expanded="false" />
                 <element signature="method#firsLogin#0;class#LoginController#0" expanded="false" />
                 <element signature="method#makePaneInvisible#0;class#LoginController#0" expanded="false" />
                 <element signature="method#cancel#0;class#LoginController#0" expanded="false" />
@@ -204,21 +224,6 @@
                 <element signature="method#insertStudentToDb#0;class#DB#0" expanded="false" />
                 <element signature="method#insertLecturerToDb#0;class#DB#0" expanded="false" />
                 <element signature="method#connection#0;class#DB#0" expanded="false" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="Login.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/mivs/back_end/Login.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="144">
-              <caret line="16" column="65" lean-forward="false" selection-start-line="16" selection-start-column="65" selection-end-line="16" selection-end-column="65" />
-              <folding>
-                <element signature="method#secondLogin#0;class#Login#0" expanded="false" />
-                <element signature="method#firsLogin#0;class#Login#0" expanded="false" />
-                <element signature="method#firsLoginFX#0;class#Login#0" expanded="false" />
-                <element signature="method#login#0;class#Login#0" expanded="false" />
               </folding>
             </state>
           </provider>
@@ -302,7 +307,6 @@
         <option value="$PROJECT_DIR$/src/main/resources/student.fxml" />
         <option value="$PROJECT_DIR$/src/main/java/mivs/application/MIVS.java" />
         <option value="$PROJECT_DIR$/src/main/java/mivs/users/Lecturer.java" />
-        <option value="$PROJECT_DIR$/src/main/java/mivs/application/controllers/LecturerController.java" />
         <option value="$PROJECT_DIR$/src/main/resources/firstLogin.fxml" />
         <option value="$PROJECT_DIR$/src/main/java/mivs/application/alert/Alert.java" />
         <option value="$PROJECT_DIR$/pom.xml" />
@@ -315,6 +319,7 @@
         <option value="$PROJECT_DIR$/src/main/java/mivs/services/AdminServices.java" />
         <option value="$PROJECT_DIR$/src/main/java/mivs/services/StudentServices.java" />
         <option value="$PROJECT_DIR$/src/main/java/mivs/application/controllers/StudentController.java" />
+        <option value="$PROJECT_DIR$/src/main/java/mivs/application/controllers/LecturerController.java" />
       </list>
     </option>
   </component>
@@ -375,42 +380,6 @@
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="MIVS" type="b2602c69:ProjectViewProjectNode" />
-              <item name="MIVS" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="mivs" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="MIVS" type="b2602c69:ProjectViewProjectNode" />
-              <item name="MIVS" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="mivs" type="462c0819:PsiDirectoryNode" />
-              <item name="application" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="MIVS" type="b2602c69:ProjectViewProjectNode" />
-              <item name="MIVS" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="mivs" type="462c0819:PsiDirectoryNode" />
-              <item name="application" type="462c0819:PsiDirectoryNode" />
-              <item name="controllers" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="MIVS" type="b2602c69:ProjectViewProjectNode" />
-              <item name="MIVS" type="462c0819:PsiDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="462c0819:PsiDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="mivs" type="462c0819:PsiDirectoryNode" />
-              <item name="users" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -731,12 +700,12 @@
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3854048" sideWeight="0.5021482" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1927024" sideWeight="0.49785176" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18358038" sideWeight="0.49785176" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3295325" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23576799" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.23576799" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24973147" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -756,7 +725,7 @@
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3854048" sideWeight="0.5021482" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -771,11 +740,11 @@
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.3854048" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18358038" sideWeight="0.49785176" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2508056" sideWeight="0.5" order="6" side_tool="true" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3295325" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.27712137" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.23576799" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3295325" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="true" content_ui="tabs" />
@@ -1005,28 +974,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/resources/firstLogin.fxml" />
-    <entry file="file://$PROJECT_DIR$/src/main/java/mivs/application/controllers/LecturerController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="738">
-          <caret line="299" column="0" lean-forward="false" selection-start-line="299" selection-start-column="0" selection-end-line="299" selection-end-column="0" />
-          <folding>
-            <element signature="method#init#0;class#LecturerController#0" expanded="false" />
-            <element signature="method#viewPane#0;class#LecturerController#0" expanded="false" />
-            <element signature="method#makePaneInvisible#0;class#LecturerController#0" expanded="false" />
-            <element signature="method#editable#0;class#LecturerController#0" expanded="false" />
-            <element signature="method#update#0;class#LecturerController#0" expanded="false" />
-            <element signature="method#viewMyCoursesPane#0;class#LecturerController#0" expanded="false" />
-            <element signature="method#courseList#0;class#LecturerController#0" expanded="false" />
-            <element signature="method#myCourseList#0;class#LecturerController#0" expanded="false" />
-            <element signature="method#viewStudentsPane#0;class#LecturerController#0" expanded="false" />
-            <element signature="method#selectCourse#0;class#LecturerController#0" expanded="false" />
-            <element signature="method#viewMyCourseList#0;class#LecturerController#0" expanded="false" />
-            <element signature="method#allStudentsList#0;class#LecturerController#0" expanded="false" />
-            <element signature="method#viewallStudentsList#0;class#LecturerController#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/mivs/application/alert/Alert.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="313">
@@ -1166,21 +1113,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/mivs/application/controllers/LoginController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="160">
-          <caret line="45" column="0" lean-forward="false" selection-start-line="45" selection-start-column="0" selection-end-line="45" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="method#lecturer#0;class#LoginController#0" expanded="false" />
-            <element signature="method#firsLogin#0;class#LoginController#0" expanded="false" />
-            <element signature="method#makePaneInvisible#0;class#LoginController#0" expanded="false" />
-            <element signature="method#cancel#0;class#LoginController#0" expanded="false" />
-            <element signature="method#ok#0;class#LoginController#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$MAVEN_REPOSITORY$/mysql/mysql-connector-java/5.1.6/mysql-connector-java-5.1.6.jar!/com/mysql/jdbc/ResultSetImpl.class">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="24">
@@ -1289,23 +1221,58 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/mivs/application/controllers/LoginController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="219">
+          <caret line="45" column="0" lean-forward="false" selection-start-line="45" selection-start-column="0" selection-end-line="45" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#firsLogin#0;class#LoginController#0" expanded="false" />
+            <element signature="method#makePaneInvisible#0;class#LoginController#0" expanded="false" />
+            <element signature="method#cancel#0;class#LoginController#0" expanded="false" />
+            <element signature="method#ok#0;class#LoginController#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/mivs/application/controllers/StudentController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="536">
-          <caret line="387" column="32" lean-forward="true" selection-start-line="387" selection-start-column="32" selection-end-line="387" selection-end-column="32" />
+        <state relative-caret-position="528">
+          <caret line="248" column="13" lean-forward="true" selection-start-line="248" selection-start-column="13" selection-end-line="248" selection-end-column="13" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="method#init#0;class#StudentController#0" expanded="false" />
             <element signature="method#viewPane#0;class#StudentController#0" expanded="false" />
             <element signature="method#makePaneInvisible#0;class#StudentController#0" expanded="false" />
             <element signature="method#editable#0;class#StudentController#0" expanded="false" />
-            <element signature="method#update#0;class#StudentController#0" expanded="false" />
             <element signature="method#viewCoursesPane#0;class#StudentController#0" expanded="false" />
             <element signature="method#viewMyCoursesPane#0;class#StudentController#0" expanded="false" />
             <element signature="method#registerToCoursesPane#0;class#StudentController#0" expanded="false" />
             <element signature="method#myCourseList#0;class#StudentController#0" expanded="false" />
             <element signature="method#courseList#0;class#StudentController#0" expanded="false" />
+            <element signature="method#availableCourseList#0;class#StudentController#0" expanded="false" />
             <element signature="method#addCourseToStudentList#0;class#StudentController#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/mivs/application/controllers/LecturerController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-182">
+          <caret line="253" column="200" lean-forward="false" selection-start-line="253" selection-start-column="200" selection-end-line="253" selection-end-column="200" />
+          <folding>
+            <element signature="method#init#0;class#LecturerController#0" expanded="false" />
+            <element signature="method#viewPane#0;class#LecturerController#0" expanded="false" />
+            <element signature="method#makePaneInvisible#0;class#LecturerController#0" expanded="false" />
+            <element signature="method#editable#0;class#LecturerController#0" expanded="false" />
+            <element signature="method#viewMyCoursesPane#0;class#LecturerController#0" expanded="false" />
+            <element signature="method#courseList#0;class#LecturerController#0" expanded="false" />
+            <element signature="method#myCourseList#0;class#LecturerController#0" expanded="false" />
+            <element signature="method#viewStudentsPane#0;class#LecturerController#0" expanded="false" />
+            <element signature="method#selectCourse#0;class#LecturerController#0" expanded="false" />
+            <element signature="method#viewMyCourseList#0;class#LecturerController#0" expanded="false" />
+            <element signature="method#allStudentsList#0;class#LecturerController#0" expanded="false" />
+            <element signature="method#viewallStudentsList#0;class#LecturerController#0" expanded="false" />
           </folding>
         </state>
       </provider>
