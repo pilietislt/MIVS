@@ -15,7 +15,6 @@ import mivs.utils.IOUtils;
 
 import java.io.FileNotFoundException;
 import java.sql.*;
-import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -127,8 +126,8 @@ public class LecturerController extends Controller {
             e.printStackTrace();
         }
 
-      //  this.lecturer = readUser.get(user);
-        firstLable.setText("Hello "+this.lecturer.getRole()+" "+this.lecturer.getFirstName());
+        //  this.lecturer = readUser.get(user);
+        firstLable.setText("Hello " + this.lecturer.getRole() + " " + this.lecturer.getFirstName());
 
     }
 
@@ -214,65 +213,65 @@ public class LecturerController extends Controller {
 
     public void update() {
 
-            int pNumber = 0;
-            int mNumber = 0;
+        int pNumber = 0;
+        int mNumber = 0;
 
-            if (!(personalNumber.getText().equals(""))) {
-                pNumber = Integer.parseInt(personalNumber.getText());
+        if (!(personalNumber.getText().equals(""))) {
+            pNumber = Integer.parseInt(personalNumber.getText());
+        }
+        if (!(mobileNumber.getText().trim().equals(""))) {
+            mNumber = Integer.parseInt(mobileNumber.getText());
+        }
+
+        this.lecturer.setFirstName(firstName.getText());
+        this.lecturer.setSecondName(secondName.getText());
+        this.lecturer.setPersonalNumber(pNumber);
+        this.lecturer.setDateOfBirth(datePicker.getValue());
+        this.lecturer.setEmail(email.getText());
+        this.lecturer.setMobileNumber(mNumber);
+        this.lecturer.setAddress(address.getText());
+
+        if (gender.getValue() == null) {
+
+        } else if (gender.getValue().equals(Gender.MALE)) {
+            this.lecturer.setGender(Gender.MALE);
+        } else if (gender.getValue().equals(Gender.FEMALE)) {
+            this.lecturer.setGender(Gender.FEMALE);
+        }
+
+        try {
+            Connection connection = new DB().connection();
+            PreparedStatement statement = connection.prepareStatement("update user set user_firstName = ? , user_secondName = ? where user_username = ?;");
+            statement.setString(1, this.lecturer.getFirstName());
+            statement.setString(2, this.lecturer.getSecondName());
+            statement.setString(3, this.lecturer.getUsername());
+            statement.execute();
+            statement = connection.prepareStatement("update lecturer set lecturer_personalNumber = ?, lecturer_dateOfBirth =?, lecturer_email = ?, lecturer_mobileNumber = ?, gender_id =?, lecturer_address =? where user_username = ?; ");
+            statement.setInt(1, this.lecturer.getPersonalNumber());
+            if (datePicker.getValue() == null) {
+                statement.setNull(2, Types.DATE);
+            } else {
+                statement.setDate(2, Date.valueOf(this.lecturer.getDateOfBirth()));
             }
-            if (!(mobileNumber.getText().trim().equals(""))) {
-                mNumber = Integer.parseInt(mobileNumber.getText());
+            statement.setString(3, this.lecturer.getEmail());
+            statement.setInt(4, this.lecturer.getMobileNumber());
+            if (this.lecturer.getGender() == Gender.FEMALE) {
+                statement.setInt(5, 1);
+            } else if (this.lecturer.getGender() == Gender.MALE) {
+                statement.setInt(5, 2);
+            } else {
+                statement.setNull(5, Types.INTEGER);
             }
+            statement.setString(6, this.lecturer.getAddress());
+            statement.setString(7, this.lecturer.getUsername());
+            statement.execute();
 
-            this.lecturer.setFirstName(firstName.getText());
-            this.lecturer.setSecondName(secondName.getText());
-            this.lecturer.setPersonalNumber(pNumber);
-            this.lecturer.setDateOfBirth(datePicker.getValue());
-            this.lecturer.setEmail(email.getText());
-            this.lecturer.setMobileNumber(mNumber);
-            this.lecturer.setAddress(address.getText());
-
-            if (gender.getValue() == null) {
-
-            } else if (gender.getValue().equals(Gender.MALE)) {
-                this.lecturer.setGender(Gender.MALE);
-            } else if (gender.getValue().equals(Gender.FEMALE)) {
-                this.lecturer.setGender(Gender.FEMALE);
-            }
-
-            try {
-                Connection connection = new DB().connection();
-                PreparedStatement statement = connection.prepareStatement("update user set user_firstName = ? , user_secondName = ? where user_username = ?;");
-                statement.setString(1, this.lecturer.getFirstName());
-                statement.setString(2, this.lecturer.getSecondName());
-                statement.setString(3, this.lecturer.getUsername());
-                statement.execute();
-                statement = connection.prepareStatement("update lecturer set lecturer_personalNumber = ?, lecturer_dateOfBirth =?, lecturer_email = ?, lecturer_mobileNumber = ?, gender_id =?, lecturer_address =? where user_username = ?; ");
-                statement.setInt(1, this.lecturer.getPersonalNumber());
-                if (datePicker.getValue() == null) {
-                    statement.setNull(2, Types.DATE);
-                } else {
-                    statement.setDate(2, Date.valueOf(this.lecturer.getDateOfBirth()));
-                }
-                statement.setString(3, this.lecturer.getEmail());
-                statement.setInt(4, this.lecturer.getMobileNumber());
-                if (this.lecturer.getGender() == Gender.FEMALE) {
-                    statement.setInt(5, 1);
-                } else if (this.lecturer.getGender() == Gender.MALE) {
-                    statement.setInt(5, 2);
-                } else {
-                    statement.setNull(5, Types.INTEGER);
-                }
-                statement.setString(6, this.lecturer.getAddress());
-                statement.setString(7, this.lecturer.getUsername());
-                statement.execute();
-
-                connection.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
 
 
-            }
+        }
 
         viewPane();
 
@@ -294,8 +293,7 @@ public class LecturerController extends Controller {
         creditsCol.setCellValueFactory(new PropertyValueFactory("credit"));
         lcodeCol.setCellValueFactory(new PropertyValueFactory("lecturerCode"));
         descriptionCol.setCellValueFactory(new PropertyValueFactory("description"));
-        coursesTable.getColumns().setAll(codeCol, titleCol, startDateCol, creditsCol, lcodeCol,descriptionCol);
-
+        coursesTable.getColumns().setAll(codeCol, titleCol, startDateCol, creditsCol, lcodeCol, descriptionCol);
 
 
     }
@@ -304,38 +302,63 @@ public class LecturerController extends Controller {
         ObservableList<Course> courses = FXCollections.observableArrayList();
 
         try {
-            HashMap<String, Course> readUser = (HashMap<String, Course>) IOUtils.readObjectFromFile("files/courses");
+            Connection connection = new DB().connection();
+            PreparedStatement statement = connection.prepareStatement(
+                    "SELECT \n" +
+                            " * \n" +
+                            "FROM  \n" +
+                            " course c,\n" +
+                            " lecturerrunningcourses l\n" +
+                            "WHERE \n" +
+                            " l.course_code = c.course_code and \n" +
+                            " lecturer_code = ?  ;");
+            statement.setString(1, this.lecturer.getLecturerCode());
 
-            for (Map.Entry<String, Course> entry : readUser.entrySet()) {
-                Course value = entry.getValue();
-                for (String c : lecturer.getRunningCourses()) {
-
-                    if (value.getCode().equals(c)) {
-                        courses.add(new Course(value.getCode(), value.getTittle(), value.getDescription(), value.getStartDate(), value.getCredit(), value.getLecturerCode()));
-
-                    }
-
-                }
-
-
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                courses.add(new Course(resultSet.getString(1), resultSet.getString(2), resultSet.getString(3), resultSet.getDate(4).toLocalDate(), resultSet.getInt(5), resultSet.getString(6)));
             }
-        } catch (FileNotFoundException e) {
+
+
+            connection.close();
+        } catch (SQLException e) {
+
             e.printStackTrace();
         }
+
+//        try {
+//            HashMap<String, Course> readUser = (HashMap<String, Course>) IOUtils.readObjectFromFile("files/courses");
+//
+//            for (Map.Entry<String, Course> entry : readUser.entrySet()) {
+//                Course value = entry.getValue();
+//                for (String c : lecturer.getRunningCourses()) {
+//
+//                    if (value.getCode().equals(c)) {
+//                        courses.add(new Course(value.getCode(), value.getTittle(), value.getDescription(), value.getStartDate(), value.getCredit(), value.getLecturerCode()));
+//
+//                    }
+//
+//                }
+//
+//
+//            }
+//        } catch (FileNotFoundException e) {
+//            e.printStackTrace();
+//        }
         return courses;
     }
 
-    public void viewStudentsPane(){
+    public void viewStudentsPane() {
 
         makePaneInvisible();
         viewStudentsPane.setVisible(true);
         viewMyCourseList(myCourseList());
     }
 
-    public  void selectCourse (){
-        if (courseList.getSelectionModel().getSelectedItem()!= null){
+    public void selectCourse() {
+        if (courseList.getSelectionModel().getSelectedItem() != null) {
             Course selectedCourse = (Course) courseList.getSelectionModel().getSelectedItem();
-            viewallStudentsList(allStudentsList(selectedCourse.getCode()));
+            viewAllStudentsList(allStudentsList(selectedCourse.getCode()));
         }
 
 
@@ -351,7 +374,6 @@ public class LecturerController extends Controller {
         courseList.getColumns().setAll(courseCodeCol, courseTitleCol, courseStartDateCol);
 
 
-
     }
 
     private ObservableList<Student> allStudentsList(String code) {
@@ -359,26 +381,41 @@ public class LecturerController extends Controller {
 
 
         try {
-            HashMap<String, User> readUser = (HashMap<String, User>) IOUtils.readObjectFromFile("files/users");
+            Connection connection = new DB().connection();
+            PreparedStatement statement = connection.prepareStatement(
+                    "SELECT \n" +
+                            " u.user_username,\n" +
+                            " user_password,\n" +
+                            " user_firstName,\n" +
+                            " user_secondName,\n" +
+                            " s.student_studentCode\n" +
+                            "FROM  \n" +
+                            " user u,\n" +
+                            " student s,\n" +
+                            " studentrunningcourses sr\n" +
+                            "WHERE\n" +
+                            " u.user_username = s.user_username and\n" +
+                            " s.student_studentCode = sr.student_code and\n" +
+                            " sr.course_code = ? ;"
+            );
+            statement.setString(1, code);
 
-            for (Map.Entry<String, User> entry : readUser.entrySet()) {
-                User value = entry.getValue();
-
-                if (value.getRole().equals(Role.STUDENT)){
-                    Student st = (Student) readUser.get(value.getUsername());
-                    if(st.getRunningCourses().contains(code)){
-                        students.add(new Student(st.getUsername(),st.getPassword(),st.getRole(),st.getFirstName(),st.getSecondName(),st.getStudentCode()));
-                    }
-
-                }
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                students.add(new Student(resultSet.getString(1), resultSet.getString(2), Role.STUDENT, resultSet.getString(3), resultSet.getString(4), resultSet.getString(5)));
             }
-        } catch (FileNotFoundException e) {
+
+
+            connection.close();
+        } catch (SQLException e) {
+
             e.printStackTrace();
         }
+
         return students;
     }
 
-    private void viewallStudentsList(ObservableList data) {
+    private void viewAllStudentsList(ObservableList data) {
 
         studentList.setItems(data);
 
@@ -388,9 +425,7 @@ public class LecturerController extends Controller {
         studentList.getColumns().setAll(studentCodeCol, studentFirstNameCol, studentSecondNameCol);
 
 
-
     }
-
 
 
 }
