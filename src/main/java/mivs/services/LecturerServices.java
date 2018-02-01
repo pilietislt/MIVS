@@ -8,6 +8,7 @@ import mivs.db.DB;
 import mivs.users.*;
 
 import java.sql.*;
+import java.util.ArrayList;
 
 public class LecturerServices {
 
@@ -102,6 +103,28 @@ public class LecturerServices {
         }
 
         return courses;
+    }
+
+    public ArrayList<String> getAllLecturer() {
+        ArrayList<String> codes = new ArrayList<>();
+        try {
+            Connection connection = new DB().connection();
+            PreparedStatement statement = connection.prepareStatement(
+                    "select user_firstName, user_secondName, lecturer_lecturerCode from user u  , lecturer l  where l.user_username = u.user_username ;"
+            );
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()){
+                codes.add(resultSet.getString(1)+ " " +resultSet.getString(2) + "," + resultSet.getString(3));
+            }
+
+
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return codes;
     }
 
     public void editLecturer(Lecturer lecturer, DatePicker datePicker) {

@@ -10,23 +10,17 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import mivs.back_end.Services;
-import mivs.courses.Course;
-import mivs.db.DB;
 import mivs.services.AdminServices;
 import mivs.services.CourseServices;
+import mivs.services.LecturerServices;
+import mivs.services.UserServices;
 import mivs.users.Admin;
 import mivs.users.Role;
-import mivs.users.Student;
 import mivs.users.User;
-import mivs.utils.IOUtils;
 import mivs.application.alert.Alert;
 
 
-import java.io.FileNotFoundException;
-import java.sql.*;
-import java.time.LocalDate;
-import java.util.HashMap;
-import java.util.Map;
+
 
 
 public class AdminController extends Controller {
@@ -97,18 +91,7 @@ public class AdminController extends Controller {
 
         makePaneInvisible();
         startPane.setVisible(true);
-
-        try {
-            Connection con = new DB().connection();
-            Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery("select * from user where user_username='" + user + "'");
-            while (rs.next()) {
-                admin = new Admin(rs.getString(1), rs.getString(2), Role.ADMIN, rs.getString(3), rs.getString(4));
-            }
-            con.close();
-        } catch (Exception e) {
-            System.out.println(e);
-        }
+        admin = new  AdminServices().getAdmin(user);
         firstLable.setText("Hello " + Role.ADMIN + " " + admin.getFirstName());
 
 
@@ -132,7 +115,7 @@ public class AdminController extends Controller {
 
     public void addCoursePane() {
         makePaneInvisible();
-        if (new Services().getAllLecturer().size() == 0) {
+        if (new LecturerServices().getAllLecturer().size() == 0) {
             new Alert().informationAlert("No Lecturer", "Please firs add Lecturer");
             startPane.setVisible(true);
 
@@ -154,20 +137,20 @@ public class AdminController extends Controller {
 
     public void addUser() {
         if (isFiledUser()) {
-            if (new Services().checkUniqueBoolen(username.getText())) {
+            if (new Services().checkUniqueBoolean(username.getText())) {
                 if (role.getValue().equals(Role.ADMIN)) {
                     new AdminServices().addAdmin(username.getText(), password.getText(), tFirstName.getText(), tSecondName.getText());
                     new Alert().informationAlert("User added", "Admin successfully added");
-                    emptyUserFieleds();
+                    emptyUserFields();
 
                 } else if (role.getValue().equals(Role.LECTURER)) {
                     new AdminServices().addLecturer(username.getText(), password.getText(), tFirstName.getText(), tSecondName.getText());
                     new Alert().informationAlert("User added", "Lecturer successfully added");
-                    emptyUserFieleds();
+                    emptyUserFields();
                 } else if (role.getValue().equals(Role.STUDENT)) {
                     new AdminServices().addStudent(username.getText(), password.getText(), tFirstName.getText(), tSecondName.getText());
                     new Alert().informationAlert("User added", "Student successfully added");
-                    emptyUserFieleds();
+                    emptyUserFields();
                 }
             } else {
 
@@ -180,7 +163,7 @@ public class AdminController extends Controller {
 
     private void userList() {
 
-        ObservableList data = getUserList();
+        ObservableList data = new UserServices().getAllUserList();
         tableUsers.setItems(data);
 
         usernameCol.setCellValueFactory(new PropertyValueFactory("username"));
@@ -193,7 +176,7 @@ public class AdminController extends Controller {
 
     private void courseList() {
 
-        ObservableList data = new CourseServices().getCourseList();
+        ObservableList data = new CourseServices().getAllCourseList();
         coursesTable.setItems(data);
 
         codeCol.setCellValueFactory(new PropertyValueFactory("code"));
@@ -205,49 +188,6 @@ public class AdminController extends Controller {
         coursesTable.getColumns().setAll(codeCol, titleCol, startDateCol, creditsCol, lcodeCol, descriptionCol);
 
     }
-
-    private ObservableList<User> getUserList() {
-        ObservableList<User> users = FXCollections.observableArrayList();
-        try {
-            Connection connection =new DB().connection();
-            PreparedStatement statement = connection.prepareStatement(
-                    "SELECT * FROM user ; "
-            );
-            ResultSet resultSet = statement.executeQuery();
-            while (resultSet.next()){
-
-                if (resultSet.getInt(5)==1){
-                    users.add( new User(resultSet.getString(1),resultSet.getString(2),Role.ADMIN,resultSet.getString(3),resultSet.getString(4)));
-                }else if(resultSet.getInt(5)==2){
-                    users.add( new User(resultSet.getString(1),resultSet.getString(2),Role.LECTURER,resultSet.getString(3),resultSet.getString(4)));
-                }else if(resultSet.getInt(5)==3){
-                    users.add( new User(resultSet.getString(1),resultSet.getString(2),Role.STUDENT,resultSet.getString(3),resultSet.getString(4)));
-                }
-
-            }
-            connection.close();
-
-        } catch (SQLException e) {
-            System.out.println("list error");
-        }
-
-
-//        try {
-//            HashMap<String, User> readUser = (HashMap<String, User>) IOUtils.readObjectFromFile("files/users");
-//
-//            for (Map.Entry<String, User> entry : readUser.entrySet()) {
-//                User value = entry.getValue();
-//
-//
-//                users.add(new User(value.getUsername(), value.getPassword(), value.getRole(), value.getFirstName(), value.getSecondName()));
-//            }
-//        } catch (FileNotFoundException e) {
-//            e.printStackTrace();
-//        }
-        return users;
-    }
-
-
 
     private boolean isFiledUser() {
         if (username.getText().trim().isEmpty()) {
@@ -275,7 +215,7 @@ public class AdminController extends Controller {
         return true;
     }
 
-    private void emptyUserFieleds() {
+    private void emptyUserFields() {
         username.clear();
         password.clear();
         tFirstName.clear();
@@ -283,7 +223,7 @@ public class AdminController extends Controller {
         role.getSelectionModel().clearSelection();
     }
 
-    private void emptycourseFieleds() {
+    private void emptyCourseFields() {
         title.clear();
         description.clear();
         credits.clear();
@@ -316,34 +256,29 @@ public class AdminController extends Controller {
 
         } else if (title.getText().trim().isEmpty()) {
             new Alert().informationAlert("NO Title", "Please fill title");
-            return ;
+            return;
 
         } else if (description.getText().trim().isEmpty()) {
             new Alert().informationAlert("NO password", "Please fill description");
-            return ;
+            return;
 
         } else if (credits.getText().trim().isEmpty()) {
             new Alert().informationAlert("NO credits", "Please fill credits");
-            return ;
+            return;
 
         }
 
         String lCode = lecturerList.getSelectionModel().getSelectedItem().toString();
-      //  String code = new Services().genereteCode(title.getText(), description.getText(), Role.LECTURER);
-
-            int credit = Integer.parseInt(credits.getText());
-            new AdminServices().addCourseFX(title.getText(), description.getText(), datePicker.getValue(), credit, lCode);
-
-            emptycourseFieleds();
-            new Alert().informationAlert("Course added", title.getText() + " successfully added");
-
-
+        int credit = Integer.parseInt(credits.getText());
+        new AdminServices().addCourse(title.getText(), description.getText(), datePicker.getValue(), credit, lCode);
+        emptyCourseFields();
+        new Alert().informationAlert("Course added", title.getText() + " successfully added");
 
 
     }
 
     private void lecturerList() {
-        ObservableList<String> items = FXCollections.observableArrayList(new Services().getAllLecturer());
+        ObservableList<String> items = FXCollections.observableArrayList(new LecturerServices().getAllLecturer());
         lecturerList.setItems(items);
     }
 
@@ -352,8 +287,6 @@ public class AdminController extends Controller {
         viewCoursesPane.setVisible(true);
         courseList();
     }
-
-
 
 
 }

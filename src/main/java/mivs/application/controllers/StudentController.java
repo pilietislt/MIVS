@@ -9,15 +9,10 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import mivs.application.alert.Alert;
-import mivs.db.DB;
 import mivs.services.CourseServices;
 import mivs.services.StudentServices;
 import mivs.users.Gender;
-import mivs.users.Role;
 import mivs.users.Student;
-
-import java.sql.*;
-
 
 
 public class StudentController extends Controller {
@@ -199,7 +194,7 @@ public class StudentController extends Controller {
     public void viewCoursesPane() {
         makePaneInvisible();
         viewAllCousesPane.setVisible(true);
-        courseList(new CourseServices().getCourseList());
+        courseList(new CourseServices().getAllCourseList());
     }
 
     public void viewMyCoursesPane() {

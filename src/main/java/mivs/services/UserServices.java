@@ -1,69 +1,45 @@
 package mivs.services;
 
-import mivs.users.Gender;
-import mivs.users.User;
-import mivs.utils.IOUtils;
-import mivs.utils.ScannerUtils;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import mivs.db.DB;
 
-import java.io.FileNotFoundException;
-import java.util.HashMap;
-import java.util.Map;
+import mivs.users.Role;
+import mivs.users.User;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 
 public class UserServices {
 
-    public Gender selectGender() {
 
-        //Gender gender = null;
-        for (Gender g : Gender.values()) {
-            System.out.println(g.get() + ". " + g);
-        }
-        int choice = ScannerUtils.scanInt("Select Gender:");
-        switch (choice) {
-            case 1:
-                return Gender.FEMALE;
-
-            case 2:
-                return Gender.MALE;
-
-            default:
-                System.out.println("wrong input");
-                return null;
-
-
-        }
-    }
-
-    public void printUserList() {
-
+    public ObservableList<User> getAllUserList() {
+        ObservableList<User> users = FXCollections.observableArrayList();
         try {
-            HashMap<String, User> readUser = (HashMap<String, User>) IOUtils.readObjectFromFile("files/users");
-            int nr = 0;
+            Connection connection =new DB().connection();
+            PreparedStatement statement = connection.prepareStatement(
+                    "SELECT * FROM user ; "
+            );
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()){
 
-            System.out.printf("%-3s %-10s %-10s %-10s %-10s\n", "Nr.", "Username", "Role", "First name", "Second Name");
-            for (Map.Entry<String, User> entry : readUser.entrySet()) {
-                //String key = entry.getKey();
-                User value = entry.getValue();
-                nr += 1;
-                System.out.printf("%-3s %-10s %-10s %-10s %-10s\n", nr, value.getUsername(), value.getRole(), value.getFirstName(), value.getSecondName());
+                if (resultSet.getInt(5)==1){
+                    users.add( new User(resultSet.getString(1),resultSet.getString(2), Role.ADMIN,resultSet.getString(3),resultSet.getString(4)));
+                }else if(resultSet.getInt(5)==2){
+                    users.add( new User(resultSet.getString(1),resultSet.getString(2),Role.LECTURER,resultSet.getString(3),resultSet.getString(4)));
+                }else if(resultSet.getInt(5)==3){
+                    users.add( new User(resultSet.getString(1),resultSet.getString(2),Role.STUDENT,resultSet.getString(3),resultSet.getString(4)));
+                }
+
             }
-        } catch (FileNotFoundException e) {
+            connection.close();
+
+        } catch (SQLException e) {
             e.printStackTrace();
         }
 
-
-    }
-
-    public User readUser(String username) {
-        HashMap<String, User> readUser = null;
-
-        try {
-            readUser = (HashMap<String, User>) IOUtils.readObjectFromFile("files/users");
-
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        return readUser.get(username);
+        return users;
     }
 }

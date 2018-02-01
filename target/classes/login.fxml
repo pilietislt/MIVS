@@ -5,26 +5,39 @@
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mivs.application.controllers.LoginController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #2E4372;" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mivs.application.controllers.LoginController">
    <children>
-      <Pane fx:id="loginPane" prefHeight="400.0" prefWidth="600.0">
+      <Pane fx:id="loginPane" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #2E4372;">
          <children>
-            <TextField fx:id="username" alignment="CENTER" layoutX="225.0" layoutY="142.0" promptText="username" />
-            <PasswordField fx:id="password" alignment="CENTER" layoutX="225.0" layoutY="208.0" promptText="passsword" />
-            <Button fx:id="login" layoutX="277.0" layoutY="276.0" mnemonicParsing="false" onAction="#login" text="Login" textAlignment="CENTER" />
-            <Label layoutX="272.0" layoutY="125.0" text="Username" />
-            <Label layoutX="274.0" layoutY="192.0" text="Password" />
+            <TextField fx:id="username" alignment="CENTER" layoutX="225.0" layoutY="142.0" promptText="username" style="-fx-background-color: #7F8CA7;" />
+            <PasswordField fx:id="password" alignment="CENTER" layoutX="225.0" layoutY="208.0" promptText="passsword" style="-fx-background-color: #7F8CA7;" />
+            <Button fx:id="login" layoutX="277.0" layoutY="276.0" mnemonicParsing="false" onAction="#login" style="-fx-background-color: #52648C;" text="Login" textAlignment="CENTER" textFill="#05173c" />
+            <Label layoutX="272.0" layoutY="125.0" text="Username" textFill="#05173c">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Label>
+            <Label layoutX="274.0" layoutY="192.0" text="Password" textFill="#05173c">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Label>
          </children>
       </Pane>
-      <Pane fx:id="firstLoginPane" layoutX="111.0" layoutY="88.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="226.0" prefWidth="377.0" visible="false">
+      <Pane fx:id="firstLoginPane" layoutX="111.0" layoutY="88.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="226.0" prefWidth="377.0" style="-fx-background-color: #2E4372;" visible="false">
          <children>
-            <TextField fx:id="firstName" alignment="CENTER" layoutX="120.0" layoutY="81.0" promptText="First name" />
-            <TextField fx:id="secondName" alignment="CENTER" layoutX="120.0" layoutY="131.0" promptText="Second name" />
-            <Button layoutX="120.0" layoutY="175.0" mnemonicParsing="false" onAction="#ok" prefHeight="25.0" prefWidth="55.0" text="OK" />
-            <Button fx:id="login1" layoutX="214.0" layoutY="175.0" mnemonicParsing="false" onAction="#cancel" prefHeight="25.0" prefWidth="55.0" text="Cencel" textAlignment="CENTER" />
-            <Label layoutX="167.0" layoutY="64.0" text="First name" />
-            <Label layoutX="158.0" layoutY="113.0" text="Second name" />
+            <TextField fx:id="firstName" alignment="CENTER" layoutX="120.0" layoutY="81.0" promptText="First name" style="-fx-background-color: #7F8CA7;" />
+            <TextField fx:id="secondName" alignment="CENTER" layoutX="120.0" layoutY="131.0" promptText="Second name" style="-fx-background-color: #7F8CA7;" />
+            <Button layoutX="120.0" layoutY="175.0" mnemonicParsing="false" onAction="#ok" prefHeight="25.0" prefWidth="55.0" style="-fx-background-color: #52648C;" text="OK" />
+            <Button fx:id="login1" layoutX="214.0" layoutY="175.0" mnemonicParsing="false" onAction="#cancel" prefHeight="25.0" prefWidth="55.0" style="-fx-background-color: #52648C;" text="Cencel" textAlignment="CENTER" />
+            <Label layoutX="167.0" layoutY="64.0" text="First name" textFill="#05173c">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Label>
+            <Label layoutX="158.0" layoutY="113.0" text="Second name" textFill="#05173c">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Label>
          </children>
       </Pane>
    </children>

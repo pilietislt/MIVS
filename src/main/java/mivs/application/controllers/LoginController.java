@@ -8,10 +8,10 @@ import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import mivs.back_end.Login;
-import mivs.back_end.Services;
 import mivs.db.DB;
 
 import mivs.application.alert.Alert;
+import mivs.services.AdminServices;
 
 
 import java.io.IOException;
@@ -40,15 +40,13 @@ public class LoginController {
 
     public void login() throws IOException {
 
-       // File f = new File("files/users");
         if ( new DB().ifDBexists()) {
-            System.out.println("true");
+            //System.out.println("not first login");
             secondLogin();
         } else {
-            System.out.println("false");
+            //System.out.println("first login");
             firsLogin();
         }
-
 
     }
 
@@ -113,7 +111,7 @@ public class LoginController {
 
     private void secondLogin() throws IOException {
 
-        if (new Login().secondLogin(username.getText(), password.getText())) {
+        if (new Login().secondLoginCheck(username.getText(), password.getText())) {
 
             int r = 0;
 
@@ -130,18 +128,6 @@ public class LoginController {
                 System.out.println(e);
             }
 
-
-
-
-//            HashMap<String, User> readUser = null;
-//            try {
-//                readUser = (HashMap<String, User>) IOUtils.readObjectFromFile("files/users");
-//            } catch (FileNotFoundException e) {
-//                e.printStackTrace();
-//            }
-//
-//            Role role = readUser.get(username.getText()).getRole();
-
             switch (r) {
                 case 1:
                     admin();
@@ -152,9 +138,6 @@ public class LoginController {
                 case 3:
                     student();
                     break;
-
-
-
             }
 
         } else {
@@ -166,7 +149,7 @@ public class LoginController {
 
     private void firsLogin() {
 
-        if (new Login().firsLoginFX(username.getText(), password.getText())) {
+        if (new Login().firsLoginCheck(username.getText(), password.getText())) {
 
             makePaneInvisible();
             firstLoginPane.setVisible(true);
@@ -195,7 +178,7 @@ public class LoginController {
 
 
         } else {
-            new Services().addFirstAdminFX(firstName.getText(), secondName.getText());
+            new AdminServices().addFirstAdmin(firstName.getText(), secondName.getText());
             admin();
         }
     }

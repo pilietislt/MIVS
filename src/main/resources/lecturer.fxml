@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Pane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mivs.application.controllers.LecturerController">
+<Pane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #2E4372;" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="mivs.application.controllers.LecturerController">
    <children>
       <Pane fx:id="viewMyCousesPane" prefHeight="400.0" prefWidth="600.0" visible="false">
          <children>
@@ -30,16 +30,16 @@
             </TableView>
          </children>
       </Pane>
-      <Pane fx:id="viewStudentsPane" prefHeight="400.0" prefWidth="600.0">
+      <Pane fx:id="viewStudentsPane" prefHeight="400.0" prefWidth="600.0" visible="false">
          <children>
-            <TableView fx:id="studentList" layoutX="24.0" layoutY="60.0" prefHeight="322.0" prefWidth="242.0">
+            <TableView fx:id="studentList" layoutX="24.0" layoutY="60.0" prefHeight="322.0" prefWidth="242.0" style="-fx-background-color: #7F8CA7;">
               <columns>
                 <TableColumn fx:id="studentCodeCol" prefWidth="55.99999809265137" text="Code" />
                 <TableColumn fx:id="studentFirstNameCol" prefWidth="94.39997100830078" text="First name" />
                   <TableColumn fx:id="studentSecondNameCol" prefWidth="90.80001831054688" text="Second name" />
               </columns>
             </TableView>
-            <TableView fx:id="courseList" layoutX="320.0" layoutY="60.0" onMouseClicked="#selectCourse" prefHeight="322.0" prefWidth="251.0">
+            <TableView fx:id="courseList" layoutX="320.0" layoutY="60.0" onMouseClicked="#selectCourse" prefHeight="322.0" prefWidth="251.0" style="-fx-background-color: #7F8CA7;">
               <columns>
                 <TableColumn fx:id="courseCodeCol" prefWidth="52.79998779296875" text="Code" />
                 <TableColumn fx:id="courseTitleCol" prefWidth="103.199951171875" text="Title" />
@@ -52,37 +52,64 @@
       </Pane>
       <Pane fx:id="startPane" prefHeight="400.0" prefWidth="606.0" visible="false">
          <children>
-            <Label fx:id="firstLable" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" text="Label" textAlignment="CENTER">
+            <Label fx:id="firstLable" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" text="Label" textAlignment="CENTER" textFill="#05173c">
                <font>
-                  <Font size="35.0" />
+                  <Font name="System Bold" size="35.0" />
                </font>
             </Label>
          </children>
       </Pane>
-      <Pane fx:id="viewPane" layoutY="2.0" prefHeight="400.0" prefWidth="600.0" visible="false">
+      <Pane fx:id="viewPane" layoutY="2.0" prefHeight="400.0" prefWidth="600.0">
          <children>
-            <Label layoutX="24.0" layoutY="107.0" text="Username" />
-            <TextField fx:id="username" disable="true" layoutX="128.0" layoutY="97.0" />
-            <TextField fx:id="firstName" layoutX="128.0" layoutY="134.0" />
-            <Label layoutX="24.0" layoutY="144.0" text="First name" />
-            <TextField fx:id="secondName" layoutX="128.0" layoutY="167.0" />
-            <TextField fx:id="personalNumber" layoutX="128.0" layoutY="200.0" />
-            <Label layoutX="24.0" layoutY="177.0" text="Second name" />
-            <Label layoutX="24.0" layoutY="205.0" text="Personal number" />
-            <Label layoutX="24.0" layoutY="237.0" text="Date of birth" />
-            <Label layoutX="307.0" layoutY="100.0" text="Email" />
-            <Label layoutX="308.0" layoutY="134.0" text="Mobile number" />
-            <Label layoutX="310.0" layoutY="164.0" text="Gender" />
-            <Label layoutX="310.0" layoutY="200.0" text="Address" />
-            <TextField fx:id="email" layoutX="411.0" layoutY="96.0" />
-            <TextField fx:id="mobileNumber" layoutX="411.0" layoutY="129.0" />
-            <TextArea fx:id="address" layoutX="411.0" layoutY="192.0" prefHeight="83.0" prefWidth="149.0" />
-            <ChoiceBox fx:id="gender" layoutX="410.0" layoutY="160.0" prefWidth="150.0" />
-            <Button fx:id="updateButton" layoutX="488.0" layoutY="350.0" mnemonicParsing="false" onAction="#update" text="Update" textAlignment="CENTER" />
-            <DatePicker fx:id="datePicker" layoutX="128.0" layoutY="233.0" prefHeight="25.0" prefWidth="149.0" />
+            <Label layoutX="24.0" layoutY="107.0" text="Username" textFill="#05173c">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Label>
+            <TextField fx:id="username" disable="true" layoutX="128.0" layoutY="97.0" style="-fx-background-color: #7F8CA7;" />
+            <TextField fx:id="firstName" layoutX="128.0" layoutY="134.0" style="-fx-background-color: #7F8CA7;" />
+            <Label layoutX="24.0" layoutY="144.0" text="First name" textFill="#05173c">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Label>
+            <TextField fx:id="secondName" layoutX="128.0" layoutY="167.0" style="-fx-background-color: #7F8CA7;" />
+            <TextField fx:id="personalNumber" layoutX="128.0" layoutY="200.0" style="-fx-background-color: #7F8CA7;" />
+            <Label layoutX="24.0" layoutY="177.0" text="Second name" textFill="#05173c">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Label>
+            <Label layoutX="24.0" layoutY="205.0" text="Personal number" textFill="#05173c">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Label>
+            <Label layoutX="24.0" layoutY="237.0" text="Date of birth" textFill="#05173c">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Label>
+            <Label layoutX="307.0" layoutY="100.0" text="Email" textFill="#05173c">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Label>
+            <Label layoutX="308.0" layoutY="134.0" text="Mobile number" textFill="#05173c">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Label>
+            <Label layoutX="310.0" layoutY="164.0" text="Gender" textFill="#05173c">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Label>
+            <Label layoutX="310.0" layoutY="200.0" text="Address" textFill="#05173c">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font></Label>
+            <TextField fx:id="email" layoutX="411.0" layoutY="96.0" style="-fx-background-color: #7F8CA7;" />
+            <TextField fx:id="mobileNumber" layoutX="411.0" layoutY="129.0" style="-fx-background-color: #7F8CA7;" />
+            <TextArea fx:id="address" layoutX="411.0" layoutY="192.0" prefHeight="83.0" prefWidth="149.0" style="-fx-background-color: #7F8CA7;" />
+            <ChoiceBox fx:id="gender" layoutX="410.0" layoutY="160.0" prefWidth="150.0" style="-fx-background-color: #7F8CA7;" />
+            <Button fx:id="updateButton" layoutX="488.0" layoutY="350.0" mnemonicParsing="false" onAction="#update" style="-fx-background-color: #52648C;" text="Update" textAlignment="CENTER" textFill="#05173c" />
+            <DatePicker fx:id="datePicker" layoutX="128.0" layoutY="233.0" prefHeight="25.0" prefWidth="149.0" style="-fx-background-color: #7F8CA7;" />
          </children>
       </Pane>
-      <MenuBar layoutY="2.0" prefHeight="26.0" prefWidth="600.0">
+      <MenuBar layoutY="2.0" prefHeight="26.0" prefWidth="600.0" style="-fx-background-color: #7F8CA7;">
         <menus>
           <Menu mnemonicParsing="false" text="File">
             <items>

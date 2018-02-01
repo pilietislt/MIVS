@@ -49,7 +49,7 @@ public class CourseServices {
         return availableCourse;
     }
 
-    public ObservableList<Course> getCourseList() {
+    public ObservableList<Course> getAllCourseList() {
         ObservableList<Course> courses = FXCollections.observableArrayList();
 
         try {
